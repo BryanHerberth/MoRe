@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Mikroskil/Skripsi/MoRe/app/src/main/res/drawable/rounded_username.xml" value="0.2085" />
         <entry key="..\:/Mikroskil/Skripsi/MoRe/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Mikroskil/Skripsi/MoRe/app/src/main/res/layout/activity_sign_in.xml" value="0.33" />
+        <entry key="..\:/Mikroskil/Skripsi/MoRe/app/src/main/res/layout/sign_in.xml" value="0.25" />
+        <entry key="..\:/Mikroskil/Skripsi/MoRe/app/src/main/res/layout/splash_screen.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
