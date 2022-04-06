@@ -8,24 +8,19 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import kotlin.math.sign
 
-class SignIn : AppCompatActivity() {
+class SignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        setContentView(R.layout.sign_up)
 
-        val signColor = "Belum ada akun ? Daftar"
+        val signColor = "Sudah punya akun ? Masuk"
         val forgroundSpannableString = SpannableString(signColor)
-        forgroundSpannableString.setSpan(ForegroundColorSpan(Color.BLACK),17,23,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        forgroundSpannableString.setSpan(ForegroundColorSpan(Color.BLACK),19,24, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         signUp.text =forgroundSpannableString
-
     }
 
-    fun goToRegis(view: View){
-        var intentRegis = Intent(this,SignUp::class.java)
-        startActivity(intentRegis)
-    }
+
+
 }
