@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E5E5E5">
+    tools:context=".Verifikasi">
+
 
     <TextView
-        android:id="@+id/Masuk"
+        android:id="@+id/Verifikasi"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
-        android:text="Masuk"
+        android:text="Verifikasi"
         android:gravity="center_vertical"
         android:textColor="@color/black"
         android:textSize="30sp"
@@ -23,54 +24,53 @@
         app:layout_constraintVertical_bias="0.081" />
 
 
-    <EditText
-        android:id="@+id/Email"
-        android:layout_width="330dp"
-        android:layout_height="40dp"
-        android:background="@drawable/rounded_username"
+    <TextView
+        android:id="@+id/infoverifikasi"
+        android:layout_width="268dp"
+        android:layout_height="33dp"
+        android:fontFamily="sans-serif-black"
         android:gravity="center_vertical"
-        android:hint="Email"
-        android:padding="10dp"
+        android:text="Kode Verifikasi telah dikirim ke email anda. \nSilahkan masukan untuk mengverifikasi email anda"
+        android:textColor="@color/black"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.188"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintVertical_bias="0.176" />
 
     <EditText
-        android:id="@+id/Password"
+        android:id="@+id/verifCode"
         android:layout_width="330dp"
         android:layout_height="40dp"
         android:background="@drawable/rounded_username"
-        android:drawableRight="@drawable/ic_eye_closed"
         android:gravity="center_vertical"
-        android:hint="Password"
+        android:hint="Masukkan Kode"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.263" />
+        app:layout_constraintVertical_bias="0.287" />
 
     <TextView
-        android:id="@+id/forgotpass"
+        android:id="@+id/resendCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lupa Kata Sandi?"
-        android:textColor="#808080"
+        android:text="Kirim ulang kode verifikasi"
+        android:textColor="#1DA0FF"
         android:textStyle="bold"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.82"
+        app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.332" />
-
+        app:layout_constraintVertical_bias="0.358" />
     <Button
-        android:id="@+id/Login"
+        android:id="@+id/VerifButton"
         android:layout_width="300dp"
         android:layout_height="53dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,23 +78,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:backgroundTint="#1DA0FF"
-        android:text="Masuk"
-        app:cornerRadius="20dp" />
+        android:text="Verifikasi"
+        tools:cornerRadius="20" />
 
-    <TextView
-        android:id="@+id/signUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Belum punya akun ? Daftar"
-        android:textColor="#1DA0FF"
-        android:onClick="goToRegis"
-        android:textStyle="bold"
+    <Button
+        android:id="@+id/tombolbatal"
+        android:layout_width="300dp"
+        android:layout_height="53dp"
+        android:backgroundTint="#C4C4C4"
+        android:text="Batal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.943"
-        />
+        app:layout_constraintVertical_bias="0.589"
+        tools:cornerRadius="20" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

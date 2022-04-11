@@ -109,6 +109,7 @@
         android:layout_height="53dp"
         android:backgroundTint="#1DA0FF"
         android:text="Daftar"
+        android:onClick="goToVerif"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"

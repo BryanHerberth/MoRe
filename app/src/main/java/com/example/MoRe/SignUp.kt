@@ -17,10 +17,13 @@ class SignUp : AppCompatActivity() {
 
         val signColor = "Sudah punya akun ? Masuk"
         val forgroundSpannableString = SpannableString(signColor)
-        forgroundSpannableString.setSpan(ForegroundColorSpan(Color.BLACK),19,24, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        forgroundSpannableString.setSpan(ForegroundColorSpan(Color.GRAY),0,17, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         signUp.text =forgroundSpannableString
     }
 
 
-
+    fun goToVerif(view: View){
+        var intentVerif = Intent(this,Verifikasi::class.java)
+        startActivity(intentVerif)
+    }
 }
