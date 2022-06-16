@@ -79,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:backgroundTint="#1DA0FF"
         android:text="Masuk"
-        app:cornerRadius="20dp" />
+        app:cornerRadius="20dp"/>
 
     <TextView
         android:id="@+id/signUp"

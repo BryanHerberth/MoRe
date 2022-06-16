@@ -79,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:backgroundTint="#1DA0FF"
         android:text="Verifikasi"
-        tools:cornerRadius="20" />
+        tools:cornerRadius="20dp" />
 
     <Button
         android:id="@+id/tombolbatal"

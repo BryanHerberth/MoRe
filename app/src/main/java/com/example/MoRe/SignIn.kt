@@ -18,7 +18,6 @@ class SignIn : AppCompatActivity() {
             = Toast.makeText(this,Pesan,Waktu)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_sign_in)
 
         val signColor = "Belum ada akun ? Daftar"
