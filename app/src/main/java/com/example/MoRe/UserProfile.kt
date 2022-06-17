@@ -13,26 +13,27 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -66,8 +67,6 @@ class ComposeTest : ComponentActivity() {
             ) {
                 Scaffoldlayout()
             }
-
-
         }
     }
 }
@@ -82,27 +81,25 @@ fun DefaultPreview() {
 }
 
 @Composable
-fun CustomAppbar() {
+fun CustomAppbar(name:String) {
     Column {
         TopAppBar(title = {
             Row(
                 modifier = Modifier.fillMaxSize(),
-//                    horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
-
                 ) {
                 Text(
-                    text = "Daftar Pabrik",
+                    text = "$name",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = White,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(60.dp, 0.dp)
+                    modifier = Modifier.padding(95.dp, 0.dp)
                 )
             }
         },
             backgroundColor = BlueApp,
-//            modifier = Modifier.height(110.dp),
+
             navigationIcon = {
                 IconButton(onClick = {
                     /*TODO*/
@@ -123,9 +120,8 @@ fun Scaffoldlayout() {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            CustomAppbar()
+            CustomAppbar("Profil")
         },
-
         content = {
             Box(
                 modifier = Modifier
@@ -150,17 +146,22 @@ fun userData() {
     var text by remember {
         mutableStateOf("Erico")
     }
+    var text2 by remember {
+        mutableStateOf("Erico")
+    }
     var email by remember {
         mutableStateOf("erico@mail.com")
     }
     var phonenum by remember {
-        mutableStateOf("+62 812-3456-7890")
+        mutableStateOf("081234567890")
+    }
+    var phonenum2 by remember {
+        mutableStateOf("081234567890")
     }
     val openDialog:MutableState<Boolean> = remember {
         mutableStateOf(false)
     }
     Column {
-
         OutlinedTextField(value = text, onValueChange = { newText ->
             text = newText
         },
@@ -171,12 +172,14 @@ fun userData() {
                 IconButton(onClick = {
                     openDialog.value = true
                 }) {
-                    Icon(imageVector = Icons.Filled.Create, contentDescription = "Edit")
+                    Icon(imageVector = Icons.Filled.Create, contentDescription = "Edit",
+                    )
                     if (openDialog.value) {
 
                         AlertDialog(
                             onDismissRequest = {
                                 openDialog.value = false
+                                text2 = text
                             },
                             title = {
                                 Text(text = "Ubah Nama", fontSize = 24.sp, fontWeight = FontWeight.Bold)
@@ -186,8 +189,9 @@ fun userData() {
                                     Text("Nama",
                                         fontSize = 20.sp,
                                         style = MaterialTheme.typography.body2)
-                                    OutlinedTextField(value = text, onValueChange = { newText ->
-                                        text = newText
+
+                                    OutlinedTextField(value = text2, onValueChange = { newText2 ->
+                                        text2 = newText2
                                     },
                                         shape = RoundedCornerShape(10.dp),
                                         singleLine = true,)
@@ -195,7 +199,7 @@ fun userData() {
                             },
                             dismissButton = {
                                 TextButton(onClick = {
-                                    openDialog.value = false
+                                    text2 = text
                                 }) {
                                     Text(
                                         text = "Batal",
@@ -207,6 +211,7 @@ fun userData() {
                             confirmButton = {
                                 TextButton(onClick = {
                                     openDialog.value = false
+                                    text = text2
                                 }) {
                                     Text(
                                         text = "Ubah nama",
@@ -237,8 +242,61 @@ fun userData() {
             readOnly = true,
             singleLine = true,
             trailingIcon = {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    openDialog.value = true
+                }) {
                     Icon(imageVector = Icons.Filled.Create, contentDescription = "Edit")
+                    if (openDialog.value) {
+
+                        AlertDialog(
+                            onDismissRequest = {
+                                openDialog.value = false
+                                phonenum2 = phonenum
+                            },
+                            title = {
+                                Text(text = "Ubah Nomor", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                            },
+                            text = {
+                                Column() {
+                                    Text("Nomor Handphone",
+                                        fontSize = 20.sp,
+                                        style = MaterialTheme.typography.body2)
+
+                                    OutlinedTextField(value = phonenum2, onValueChange = { newNum ->
+                                        phonenum2 = newNum
+                                    },
+                                        shape = RoundedCornerShape(10.dp),
+                                        singleLine = true,
+                                        keyboardOptions = KeyboardOptions(
+                                            keyboardType = KeyboardType.Phone,
+                                        ))
+                                }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = {
+                                    phonenum2 = phonenum
+                                }) {
+                                    Text(
+                                        text = "Batal",
+                                        color = Color.Red,
+                                        fontSize = 15.sp,
+                                    )
+                                }
+                            },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    openDialog.value = false
+                                    phonenum = phonenum2
+                                }) {
+                                    Text(
+                                        text = "Ubah nama",
+                                        color = BlueApp,
+                                        fontSize = 15.sp,
+                                    )
+                                }
+                            }
+                        )
+                    }
                 }
             },
             keyboardOptions = KeyboardOptions(
@@ -320,6 +378,9 @@ fun ProfileImage() {
         userData()
     }
 }
+
+
+
 
 
 
