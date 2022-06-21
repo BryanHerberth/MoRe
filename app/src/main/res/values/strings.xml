@@ -2,4 +2,5 @@
     <string name="app_name">My Application</string>
     <string name="title_activity_compose_test">ComposeTest</string>
     <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="title_activity_home">Home</string>
 </resources>
