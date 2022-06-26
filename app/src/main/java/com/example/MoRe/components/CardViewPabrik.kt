@@ -30,7 +30,7 @@ fun CardPabrik(pabrik: DaftarPabrik = getPabrik()[0],
 ){
     Box(modifier = Modifier
         .fillMaxHeight()
-        .fillMaxWidth()
+        .wrapContentSize()
         .padding(5.dp)) {
         Surface(modifier = Modifier
             .padding(12.dp)
@@ -39,7 +39,6 @@ fun CardPabrik(pabrik: DaftarPabrik = getPabrik()[0],
             border = BorderStroke(width = 2.dp, color = Color.LightGray)
 
         ) {
-
             Card(
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier

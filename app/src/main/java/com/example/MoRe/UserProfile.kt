@@ -116,9 +116,7 @@ fun CustomAppbar(name:String) {
 
 @Composable
 fun Scaffoldlayout() {
-    val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
             CustomAppbar("Profil")
         },

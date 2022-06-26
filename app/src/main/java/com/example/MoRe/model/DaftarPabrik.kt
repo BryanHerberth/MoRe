@@ -11,7 +11,8 @@ data class DaftarPabrik(
 
 fun getPabrik(): List<DaftarPabrik>{
     return listOf(
-        DaftarPabrik(id ="0001",
+        DaftarPabrik(
+            id ="0001",
             namaPabrik = "PT Numalos Abadi",
             alamatPabrik = "Jl. Pulau Irian, No. 17 KIM I, Deli Serdang \n Sumatera Utara - Indonesia",
             R.drawable.numalos,

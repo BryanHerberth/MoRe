@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".NotificationPage"
+            android:exported="false"
+            android:label="@string/title_activity_notification_page"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
             android:name=".Home"
             android:exported="true"
             android:label="@string/title_activity_home"
@@ -25,17 +30,19 @@
             android:exported="true"
             android:label="@string/title_activity_home_screen"
             android:theme="@style/Theme.MyApplication">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ComposeTest"
             android:exported="true"
             android:label="@string/title_activity_compose_test"
-            android:theme="@style/Theme.MyApplication"></activity>
+            android:theme="@style/Theme.MyApplication" />
         <activity
             android:name=".Verifikasi"
             android:exported="false" />

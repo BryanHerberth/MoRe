@@ -3,4 +3,5 @@
     <string name="title_activity_compose_test">ComposeTest</string>
     <string name="title_activity_home_screen">HomeScreen</string>
     <string name="title_activity_home">Home</string>
+    <string name="title_activity_notification_page">NotificationPage</string>
 </resources>

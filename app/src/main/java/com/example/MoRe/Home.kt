@@ -55,9 +55,7 @@ class Home : ComponentActivity() {
 fun ScaffoldHome(
     listPabrik : List<DaftarPabrik> = getPabrik()
 ) {
-//    val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     Scaffold(
-//        scaffoldState = scaffoldState,
 
         topBar = {
             AppBarCompose()
@@ -65,19 +63,21 @@ fun ScaffoldHome(
 
         content = {
             Surface(modifier =
-                    Modifier.background(BlueApp)) {
-                Box(modifier = Modifier
-                    .background(BlueApp)
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center) {
-                    SearchBar(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                            .background(BlueApp),
-                        hint = "telusuri"
-                    )
-                }
+                    Modifier.background(BlueApp)
+                        .fillMaxWidth()
+                        .fillMaxHeight()) {
+//                Box(modifier = Modifier
+//                    .background(BlueApp)
+//                    .fillMaxWidth(),
+//                contentAlignment = Alignment.Center) {
+//                }
+                SearchBar(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .background(BlueApp),
+                    hint = "telusuri"
+                )
                 Card() {
                     LazyColumn{
                         items(items = listPabrik)
@@ -87,10 +87,8 @@ fun ScaffoldHome(
                     }
                 }
                 Spacer(modifier = Modifier.height(235.dp))
-
             }
         },
-
     )
 }
 
