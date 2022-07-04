@@ -94,7 +94,7 @@ fun CustomAppbar(name:String) {
                     fontWeight = FontWeight.Bold,
                     color = White,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(95.dp, 0.dp)
+                    modifier = Modifier.padding(90.dp, 0.dp)
                 )
             }
         },

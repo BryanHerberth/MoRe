@@ -12,7 +12,7 @@ fun StatusBarchange(){
     val useDarkIcons = MaterialTheme.colors.isLight
 
     SideEffect {
-        systemUiController.setStatusBarColor(
+        systemUiController.setSystemBarsColor(
             color = BlueApp,
             darkIcons = useDarkIcons
         )

@@ -1,5 +1,6 @@
 package com.example.MoRe.components
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,9 +22,9 @@ import com.example.MoRe.model.getDataMesin
 
 @Preview(showBackground = true)
 @Composable
-fun CardNotif(mesin : DaftarMesinNotif = getDataMesin()[0],
+fun CardMesin(mesin : DaftarMesinNotif = getDataMesin()[0],
               onItemClick : (String) -> Unit ={}
-              ){
+){
     Card(modifier = Modifier
         .padding(4.dp)
         .fillMaxWidth()
@@ -35,7 +36,7 @@ fun CardNotif(mesin : DaftarMesinNotif = getDataMesin()[0],
     ) {
         Row(verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
-            ) {
+        ) {
             Surface(modifier = Modifier
                 .padding(12.dp)
                 .size(100.dp),
@@ -52,12 +53,12 @@ fun CardNotif(mesin : DaftarMesinNotif = getDataMesin()[0],
                     style = MaterialTheme.typography.h6
                 )
                 Text(
-                    text = mesin.namaPabrik,
-                    style = MaterialTheme.typography.body2,
+                    text = mesin.tipeMesin,
+                    style = MaterialTheme.typography.caption,
                     fontWeight = FontWeight.Bold,
 
-                )
-                Text(text = mesin.pesan,
+                    )
+                Text(text = mesin.merekMesin,
                     style = MaterialTheme.typography.caption
                 )
             }
