@@ -138,6 +138,57 @@ fun Scaffoldlayout() {
         })
 }
 
+@Composable
+fun ProfileImage() {
+    val imageUri = rememberSaveable { mutableStateOf("") }
+    val painter = rememberAsyncImagePainter(
+        if (imageUri.value.isEmpty())
+            R.drawable.ic_user
+        else
+            imageUri.value
+    )
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { imageUri.value = it.toString() }
+    }
+
+    Column(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Card(
+            shape = CircleShape,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(100.dp),
+            border = BorderStroke(2.dp, color = Color.Black)
+        ) {
+            Image(
+                painter = painter,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(120.dp)
+                    .clickable { launcher.launch("image/*") },
+                contentScale = ContentScale.Crop
+            )
+        }
+        Spacer(modifier = Modifier.padding(4.dp))
+
+        TextButton(onClick = {
+            launcher.launch("image/*")
+        }) {
+            Text(
+                text = "Ubah Gambar",
+                color = BlueApp, fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+            )
+        }
+        userData()
+    }
+}
 
 @Composable
 fun userData() {
@@ -325,57 +376,6 @@ fun userData() {
     }
 }
 
-@Composable
-fun ProfileImage() {
-    val imageUri = rememberSaveable { mutableStateOf("") }
-    val painter = rememberAsyncImagePainter(
-        if (imageUri.value.isEmpty())
-            R.drawable.ic_user
-        else
-            imageUri.value
-    )
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let { imageUri.value = it.toString() }
-    }
-
-    Column(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Card(
-            shape = CircleShape,
-            modifier = Modifier
-                .padding(8.dp)
-                .size(100.dp),
-            border = BorderStroke(2.dp, color = Color.Black)
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(120.dp)
-                    .clickable { launcher.launch("image/*") },
-                contentScale = ContentScale.Crop
-            )
-        }
-        Spacer(modifier = Modifier.padding(4.dp))
-
-        TextButton(onClick = {
-            launcher.launch("image/*")
-        }) {
-            Text(
-                text = "Ubah Gambar",
-                color = BlueApp, fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-            )
-        }
-        userData()
-    }
-}
 
 
 

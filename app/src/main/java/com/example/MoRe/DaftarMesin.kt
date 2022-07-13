@@ -1,11 +1,13 @@
 package com.example.MoRe
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,13 +24,16 @@ import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.MoRe.ViewModel.SearchViewModel
@@ -38,11 +43,18 @@ import com.example.MoRe.model.*
 import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 class DaftarMesin : ComponentActivity() {
+    @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
+
         val searchViewModel: SearchViewModel by viewModels()
+
+
 
         super.onCreate(savedInstanceState)
         setContent {
@@ -56,21 +68,30 @@ class DaftarMesin : ComponentActivity() {
                     darkIcons = useDarkIcons
                 )
             }
-            ScaffoldListMesin(searchViewModel = SearchViewModel())
+            ModalBottomSheet{
+                state: ModalBottomSheetState, scope: CoroutineScope ->
+                ScaffoldListMesin(searchViewModel = SearchViewModel(), scope = scope,
+                    modalBottomSheetState = state)
+            }
         }
     }
 }
 
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ScaffoldListMesin(searchViewModel: SearchViewModel ,
                       listMesin : List<DaftarMesinNotif> = getDataMesin(),
-                      pabrik: DaftarPabrik = getPabrik()[0]
-) {
+                      pabrik: DaftarPabrik = getPabrik()[0],
+                      scope: CoroutineScope,
+                      modalBottomSheetState: ModalBottomSheetState,
+//                      bottomSheetScaffoldState: BottomSheetScaffoldState
 
+) {
     val searchWidgetState by searchViewModel.searchWidgetState
     val searchTextState by searchViewModel.searchTextState
+
 
 Scaffold(
     topBar = {
@@ -141,8 +162,13 @@ Scaffold(
                                         modifier = Modifier.fillMaxWidth(),
                                         horizontalArrangement = Arrangement.End
                                     ) {
-                                        IconButton(onClick = { /*TODO*/ }) {
+                                        IconButton(onClick = {
 
+                                            scope.launch{
+                                                modalBottomSheetState.show()
+                                            }
+                                            Log.d(TAG, "ScaffoldListMesin: Scafoold where")
+                                        }) {
                                             Icon(
                                                 imageVector = Icons.Outlined.AccountCircle,
                                                 contentDescription = "User",
@@ -192,6 +218,52 @@ Scaffold(
         }
     )
 }
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+@ExperimentalMaterialApi
+fun ModalBottomSheet(
+    listUser: List<DaftarUser> = getUser(),
+    activityContentScope: @Composable (state: ModalBottomSheetState , scope: CoroutineScope ) -> Unit
+//    StatusUser: String?
+    ) {
+
+    val modalBottomSheetState = rememberModalBottomSheetState(
+        initialValue =ModalBottomSheetValue.Hidden
+    )
+
+    val scope = rememberCoroutineScope()
+
+    val context = LocalContext.current
+//    val newUserList = getUser().filter { pengguna ->
+//        pengguna.tipeUser == StatusUser
+//    }
+    ModalBottomSheetLayout(
+        sheetState = modalBottomSheetState,
+        sheetContent = {
+            LazyColumn{
+
+                val sorted = listUser.groupBy { it.tipeUser}
+
+                sorted.forEach { (tipeUser, idUser ) ->
+                    stickyHeader {
+                        Text(text = "$tipeUser",
+                            style = MaterialTheme.typography.h4,
+                        )
+                    }
+                    items(items = idUser)
+                    {
+                        CardUser(pengguna = it)
+                    }
+                }
+
+            }
+        }
+    ) {
+        activityContentScope(modalBottomSheetState, scope)
+    }
+}
+
 
 
 @Composable
@@ -260,9 +332,14 @@ fun MesinAppBar( onSearchClicked: () -> Unit) {
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview4() {
-//    MesinAppBar (onSearchClicked ={} )
-    ScaffoldListMesin(searchViewModel = SearchViewModel())
+fun DaftarMesinPreview() {
+    MesinAppBar (onSearchClicked ={} )
+    ModalBottomSheet{
+            state: ModalBottomSheetState, scope: CoroutineScope ->
+        ScaffoldListMesin(searchViewModel = SearchViewModel(), scope = scope,
+            modalBottomSheetState = state)
+    }
 }

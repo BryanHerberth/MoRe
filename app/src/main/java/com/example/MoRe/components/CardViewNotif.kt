@@ -1,5 +1,6 @@
 package com.example.MoRe.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -29,6 +30,7 @@ fun CardNotif(mesin : DaftarMesinNotif = getDataMesin()[0],
         .fillMaxWidth()
         .clickable {
             onItemClick(mesin.id)
+            onItemClick(Log.d("Clicked","Clicked").toString())
         },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
         elevation = 6.dp

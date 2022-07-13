@@ -5,4 +5,5 @@
     <string name="title_activity_home">Home</string>
     <string name="title_activity_notification_page">NotificationPage</string>
     <string name="title_activity_daftar_mesin">DaftarMesin</string>
+    <string name="title_activity_bot_shet_test">BotShetTest</string>
 </resources>
