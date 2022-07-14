@@ -114,7 +114,6 @@ fun AppBarCompose( onSearchClicked: () -> Unit) {
         title = {
             Box(modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center) {
-
                 Text(
                     text = "Daftar Pabrik",
                     fontSize = 24.sp,
@@ -129,7 +128,7 @@ fun AppBarCompose( onSearchClicked: () -> Unit) {
             }) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
-                    contentDescription = "Back Arrow",
+                    contentDescription = "Akun",
                     tint = Color.White
                 )
             }

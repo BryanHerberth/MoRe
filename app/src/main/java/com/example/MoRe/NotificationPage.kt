@@ -50,7 +50,7 @@ class NotificationPage : ComponentActivity() {
 fun ScaffoldNotif(listMesin : List<DaftarMesinNotif> = getDataMesin() ){
     Scaffold(
         topBar = {
-            CustomAppbar(name = "Detail")
+            CustomAppbar(name = "Notifikasi")
         },
         content = {
             Column(modifier = Modifier.padding(12.dp)) {

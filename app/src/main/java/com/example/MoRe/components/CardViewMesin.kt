@@ -1,6 +1,7 @@
 package com.example.MoRe.components
 
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,13 +34,14 @@ fun CardMesin(mesin : DaftarMesinNotif = getDataMesin()[0],
             onItemClick(mesin.id)
         },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-        elevation = 6.dp
+//        elevation = 6.dp
+        border = BorderStroke(2.dp, color = Color.LightGray)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
             Surface(modifier = Modifier
-                .padding(12.dp)
+                .padding(10.dp)
                 .size(100.dp),
                 shape = RoundedCornerShape(CornerSize(16.dp)),
                 elevation = 5.dp
