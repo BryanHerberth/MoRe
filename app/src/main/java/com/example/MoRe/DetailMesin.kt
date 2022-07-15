@@ -1,6 +1,8 @@
 package com.example.MoRe
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -91,70 +93,130 @@ fun ScaffoldDetailMesin()
                 horizontalArrangement = Arrangement.Center
             ) {
 
-                Text(text = "Pemantaun",
-                    style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(6.dp)
+                TextButton(onClick = {
+                    Log.d(TAG, "Clicked")
+                },
+                modifier = Modifier.padding(2.dp)
+                    ) {
+                    Text(text = "Pemantauan",
+                        style = MaterialTheme.typography.h6,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        modifier = Modifier.padding(2.dp)
                     )
-                Text(text = "Laporan",
-                    style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(6.dp)
-                )
-                Text(text = "Dokumen",
-                    style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(6.dp)
-                )
+                }
+
+                TextButton(onClick = {
+                    Log.d(TAG, "Clicked")
+                },
+                    modifier = Modifier.padding(2.dp)
+                ) {
+                    Text(text = "Laporan",
+                        style = MaterialTheme.typography.h6,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        modifier = Modifier.padding(2.dp)
+                    )
+                }
+                TextButton(onClick = {
+                    Log.d(TAG, "Dokumen")
+                },
+                    modifier = Modifier.padding(2.dp)
+                ) {
+                    Text(text = "Dokumen",
+                        style = MaterialTheme.typography.h6,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        modifier = Modifier.padding(2.dp)
+                    )
+                }
+//                Text(text = "Laporan",
+//                    style = MaterialTheme.typography.h5,
+//                    fontWeight = FontWeight.Bold,
+//                    modifier = Modifier.padding(6.dp)
+//                )
+//                Text(text = "Dokumen",
+//                    style = MaterialTheme.typography.h5,
+//                    fontWeight = FontWeight.Bold,
+//                    modifier = Modifier.padding(6.dp)
+//                )
             }
-            
             Spacer(modifier = Modifier.height(20.dp))
-            
-            Column(modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally) {
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ){
-                    Card(modifier = Modifier
-                        .padding(10.dp)
-                        .width(150.dp)
-                        .wrapContentHeight(),
-                        elevation = 6.dp,
+            Pemantauan()
+        }
+    }
+}
+
+@Composable
+fun Pemantauan() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Card(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .width(150.dp)
+                    .wrapContentHeight(),
+                elevation = 6.dp,
 //                        border = BorderStroke(4.dp, color = Color.LightGray),
-                        shape = RoundedCornerShape(corner = CornerSize(16.dp))
-                    ) {
-                        Column(modifier = Modifier.padding(4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Text(text = "90", style = MaterialTheme.typography.h3)
-                            Text(text = "(%)", style = MaterialTheme.typography.h4)
-                            Text(text = "Kecepatan Mesin",
-                                style = MaterialTheme.typography.h5,
-                                modifier = Modifier.padding(6.dp,0.dp)
-                            )
-                        }
-                    }
-                    Card(modifier = Modifier
-                        .padding(10.dp)
-                        .width(150.dp)
-                        .wrapContentHeight(),
-                        elevation = 6.dp,
-//                        border = BorderStroke(4.dp, color = Color.LightGray),
-                        shape = RoundedCornerShape(corner = CornerSize(16.dp))
-                    ) {
-                        Column(modifier = Modifier.padding(4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Text(text = "124", style = MaterialTheme.typography.h3)
-                            Text(text = " I/ Min", style = MaterialTheme.typography.h4)
-                            Text(text = "Hasil Produksi",
-                                style = MaterialTheme.typography.h5,
-                                modifier = Modifier.padding(6.dp,0.dp)
-                            )
-                        }
-                    }
+                shape = RoundedCornerShape(corner = CornerSize(16.dp))
+            ) {
+                Column(
+                    modifier = Modifier.padding(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(text = "90", style = MaterialTheme.typography.h3)
+                    Text(text = "(%)", style = MaterialTheme.typography.h4)
+                    Text(
+                        text = "Kecepatan Mesin",
+                        style = MaterialTheme.typography.h5,
+                        modifier = Modifier.padding(6.dp, 0.dp)
+                    )
                 }
             }
+            Card(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .width(150.dp)
+                    .wrapContentHeight(),
+                elevation = 6.dp,
+//                        border = BorderStroke(4.dp, color = Color.LightGray),
+                shape = RoundedCornerShape(corner = CornerSize(16.dp))
+            ) {
+                Column(
+                    modifier = Modifier.padding(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(text = "124", style = MaterialTheme.typography.h3)
+                    Text(text = " I/ Min", style = MaterialTheme.typography.h4)
+                    Text(
+                        text = "Hasil Produksi",
+                        style = MaterialTheme.typography.h5,
+                        modifier = Modifier.padding(6.dp, 0.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DokumenLayout() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        OutlinedButton(onClick = { /*TODO*/ },
+            modifier = Modifier.padding(4.dp),
+
+            ) {
+            Text(text = "Lembaran Data")
         }
     }
 }
