@@ -7,4 +7,5 @@
     <string name="title_activity_daftar_mesin">DaftarMesin</string>
     <string name="title_activity_bot_shet_test">BotShetTest</string>
     <string name="title_activity_detail_mesin">DetailMesin</string>
+    <string name="title_activity_datepicker_test">DatepickerTest</string>
 </resources>

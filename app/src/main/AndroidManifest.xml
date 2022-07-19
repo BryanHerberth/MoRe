@@ -10,10 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".DatepickerTest"
+            android:exported="false"
+            android:label="@string/title_activity_datepicker_test"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
             android:name=".DetailMesin"
             android:exported="true"
             android:label="@string/title_activity_detail_mesin"
-            android:theme="@style/Theme.MyApplication" >
+            android:theme="@style/Theme.MyApplication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,8 +34,7 @@
             android:name=".DaftarMesin"
             android:exported="true"
             android:label="@string/title_activity_daftar_mesin"
-            android:theme="@style/Theme.MyApplication">
-        </activity>
+            android:theme="@style/Theme.MyApplication"></activity>
         <activity
             android:name=".NotificationPage"
             android:exported="false"
