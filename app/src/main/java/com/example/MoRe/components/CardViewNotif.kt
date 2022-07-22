@@ -36,7 +36,6 @@ fun CardNotif(mesin : DaftarMesinNotif = getDataMesin()[0],
             onItemClick(Log.d("Clicked","Clicked").toString())
         },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-//        elevation = 6.dp,
         border = BorderStroke(2.dp, color = Color.LightGray)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically,

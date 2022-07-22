@@ -5,12 +5,14 @@ import android.content.ContentValues.TAG
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
+import android.widget.TableRow
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -25,13 +27,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.MoRe.components.CardMesin
 import com.example.MoRe.components.CardNotif
+import com.example.MoRe.components.CardViewLaporan
 import com.example.MoRe.components.StatusBarchange
 import com.example.MoRe.model.DaftarLaporan
+import com.example.MoRe.model.getDataLaporan
 import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 
@@ -258,6 +263,7 @@ fun DokumenLayout() {
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterialApi
 @Composable
 fun LaporanLayouts(){
@@ -266,10 +272,14 @@ fun LaporanLayouts(){
     var optionText by remember{ mutableStateOf("")}
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
+    val tampilkanClickedState = remember {
+        mutableStateOf(false)
+    }
 
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ExposedDropdownMenuBox(expanded = expanded,
@@ -317,7 +327,7 @@ fun LaporanLayouts(){
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedButton(onClick = {
-
+            tampilkanClickedState.value = !tampilkanClickedState.value
         },
             modifier = Modifier
                 .padding(4.dp)
@@ -337,7 +347,69 @@ fun LaporanLayouts(){
             )
         }
     }
+    if (tampilkanClickedState.value){
+        HasilTampilkan()
+    } else{
+        Box() {}
+    }
 }
+
+@ExperimentalFoundationApi
+@Preview(showBackground = true)
+@Composable
+fun HasilTampilkan(laporan: List<DaftarLaporan> = getDataLaporan()){
+        Card(modifier = Modifier
+            .padding(4.dp)
+            .fillMaxWidth(),
+
+        ) {
+            Surface(modifier = Modifier
+                .padding(4.dp)
+                .fillMaxWidth()
+                .fillMaxHeight(),
+
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(2.dp)
+                    ) {
+                        
+                        Text(text = "Nomor",
+                            style = MaterialTheme.typography.h6,
+                            fontWeight = Bold
+                        )
+                        Spacer(modifier = Modifier.weight(0.1f))
+                        Text(text = "Waktu Pencatatan",
+                            style = MaterialTheme.typography.h6,
+                            fontWeight = Bold
+                            )
+                        Spacer(modifier = Modifier.weight(0.1f))
+                        Text(text = "Hasil",
+                            style = MaterialTheme.typography.h6,
+                            fontWeight = Bold
+                        )
+                    }
+
+                    LazyColumn{
+                        val laporanSort = laporan.groupBy { it.Nomor}
+
+                        laporanSort.forEach { (Nomor, Tanggal, ) ->
+                            stickyHeader {
+                            }
+                            items(items = Tanggal){
+                                CardViewLaporan(daftarLaporan = it)
+                            }
+                        }
+                    }
+                }
+        }
+    }
+}
+
 
 
 @Composable
@@ -385,7 +457,7 @@ fun DateStartPickerLayout(){
 }
 
 @Composable
-fun DateEndPickerLayout(){
+fun DateEndPickerLayout() {
 
     val eCalendar = Calendar.getInstance()
     val eYear = eCalendar.get(Calendar.YEAR)
@@ -394,24 +466,27 @@ fun DateEndPickerLayout(){
 
     val context = LocalContext.current
 
-    var eDate =  remember {
+    var eDate = remember {
         mutableStateOf("")
     }
 
     val dateEndPickerDialog = DatePickerDialog(
-        context, { d, year2 , month2 , day2 ->
+        context, { d, year2, month2, day2 ->
             val month = month2 + 1
             eDate.value = "$day2/$month2/$year2"
         }, eYear, eMonth, eDay
     )
     TextField(
         value = "${eDate.value}",
-        onValueChange = {   },
-        label ={ Text(text = "End Date")} ,
+        onValueChange = { },
+        label = { Text(text = "End Date") },
         readOnly = true,
         trailingIcon = {
-            IconButton(onClick = {dateEndPickerDialog.show()}) {
-                Image(imageVector = Icons.Outlined.ArrowDropDown, contentDescription = "DropDownArrow")
+            IconButton(onClick = { dateEndPickerDialog.show() }) {
+                Image(
+                    imageVector = Icons.Outlined.ArrowDropDown,
+                    contentDescription = "DropDownArrow"
+                )
             }
         },
         colors = TextFieldDefaults.textFieldColors(
@@ -423,8 +498,8 @@ fun DateEndPickerLayout(){
             trailingIconColor = Color.Black
         ),
         shape = RoundedCornerShape(corner = CornerSize(6.dp)),
-        modifier = Modifier.border(BorderStroke(1.dp, Color.LightGray)
+        modifier = Modifier.border(
+            BorderStroke(1.dp, Color.LightGray)
         )
     )
-    
 }
