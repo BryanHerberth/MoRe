@@ -19,19 +19,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.MoRe.model.DaftarMesinNotif
 import com.example.MoRe.model.getDataMesin
+import com.example.MoRe.navigation.MoReScreens
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun CardMesin(mesin : DaftarMesinNotif = getDataMesin()[0],
-              onItemClick : (String) -> Unit ={}
+              onItemClick : (String) -> Unit ={},
+              navController: NavController
 ){
     Card(modifier = Modifier
         .padding(4.dp)
         .fillMaxWidth()
         .clickable {
-            onItemClick(mesin.id)
+                   navController.navigate(MoReScreens.DetailScreen.name)
         },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
         border = BorderStroke(2.dp, color = Color.LightGray)

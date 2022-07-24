@@ -51,6 +51,9 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     def accompanist_version = '0.16.0'
+    def nav_version = "2.5.0"
+
+    implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
     implementation "com.google.accompanist:accompanist-pager:0.23.1"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.23.1"

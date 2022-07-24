@@ -19,17 +19,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.MoRe.SearchBar
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.model.DaftarPabrik
 import com.example.MoRe.model.SearchWidgetState
 import com.example.MoRe.model.getPabrik
+import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.ui.theme.BlueApp
 
 @Composable
 fun ScaffoldHome(
     listPabrik : List<DaftarPabrik> = getPabrik(),
-    searchViewModel: SearchViewModel
+    searchViewModel: SearchViewModel,
+    navController: NavController
 ) {
 
     val searchWidgetState by searchViewModel.searchWidgetState
@@ -52,7 +55,8 @@ fun ScaffoldHome(
                 },
                 onSearchTriggered = {
                     searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
-                }
+                },
+                navController = navController
             )
         },
         content = {
@@ -72,7 +76,7 @@ fun ScaffoldHome(
                     LazyColumn{
                         items(items = listPabrik)
                         {
-                            CardPabrik(pabrik = it)
+                            CardPabrik(pabrik = it, navController = navController)
                         }
                     }
                 }
@@ -89,12 +93,14 @@ fun SwitchAppbar(
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit,
-    onSearchTriggered: () -> Unit
+    onSearchTriggered: () -> Unit,
+    navController: NavController
 ){
     when(searchWidgetState){
         SearchWidgetState.CLOSED -> {
             AppBarCompose (
-                onSearchClicked = onSearchTriggered
+                onSearchClicked = onSearchTriggered,
+                navController = navController
                     )
         }
         SearchWidgetState.OPENED -> {
@@ -109,7 +115,9 @@ fun SwitchAppbar(
 }
 
 @Composable
-fun AppBarCompose( onSearchClicked: () -> Unit) {
+fun AppBarCompose( onSearchClicked: () -> Unit,
+                   navController: NavController
+                   ) {
     TopAppBar(
         title = {
             Box(modifier = Modifier.fillMaxWidth(),
@@ -124,7 +132,12 @@ fun AppBarCompose( onSearchClicked: () -> Unit) {
         },
         navigationIcon = {
             IconButton(onClick = {
-                /*TODO*/
+                navController.navigate(MoReScreens.ProfileScreen.name){
+//                    popUpTo(MoReScreens.HomeScreen.name)
+//                    {
+//                        inclusive = true
+//                    }
+                }
             }) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
@@ -141,7 +154,11 @@ fun AppBarCompose( onSearchClicked: () -> Unit) {
                     contentDescription = "Search",
                     tint = Color.White)
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = {
+                navController.navigate(MoReScreens.NotifScreen.name){
+
+                }
+            }) {
 
                 Icon(
                     imageVector = Icons.Filled.Notifications,

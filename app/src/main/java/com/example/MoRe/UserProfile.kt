@@ -38,7 +38,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.example.MoRe.ui.theme.Teal200
@@ -47,41 +49,41 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 import kotlinx.android.synthetic.main.splash_screen.*
 
-class ComposeTest : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            val systemUiController = rememberSystemUiController()
-            val useDarkIcons = MaterialTheme.colors.isLight
+//class ComposeTest : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//            val systemUiController = rememberSystemUiController()
+//            val useDarkIcons = MaterialTheme.colors.isLight
+//
+//            SideEffect {
+//                systemUiController.setStatusBarColor(
+//                    color = BlueApp,
+//                    darkIcons = useDarkIcons
+//                )
+//            }
+//            Surface(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .fillMaxHeight()
+//            ) {
+//                Scaffoldlayout(navController = )
+//            }
+//        }
+//    }
+//}
+//
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    MyApplicationTheme {
+//        Scaffoldlayout()
+//    }
+//}
 
-            SideEffect {
-                systemUiController.setStatusBarColor(
-                    color = BlueApp,
-                    darkIcons = useDarkIcons
-                )
-            }
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-            ) {
-                Scaffoldlayout()
-            }
-        }
-    }
-}
-
-
-@Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        Scaffoldlayout()
-    }
-}
-
-@Composable
-fun CustomAppbar(name:String) {
+fun CustomAppbar(name:String, navController: NavController) {
     Column {
         TopAppBar(title = {
             Row(
@@ -102,7 +104,12 @@ fun CustomAppbar(name:String) {
 
             navigationIcon = {
                 IconButton(onClick = {
-                    /*TODO*/
+                        navController.navigate(MoReScreens.HomeScreen.name){
+                        popUpTo(MoReScreens.HomeScreen.name)
+                        {
+                            inclusive = true
+                        }
+                    }
                 }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
@@ -115,10 +122,11 @@ fun CustomAppbar(name:String) {
 }
 
 @Composable
-fun Scaffoldlayout() {
+fun Scaffoldlayout(navController: NavController) {
     Scaffold(
         topBar = {
-            CustomAppbar("Profil")
+            CustomAppbar("Profil",
+                navController = navController)
         },
         content = {
             Box(

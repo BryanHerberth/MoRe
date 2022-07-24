@@ -19,14 +19,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.MoRe.model.DaftarPabrik
 import com.example.MoRe.model.getPabrik
+import com.example.MoRe.navigation.MoReScreens
 
 
-@Preview
 @Composable
 fun CardPabrik(pabrik: DaftarPabrik = getPabrik()[0],
-        onItemClick : (String) -> Unit ={}
+        onItemClick : (String) -> Unit ={},
+               navController: NavController
 ){
     Box(modifier = Modifier
         .fillMaxHeight()
@@ -44,7 +46,7 @@ fun CardPabrik(pabrik: DaftarPabrik = getPabrik()[0],
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        onItemClick(pabrik.id)
+                        navController.navigate(MoReScreens.PabrikScreen.name)
                     }
                     .wrapContentHeight(),
                 elevation = 8.dp

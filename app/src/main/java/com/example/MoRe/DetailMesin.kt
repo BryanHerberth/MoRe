@@ -31,48 +31,53 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.MoRe.components.*
 import com.example.MoRe.model.DaftarLaporan
 import com.example.MoRe.model.getDataLaporan
+import com.example.MoRe.navigation.MoReNavHost
+import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@ExperimentalMaterialApi
-class DetailMesin : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContent {
-            MyApplicationTheme {
-                StatusBarchange()
-                Surface(color = MaterialTheme.colors.background) {
-                    ScaffoldDetailMesin()
-                }
-            }
-        }
-    }
-}
-
-
+//@ExperimentalMaterialApi
+//class DetailMesin : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//        setContent {
+//            MyApplicationTheme {
+//                StatusBarchange()
+//                Surface(color = MaterialTheme.colors.background) {
+//                    ScaffoldDetailMesin()
+//                }
+//            }
+//        }
+//    }
+//}
 
 
 @OptIn(ExperimentalPagerApi::class)
 @ExperimentalMaterialApi
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
-fun ScaffoldDetailMesin()
+fun ScaffoldDetailMesin(navController: NavController)
 {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-    Column() {
+
+    Scaffold() {
+
+    }
+    Column(modifier = Modifier.fillMaxWidth()) {
         TopAppBar(
             title = {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.Start
+                    horizontalAlignment = Alignment.CenterHorizontally
 
                 ) {
                     Text(
@@ -86,7 +91,12 @@ fun ScaffoldDetailMesin()
             },
             navigationIcon = {
                 IconButton(onClick = {
-                    /*TODO*/
+                    navController.navigate(MoReScreens.HomeScreen.name) {
+                        popUpTo(MoReScreens.HomeScreen.name)
+                        {
+                            inclusive = true
+                        }
+                    }
                 }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
@@ -103,7 +113,7 @@ fun ScaffoldDetailMesin()
             .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CardMesin()
+            CardMesin(navController = navController)
         }
         Spacer(modifier = Modifier.height(20.dp))
         Tabs(pagerState = pagerState, scope = coroutineScope)
@@ -176,7 +186,7 @@ fun Tabs(pagerState: PagerState,
                         style = MaterialTheme.typography.h6,
                         fontWeight = Bold,
                         color = Color.Black,
-                        modifier = Modifier.padding(10.dp))
+                        )
                 }
 
             }

@@ -36,10 +36,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.*
 import com.example.MoRe.components.SwitchAppbar
 import com.example.MoRe.model.*
+import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -47,35 +49,35 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
-class DaftarMesin : ComponentActivity() {
-    @OptIn(ExperimentalMaterialApi::class)
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-
-        val searchViewModel: SearchViewModel by viewModels()
-
-
-
-        super.onCreate(savedInstanceState)
-        setContent {
-
-            val systemUiController = rememberSystemUiController()
-            val useDarkIcons = MaterialTheme.colors.isLight
-
-            SideEffect {
-                systemUiController.setSystemBarsColor(
-                    color = BlueApp,
-                    darkIcons = useDarkIcons
-                )
-            }
-            ModalBottomSheet{
-                state: ModalBottomSheetState, scope: CoroutineScope ->
-                ScaffoldListMesin(searchViewModel = SearchViewModel(), scope = scope,
-                    modalBottomSheetState = state)
-            }
-        }
-    }
-}
+//class DaftarMesin : ComponentActivity() {
+//    @OptIn(ExperimentalMaterialApi::class)
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//
+//
+//        val searchViewModel: SearchViewModel by viewModels()
+//
+//
+//
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//
+//            val systemUiController = rememberSystemUiController()
+//            val useDarkIcons = MaterialTheme.colors.isLight
+//
+//            SideEffect {
+//                systemUiController.setSystemBarsColor(
+//                    color = BlueApp,
+//                    darkIcons = useDarkIcons
+//                )
+//            }
+//            ModalBottomSheet{
+//                state: ModalBottomSheetState, scope: CoroutineScope ->
+//                ScaffoldListMesin(searchViewModel = SearchViewModel(), scope = scope,
+//                    modalBottomSheetState = state)
+//            }
+//        }
+//    }
+//}
 
 
 
@@ -86,6 +88,7 @@ fun ScaffoldListMesin(searchViewModel: SearchViewModel ,
                       pabrik: DaftarPabrik = getPabrik()[0],
                       scope: CoroutineScope,
                       modalBottomSheetState: ModalBottomSheetState,
+                      navController: NavController,
 //                      bottomSheetScaffoldState: BottomSheetScaffoldState
 
 ) {
@@ -117,106 +120,109 @@ Scaffold(
                 },
                 onSearchTriggered = {
                     searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
-                }
+                },
+                navController = navController
             )
         }
-    },
-    content = {
-            Column(
-                modifier = Modifier
-                    .padding(5.dp)
-            ) {
+    }
+) {
+    Column(
+        modifier = Modifier
+            .padding(5.dp)
+    ) {
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Card(
-                        shape = MaterialTheme.shapes.small,
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Card(
+                shape = MaterialTheme.shapes.small,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {},
+                elevation = 8.dp
+            ) {
+                Column() {
+                    Image(
+                        painter = painterResource(id = pabrik.fotoPabrik),
+                        contentDescription = "foto pabrik",
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable {},
-                        elevation = 8.dp
+                            .height(200.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp, bottom = 12.dp, start = 8.dp, end = 8.dp),
+                        horizontalAlignment = Alignment.Start
                     ) {
-                        Column() {
-                            Image(
-                                painter = painterResource(id = pabrik.fotoPabrik),
-                                contentDescription = "foto pabrik",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(200.dp),
-                                contentScale = ContentScale.Crop
+                        Row() {
+                            Text(
+                                text = pabrik.namaPabrik,
+                                style = MaterialTheme.typography.h6
                             )
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 12.dp, bottom = 12.dp, start = 8.dp, end = 8.dp),
-                                horizontalAlignment = Alignment.Start
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
                             ) {
-                                Row() {
-                                    Text(
-                                        text = pabrik.namaPabrik,
-                                        style = MaterialTheme.typography.h6
-                                    )
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.End
-                                    ) {
-                                        IconButton(onClick = {
+                                IconButton(onClick = {
 
-                                            scope.launch{
-                                                modalBottomSheetState.show()
-                                            }
-                                            Log.d(TAG, "ScaffoldListMesin: Scafoold where")
-                                        }) {
-                                            Icon(
-                                                imageVector = Icons.Outlined.AccountCircle,
-                                                contentDescription = "User",
-                                            )
-                                        }
+                                    scope.launch {
+                                        modalBottomSheetState.show()
                                     }
+                                    Log.d(TAG, "ScaffoldListMesin: Scafoold where")
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.AccountCircle,
+                                        contentDescription = "User",
+                                    )
                                 }
-                                Text(
-                                    text = pabrik.alamatPabrik,
-                                    style = MaterialTheme.typography.caption
-                                )
                             }
                         }
+                        Text(
+                            text = pabrik.alamatPabrik,
+                            style = MaterialTheme.typography.caption
+                        )
                     }
                 }
-                Spacer(modifier = Modifier.height(30.dp))
-                Column(modifier = Modifier
+            }
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Daftar Mesin",
+                style = MaterialTheme.typography.h4,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Box(
+                modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Daftar Mesin",
-                        style = MaterialTheme.typography.h4,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Box(modifier = Modifier
+                    .fillMaxHeight()
+            ) {
+                Card(
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight()) {
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight()
-                        ) {
-                            LazyColumn {
-                                items(items = listMesin)
-                                {
-                                    CardMesin(mesin = it)
-                                }
-                            }
+                        .fillMaxHeight()
+                ) {
+                    LazyColumn {
+                        items(items = listMesin)
+                        {
+                            CardMesin(mesin = it, navController = navController)
                         }
                     }
                 }
             }
         }
-    )
+    }
+}
 }
 
 
@@ -274,13 +280,15 @@ fun SwitchBar2(
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit,
-    onSearchTriggered: () -> Unit
+    onSearchTriggered: () -> Unit,
+    navController: NavController
 ){
     when(searchWidgetState){
         SearchWidgetState.CLOSED -> {
             MesinAppBar (
                 onSearchClicked = onSearchTriggered
-            )
+            ,
+            navController = navController)
         }
         SearchWidgetState.OPENED -> {
             SearchAppBar(
@@ -294,7 +302,9 @@ fun SwitchBar2(
 }
 
 @Composable
-fun MesinAppBar( onSearchClicked: () -> Unit) {
+fun MesinAppBar( onSearchClicked: () -> Unit,
+                 navController: NavController
+                 ) {
     TopAppBar(
         modifier = Modifier.fillMaxWidth(),
         title = {
@@ -309,7 +319,12 @@ fun MesinAppBar( onSearchClicked: () -> Unit) {
         },
         navigationIcon = {
             IconButton(onClick = {
-                /*TODO*/
+                navController.navigate(MoReScreens.HomeScreen.name) {
+                    popUpTo(MoReScreens.HomeScreen.name)
+                    {
+                        inclusive = true
+                    }
+                }
             }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
@@ -333,14 +348,14 @@ fun MesinAppBar( onSearchClicked: () -> Unit) {
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
-@Preview(showBackground = true)
-@Composable
-fun DaftarMesinPreview() {
-    MesinAppBar (onSearchClicked ={} )
-    ModalBottomSheet{
-            state: ModalBottomSheetState, scope: CoroutineScope ->
-        ScaffoldListMesin(searchViewModel = SearchViewModel(), scope = scope,
-            modalBottomSheetState = state)
-    }
-}
+//@OptIn(ExperimentalMaterialApi::class)
+//@Preview(showBackground = true)
+//@Composable
+//fun DaftarMesinPreview() {
+//    MesinAppBar (onSearchClicked ={} )
+//    ModalBottomSheet{
+//            state: ModalBottomSheetState, scope: CoroutineScope ->
+//        ScaffoldListMesin(searchViewModel = SearchViewModel(), scope = scope,
+//            modalBottomSheetState = state)
+//    }
+//}

@@ -19,11 +19,6 @@
             android:exported="true"
             android:label="@string/title_activity_detail_mesin"
             android:theme="@style/Theme.MyApplication">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".BotShetTest"
@@ -74,7 +69,13 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:label="Sign in" />
+            android:label="Sign in" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

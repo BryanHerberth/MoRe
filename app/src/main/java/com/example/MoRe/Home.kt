@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.CardPabrik
 import com.example.MoRe.components.ScaffoldHome
@@ -45,18 +46,18 @@ import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-class Home : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        val searchViewModel: SearchViewModel by viewModels()
-
-        super.onCreate(savedInstanceState)
-        setContent {
-            StatusBarchange()
-            ScaffoldHome(searchViewModel = searchViewModel)
-        }
-    }
-}
+//class Home : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//
+//        val searchViewModel: SearchViewModel by viewModels()
+//
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//            StatusBarchange()
+//            ScaffoldHome(searchViewModel = searchViewModel)
+//        }
+//    }
+//}
 
 
 
@@ -64,7 +65,7 @@ class Home : ComponentActivity() {
 fun SearchBar(
     modifier: Modifier = Modifier,
     hint: String = "",
-    onSearch: (String) -> Unit = {}
+    onSearch: (String) -> Unit = {},
 ) {
     var text by remember {
         mutableStateOf("")
@@ -114,11 +115,11 @@ fun SearchBar(
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview3() {
-    MyApplicationTheme {
-        ScaffoldHome(searchViewModel = SearchViewModel())
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview3() {
+//    MyApplicationTheme {
+//        ScaffoldHome(searchViewModel = SearchViewModel(), navController = )
+//    }
+//}
 

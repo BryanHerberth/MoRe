@@ -17,6 +17,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.MoRe.components.CardNotif
 import com.example.MoRe.components.StatusBarchange
 import com.example.MoRe.model.DaftarMesinNotif
@@ -27,30 +28,32 @@ import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-class NotificationPage : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            val systemUiController = rememberSystemUiController()
-            val useDarkIcons = MaterialTheme.colors.isLight
-
-            SideEffect {
-                systemUiController.setStatusBarColor(
-                    color = BlueApp,
-                    darkIcons = useDarkIcons
-                )
-            }
-            ScaffoldNotif()
-        }
-    }
-}
+//class NotificationPage : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//            val systemUiController = rememberSystemUiController()
+//            val useDarkIcons = MaterialTheme.colors.isLight
+//
+//            SideEffect {
+//                systemUiController.setStatusBarColor(
+//                    color = BlueApp,
+//                    darkIcons = useDarkIcons
+//                )
+//            }
+//            ScaffoldNotif()
+//        }
+//    }
+//}
 
 
 @Composable
-fun ScaffoldNotif(listMesin : List<DaftarMesinNotif> = getDataMesin() ){
+fun ScaffoldNotif(listMesin : List<DaftarMesinNotif> = getDataMesin(),
+                  navController: NavController
+                  ){
     Scaffold(
         topBar = {
-            CustomAppbar(name = "Notifikasi")
+            CustomAppbar(name = "Notifikasi", navController = navController)
         },
         content = {
             Column(modifier = Modifier.padding(12.dp)) {
@@ -67,9 +70,9 @@ fun ScaffoldNotif(listMesin : List<DaftarMesinNotif> = getDataMesin() ){
 }
 
 
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview2() {
-    ScaffoldNotif()
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview2(nav) {
+//    ScaffoldNotif(navController = )
+//}
