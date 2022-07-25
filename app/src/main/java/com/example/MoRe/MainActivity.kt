@@ -33,6 +33,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.MoRe.ViewModel.SearchViewModel
+import com.example.MoRe.components.StatusBarchange
 import com.example.MoRe.navigation.MoReNavHost
 import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
@@ -46,6 +47,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 val navController = rememberNavController()
+                StatusBarchange()
                 ModalBottomSheet{
                         state: ModalBottomSheetState, scope: CoroutineScope ->
                     ScaffoldListMesin(searchViewModel = SearchViewModel(), scope = scope,

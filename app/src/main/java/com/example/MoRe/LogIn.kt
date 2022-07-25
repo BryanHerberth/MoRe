@@ -55,7 +55,6 @@ fun moreLogInScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(30.dp))
             loginForm(navController)
         }
-
     }
 }
 
@@ -72,6 +71,7 @@ fun loginForm(navController: NavHostController) {
 
     val modifier = Modifier
         .height(250.dp)
+        .width(400.dp)
         .background(MaterialTheme.colors.background)
         .verticalScroll(rememberScrollState())
     
@@ -134,13 +134,14 @@ fun loginForm(navController: NavHostController) {
     Column(verticalArrangement = Arrangement.spacedBy(16.dp, alignment = Alignment.Bottom),
         horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
     }
     Row(verticalAlignment = Alignment.CenterVertically,
         ) {
         Text(text = "Belum Punya Akun?", color = Color.Gray)
         TextButton(onClick = {
             navController.popBackStack()
-            navController.navigate(MoReScreens.VerificationScreen.name)
+            navController.navigate(MoReScreens.SignUpScreen.name)
 
         }) {
             Text(text = "Daftar", color = BlueApp,
@@ -166,8 +167,6 @@ fun EmailInput(
         keyboardType = KeyboardType.Email,
         imeAction = imeAction,
         onAction = onAction)
-
-
 }
 
 @Composable
@@ -181,7 +180,6 @@ fun InputField(
     imeAction: ImeAction = ImeAction.Next,
     onAction: KeyboardActions = KeyboardActions.Default
 ) {
-
     OutlinedTextField(
         value = valueState.value,
         onValueChange = { valueState.value = it },
@@ -199,6 +197,8 @@ fun InputField(
         keyboardActions = onAction
     )
 }
+
+
 
 @Composable
 fun PasswordInput(
