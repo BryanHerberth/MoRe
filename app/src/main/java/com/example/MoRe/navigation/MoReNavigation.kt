@@ -1,14 +1,13 @@
 package com.example.MoRe.navigation
 
-import android.window.SplashScreen
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.MoRe.*
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.ScaffoldHome
@@ -44,8 +43,18 @@ fun MoReNavHost(scope: CoroutineScope,
             moreVerifScreen(navController = navController)
         }
 
-        composable(MoReScreens.HomeScreen.name){
-            ScaffoldHome(searchViewModel = SearchViewModel(), navController = navController)
+        val Homeroute = MoReScreens.HomeScreen.name
+        composable("$Homeroute/{email}",
+            arguments = listOf(
+                navArgument(name = "email"){
+                    type = NavType.StringType
+                })){navBack ->
+            navBack.arguments?.getString("email").let { email->
+                ScaffoldHome(searchViewModel = SearchViewModel(), navController = navController,
+                    email = email
+                    )
+            }
+
         }
         composable(MoReScreens.ProfileScreen.name){
             Scaffoldlayout(navController = navController)

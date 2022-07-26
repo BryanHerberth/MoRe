@@ -23,7 +23,6 @@ import kotlinx.coroutines.delay
 //@Preview(showBackground = true)
 @Composable
 fun moreSplashScreen(navController: NavController){
-
     val scale = remember {
         Animatable(0f)
     }
@@ -37,7 +36,7 @@ fun moreSplashScreen(navController: NavController){
                         .getInterpolation(it)
                 }))
         delay(2000L)
-        navController.navigate(MoReScreens.LoginScreen.name)
+        navController.navigate(MoReScreens.LoginScreen.name )
 
     }
 

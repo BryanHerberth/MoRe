@@ -76,8 +76,8 @@ fun ScaffoldDetailMesin(navController: NavController)
         TopAppBar(
             title = {
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier = Modifier.width(270.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
 
                 ) {
                     Text(
@@ -85,14 +85,14 @@ fun ScaffoldDetailMesin(navController: NavController)
                         fontSize = 24.sp,
                         fontWeight = Bold,
                         color = Color.White,
-                        modifier = Modifier.padding(65.dp,0.dp)
+                        modifier = Modifier.padding(40.dp,0.dp)
                     )
                 }
             },
             navigationIcon = {
                 IconButton(onClick = {
-                    navController.navigate(MoReScreens.HomeScreen.name) {
-                        popUpTo(MoReScreens.HomeScreen.name)
+                    navController.navigate(MoReScreens.PabrikScreen.name) {
+                        popUpTo(MoReScreens.PabrikScreen.name)
                         {
                             inclusive = true
                         }
@@ -117,6 +117,7 @@ fun ScaffoldDetailMesin(navController: NavController)
         }
         Spacer(modifier = Modifier.height(20.dp))
         Tabs(pagerState = pagerState, scope = coroutineScope)
+        Spacer(modifier = Modifier.height(10.dp))
         TabsContent(pagerState = pagerState)
         }
     }

@@ -47,40 +47,7 @@ import com.example.MoRe.ui.theme.Teal200
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
-import kotlinx.android.synthetic.main.splash_screen.*
 
-//class ComposeTest : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContent {
-//            val systemUiController = rememberSystemUiController()
-//            val useDarkIcons = MaterialTheme.colors.isLight
-//
-//            SideEffect {
-//                systemUiController.setStatusBarColor(
-//                    color = BlueApp,
-//                    darkIcons = useDarkIcons
-//                )
-//            }
-//            Surface(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .fillMaxHeight()
-//            ) {
-//                Scaffoldlayout(navController = )
-//            }
-//        }
-//    }
-//}
-//
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    MyApplicationTheme {
-//        Scaffoldlayout()
-//    }
-//}
 
 @Composable
 fun CustomAppbar(name:String, navController: NavController) {

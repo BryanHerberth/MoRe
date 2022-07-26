@@ -68,7 +68,7 @@ fun loginForm(navController: NavHostController) {
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
     val passwordFocusRequest = FocusRequester.Default
     val keyboardController = LocalSoftwareKeyboardController.current
-
+    val default ="test"
     val modifier = Modifier
         .height(250.dp)
         .width(400.dp)
@@ -109,7 +109,7 @@ fun loginForm(navController: NavHostController) {
             OutlinedButton(
                 onClick = {
                           navController.popBackStack()
-                    navController.navigate(MoReScreens.HomeScreen.name)
+                    navController.navigate(MoReScreens.HomeScreen.name +"/${email.value}")
 
             },
                 modifier = Modifier
@@ -238,7 +238,6 @@ fun PasswordVisibility(passwordVisibility: MutableState<Boolean>) {
     val visible = passwordVisibility.value
     IconButton(onClick = { passwordVisibility.value = !visible}) {
         Icon(imageVector = Icons.Filled.Check, contentDescription = "Show password")
-
     }
 
 }

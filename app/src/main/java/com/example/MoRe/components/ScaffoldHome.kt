@@ -30,11 +30,13 @@ import com.example.MoRe.ui.theme.BlueApp
 
 @Composable
 fun ScaffoldHome(
-    listPabrik : List<DaftarPabrik> = getPabrik(),
+    listPabrik: List<DaftarPabrik> = getPabrik(),
     searchViewModel: SearchViewModel,
-    navController: NavController
+    navController: NavController,
+    email: String?
 ) {
 
+    Log.d("TAG", "ScaffoldHome: $email")
     val searchWidgetState by searchViewModel.searchWidgetState
     val searchTextState by searchViewModel.searchTextState
     Scaffold(
