@@ -33,7 +33,7 @@ fun ScaffoldHome(
     listPabrik: List<DaftarPabrik> = getPabrik(),
     searchViewModel: SearchViewModel,
     navController: NavController,
-    email: String?
+    email: String?,
 ) {
 
     Log.d("TAG", "ScaffoldHome: $email")

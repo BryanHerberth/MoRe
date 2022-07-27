@@ -48,13 +48,23 @@ fun MoReNavHost(scope: CoroutineScope,
             arguments = listOf(
                 navArgument(name = "email"){
                     type = NavType.StringType
-                })){navBack ->
+                },
+//                navArgument(name = "pass"){
+//                    type = NavType.StringType
+//                }
+            )){navBack->
             navBack.arguments?.getString("email").let { email->
-                ScaffoldHome(searchViewModel = SearchViewModel(), navController = navController,
-                    email = email
-                    )
-            }
+                ScaffoldHome(
+                    searchViewModel = SearchViewModel(), navController = navController,
+                    email = email,
 
+                )
+            }
+//           navBack.arguments?.getString("pass").let { pass->
+//               ScaffoldHome(searchViewModel = SearchViewModel(), navController = navController,
+//                   pass = pass
+//               )
+//           }
         }
         composable(MoReScreens.ProfileScreen.name){
             Scaffoldlayout(navController = navController)

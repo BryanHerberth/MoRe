@@ -162,7 +162,8 @@ fun Tabs(pagerState: PagerState,
 
         ScrollableTabRow(selectedTabIndex = pagerState.currentPage,
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(10.dp),
             backgroundColor = Color.Transparent,
             divider = { TabRowDefaults.Divider(color = Color.Transparent) },
             indicator = {

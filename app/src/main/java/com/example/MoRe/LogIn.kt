@@ -109,7 +109,7 @@ fun loginForm(navController: NavHostController) {
             OutlinedButton(
                 onClick = {
                           navController.popBackStack()
-                    navController.navigate(MoReScreens.HomeScreen.name +"/${email.value}")
+                    navController.navigate(MoReScreens.HomeScreen.name +"/${email.value}" )
 
             },
                 modifier = Modifier
