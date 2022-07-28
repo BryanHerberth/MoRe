@@ -14,6 +14,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,9 +50,13 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 @Composable
-fun ScaffoldNotif(listMesin : List<DaftarMesinNotif> = getDataMesin(),
-                  navController: NavController
-                  ){
+fun ScaffoldNotif(
+    listMesin: List<DaftarMesinNotif> = getDataMesin(),
+    navController: NavController,
+    idPabrik: String?,
+    idMesin: String?
+){
+    val idMesin = rememberSaveable { mutableStateOf("2") }
     Scaffold(
         topBar = {
             CustomAppbar(name = "Notifikasi", navController = navController)
@@ -61,7 +67,7 @@ fun ScaffoldNotif(listMesin : List<DaftarMesinNotif> = getDataMesin(),
                 LazyColumn{
                     items(items = listMesin)
                     {
-                        CardNotif(mesin = it)
+                        CardNotif(mesin = it, navController = navController)
                     }
                 }
             }

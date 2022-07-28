@@ -12,6 +12,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,20 +22,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.MoRe.model.DaftarMesinNotif
 import com.example.MoRe.model.getDataMesin
+import com.example.MoRe.navigation.MoReScreens
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun CardNotif(mesin : DaftarMesinNotif = getDataMesin()[0],
-              onItemClick : (String) -> Unit ={}
+              onItemClick : (String) -> Unit ={},
+              navController: NavController,
               ){
+    val idPabrik = rememberSaveable { mutableStateOf("1") }
+    val idMesin = rememberSaveable { mutableStateOf("2") }
     Card(modifier = Modifier
         .padding(4.dp)
         .fillMaxWidth()
         .clickable {
             onItemClick(mesin.id)
             onItemClick(Log.d("Clicked","Clicked").toString())
+                    navController.navigate(MoReScreens.DetailScreen.name +"/${idPabrik.value}/${idMesin.value}")
         },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
         border = BorderStroke(2.dp, color = Color.LightGray)

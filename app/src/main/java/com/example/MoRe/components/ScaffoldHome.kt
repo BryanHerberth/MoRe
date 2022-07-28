@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -12,6 +14,8 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +39,7 @@ fun ScaffoldHome(
     navController: NavController,
     email: String?,
     pass: String?,
+
 ) {
 
     Log.d("TAG", "ScaffoldHome: $email")
@@ -42,7 +47,6 @@ fun ScaffoldHome(
     val searchWidgetState by searchViewModel.searchWidgetState
     val searchTextState by searchViewModel.searchTextState
     Scaffold(
-
         topBar = {
             SwitchAppbar(
                 searchWidgetState = searchWidgetState,
@@ -68,7 +72,8 @@ fun ScaffoldHome(
             Modifier
                 .background(BlueApp)
                 .fillMaxWidth()
-                .fillMaxHeight()) {
+                .fillMaxHeight()
+                ) {
                 SearchBar(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -104,8 +109,10 @@ fun SwitchAppbar(
         SearchWidgetState.CLOSED -> {
             AppBarCompose (
                 onSearchClicked = onSearchTriggered,
-                navController = navController
-                    )
+                navController = navController,
+                idPabrik = null,
+                idMesin = null
+                )
         }
         SearchWidgetState.OPENED -> {
             SearchAppBar(
@@ -120,7 +127,9 @@ fun SwitchAppbar(
 
 @Composable
 fun AppBarCompose( onSearchClicked: () -> Unit,
-                   navController: NavController
+                   navController: NavController,
+                   idPabrik: String?,
+                   idMesin: String?
                    ) {
     TopAppBar(
         title = {
@@ -159,9 +168,7 @@ fun AppBarCompose( onSearchClicked: () -> Unit,
                     tint = Color.White)
             }
             IconButton(onClick = {
-                navController.navigate(MoReScreens.NotifScreen.name){
-
-                }
+                navController.navigate(MoReScreens.NotifScreen.name +"/$idPabrik/${idMesin}")
             }) {
 
                 Icon(

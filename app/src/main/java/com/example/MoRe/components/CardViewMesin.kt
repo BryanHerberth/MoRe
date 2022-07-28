@@ -11,6 +11,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,13 +30,15 @@ import com.example.MoRe.navigation.MoReScreens
 @Composable
 fun CardMesin(mesin : DaftarMesinNotif = getDataMesin()[0],
               onItemClick : (String) -> Unit ={},
-              navController: NavController
+              navController: NavController,
+              idPabrik :String?,
 ){
+    val idMesin = rememberSaveable { mutableStateOf("2") }
     Card(modifier = Modifier
         .padding(4.dp)
         .fillMaxWidth()
         .clickable {
-                   navController.navigate(MoReScreens.DetailScreen.name)
+                   navController.navigate(MoReScreens.DetailScreen.name +"/$idPabrik/${idMesin.value}")
         },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
         border = BorderStroke(2.dp, color = Color.LightGray)

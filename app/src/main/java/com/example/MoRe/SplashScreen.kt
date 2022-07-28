@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -26,7 +28,9 @@ fun moreSplashScreen(navController: NavController){
     val scale = remember {
         Animatable(0f)
     }
-
+    val email = rememberSaveable { mutableStateOf("Erico") }
+    val password = rememberSaveable { mutableStateOf("1234") }
+    val loggedIn = true
     LaunchedEffect(key1 = true){
         scale.animateTo(
             targetValue = 0.9f,
@@ -36,8 +40,11 @@ fun moreSplashScreen(navController: NavController){
                         .getInterpolation(it)
                 }))
         delay(1200L)
-        navController.navigate(MoReScreens.LoginScreen.name )
-
+        if (loggedIn) {
+            navController.navigate(MoReScreens.HomeScreen.name +"/${email.value}/${password.value}")
+        } else {
+            navController.navigate(MoReScreens.LoginScreen.name)
+        }
     }
 
     Box(modifier = Modifier

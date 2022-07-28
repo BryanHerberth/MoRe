@@ -11,15 +11,20 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.MoRe.model.DaftarPabrik
 import com.example.MoRe.model.getPabrik
 import com.example.MoRe.navigation.MoReScreens
@@ -30,6 +35,8 @@ fun CardPabrik(pabrik: DaftarPabrik = getPabrik()[0],
         onItemClick : (String) -> Unit ={},
                navController: NavController
 ){
+    val idPabrik = rememberSaveable { mutableStateOf("1") }
+
     Box(modifier = Modifier
         .fillMaxHeight()
         .wrapContentSize()
@@ -46,22 +53,28 @@ fun CardPabrik(pabrik: DaftarPabrik = getPabrik()[0],
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        navController.navigate(MoReScreens.PabrikScreen.name)
+                        navController.navigate(MoReScreens.PabrikScreen.name+"/${idPabrik.value}")
                     }
                     .wrapContentHeight(),
                 elevation = 8.dp
             ) {
                 Column() {
-                    Image(painter = painterResource(id = pabrik.fotoPabrik),
-                        contentDescription = "foto pabrik",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                        ,
-                        contentScale = ContentScale.Fit
-                    )
+                    AsyncImage(model = ImageRequest.Builder(LocalContext.current)
+                        .data(data = pabrik.fotoPabrik)
+                        .crossfade(true)
+                        .build(),
+                        contentDescription = "Foto Pabrik",
+                        contentScale = ContentScale.Crop)
+//                    Image(painter = painterResource(id = pabrik.fotoPabrik),
+//                        contentDescription = "foto pabrik",
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                        ,
+//                        contentScale = ContentScale.Fit
+//                    )
                     Column(modifier = Modifier
                         .fillMaxWidth()
-                    .padding(top = 12.dp, bottom = 12.dp, start = 8.dp, end = 8.dp)
+                        .padding(top = 12.dp, bottom = 12.dp, start = 8.dp, end = 8.dp)
                         ,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {

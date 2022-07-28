@@ -37,6 +37,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.*
 import com.example.MoRe.components.SwitchAppbar
@@ -83,20 +85,23 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ScaffoldListMesin(searchViewModel: SearchViewModel ,
-                      listMesin : List<DaftarMesinNotif> = getDataMesin(),
-                      pabrik: DaftarPabrik = getPabrik()[0],
-                      scope: CoroutineScope,
-                      modalBottomSheetState: ModalBottomSheetState,
-                      navController: NavController,
+fun ScaffoldListMesin(
+    searchViewModel: SearchViewModel,
+    listMesin: List<DaftarMesinNotif> = getDataMesin(),
+    pabrik: DaftarPabrik = getPabrik()[0],
+    scope: CoroutineScope,
+    modalBottomSheetState: ModalBottomSheetState,
+    navController: NavController,
+    idPabrik: String?,
 //                      bottomSheetScaffoldState: BottomSheetScaffoldState
 
 ) {
     val searchWidgetState by searchViewModel.searchWidgetState
     val searchTextState by searchViewModel.searchTextState
+    Log.d("TAG", "ScaffoldHome: $idPabrik")
 
 
-Scaffold(
+    Scaffold(
     topBar = {
         Column(
             modifier = Modifier
@@ -143,14 +148,12 @@ Scaffold(
                 elevation = 8.dp
             ) {
                 Column() {
-                    Image(
-                        painter = painterResource(id = pabrik.fotoPabrik),
-                        contentDescription = "foto pabrik",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp),
-                        contentScale = ContentScale.Crop
-                    )
+                    AsyncImage(model = ImageRequest.Builder(LocalContext.current)
+                        .data(data = pabrik.fotoPabrik)
+                        .crossfade(true)
+                        .build(),
+                        contentDescription = "Foto Pabrik",
+                        contentScale = ContentScale.Fit)
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -215,7 +218,7 @@ Scaffold(
                     LazyColumn {
                         items(items = listMesin)
                         {
-                            CardMesin(mesin = it, navController = navController)
+                            CardMesin(mesin = it, navController = navController, idPabrik = idPabrik)
                         }
                     }
                 }

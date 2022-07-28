@@ -64,8 +64,12 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterialApi
 //@Preview(showBackground = true)
 @Composable
-fun ScaffoldDetailMesin(navController: NavController)
+fun ScaffoldDetailMesin(navController: NavController,
+                        idPabrik : String?,
+                        idMesin : String?)
 {
+    Log.d("TAG", "DetailMesin: $idPabrik")
+    Log.d("TAG", "DetailMesin: $idMesin")
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
@@ -113,7 +117,7 @@ fun ScaffoldDetailMesin(navController: NavController)
             .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CardMesin(navController = navController)
+            CardMesin(navController = navController, idPabrik = idPabrik)
         }
         Spacer(modifier = Modifier.height(20.dp))
         Tabs(pagerState = pagerState, scope = coroutineScope)

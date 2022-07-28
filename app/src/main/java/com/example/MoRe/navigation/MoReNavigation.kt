@@ -33,11 +33,39 @@ fun MoReNavHost(scope: CoroutineScope,
         composable(MoReScreens.SignUpScreen.name){
             moreSignUpScreen(navController = navController)
         }
-        composable(MoReScreens.PabrikScreen.name){
-            ScaffoldListMesin(searchViewModel = SearchViewModel(), navController = navController, scope = scope, modalBottomSheetState = modalBottomSheetState)
+
+        val pabrikScreen  = MoReScreens.PabrikScreen.name
+        composable("$pabrikScreen/{idPabrik}",
+                arguments = listOf(
+                navArgument(name = "idPabrik"){
+                    type = NavType.StringType
+                    defaultValue = "1"
+                    nullable = true
+                })){navPabrik ->
+            ScaffoldListMesin(searchViewModel = SearchViewModel(),
+                navController = navController,
+                scope = scope,
+                modalBottomSheetState = modalBottomSheetState,
+                idPabrik = navPabrik.arguments?.getString("idPabrik")
+                )
         }
-        composable(MoReScreens.DetailScreen.name){
-            ScaffoldDetailMesin(navController = navController)
+        val detailScreen =MoReScreens.DetailScreen.name
+        composable("$detailScreen/{idPabrik}/{idMesin}",
+            arguments = listOf(
+                navArgument(name = "idPabrik"){
+                    type = NavType.StringType
+                    defaultValue = "1"
+                    nullable = true
+                },
+                navArgument(name = "idMesin"){
+                    type = NavType.StringType
+                    defaultValue ="1"
+                    nullable = true
+                }
+            )){navDetails ->
+            ScaffoldDetailMesin(navController = navController,
+                idPabrik = navDetails.arguments?.getString("idPabrik"),
+                idMesin = navDetails.arguments?.getString("idMesin"))
         }
         composable(MoReScreens.VerificationScreen.name){
             moreVerifScreen(navController = navController)
@@ -48,42 +76,47 @@ fun MoReNavHost(scope: CoroutineScope,
             arguments = listOf(
                 navArgument(name = "email"){
                     type = NavType.StringType
+                    defaultValue = "Erico"
+                    nullable = true
                 },
                 navArgument(name = "pass"){
                     type = NavType.StringType
+                    defaultValue ="12345"
+                    nullable = true
+
                 }
             )) { navBack ->
             ScaffoldHome(
                 searchViewModel = SearchViewModel(),
                 navController = navController,
-                email = navBack.arguments!!.getString("email"),
-                pass = navBack.arguments!!.getString("pass")
+                email = navBack.arguments?.getString("email"),
+                pass = navBack.arguments?.getString("pass"),
             )
         }
-//            navBack.arguments?.getString("email").let { email->
-//
-//                val emailkey = email
-//                val passkey = pass
-//                ScaffoldHome(
-//                    searchViewModel = SearchViewModel(), navController = navController,
-//                    email = emailkey,
-//
-//                )
-//            }
-//           navBack.arguments?.getString("pass").let { pass->
-//               ScaffoldHome(searchViewModel = SearchViewModel(), navController = navController,
-//                   pass = pass
-//               )
-//           }
 
         composable(MoReScreens.ProfileScreen.name){
             Scaffoldlayout(navController = navController)
         }
-        composable(MoReScreens.NotifScreen.name){
-            ScaffoldNotif(navController = navController)
+
+        val notifScreen = MoReScreens.NotifScreen.name
+        composable("$notifScreen/{idPabrik}/{idMesin}",
+                arguments = listOf(
+                navArgument(name = "idPabrik"){
+                    type = NavType.StringType
+                    defaultValue = "1"
+                    nullable = true
+                },
+            navArgument(name = "idMesin"){
+                type = NavType.StringType
+                defaultValue ="1"
+                nullable = true
+            })){navNotif ->
+            ScaffoldNotif(navController = navController,
+                idPabrik = navNotif.arguments?.getString("idPabrik"),
+                idMesin = navNotif.arguments?.getString("idMesin"))
         }
     }
-    
+
 }
 
 
