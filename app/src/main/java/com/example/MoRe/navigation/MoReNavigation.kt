@@ -44,28 +44,38 @@ fun MoReNavHost(scope: CoroutineScope,
         }
 
         val Homeroute = MoReScreens.HomeScreen.name
-        composable("$Homeroute/{email}",
+        composable("$Homeroute/{email}/{pass}",
             arguments = listOf(
                 navArgument(name = "email"){
                     type = NavType.StringType
                 },
-//                navArgument(name = "pass"){
-//                    type = NavType.StringType
-//                }
-            )){navBack->
-            navBack.arguments?.getString("email").let { email->
-                ScaffoldHome(
-                    searchViewModel = SearchViewModel(), navController = navController,
-                    email = email,
-
-                )
-            }
+                navArgument(name = "pass"){
+                    type = NavType.StringType
+                }
+            )) { navBack ->
+            ScaffoldHome(
+                searchViewModel = SearchViewModel(),
+                navController = navController,
+                email = navBack.arguments!!.getString("email"),
+                pass = navBack.arguments!!.getString("pass")
+            )
+        }
+//            navBack.arguments?.getString("email").let { email->
+//
+//                val emailkey = email
+//                val passkey = pass
+//                ScaffoldHome(
+//                    searchViewModel = SearchViewModel(), navController = navController,
+//                    email = emailkey,
+//
+//                )
+//            }
 //           navBack.arguments?.getString("pass").let { pass->
 //               ScaffoldHome(searchViewModel = SearchViewModel(), navController = navController,
 //                   pass = pass
 //               )
 //           }
-        }
+
         composable(MoReScreens.ProfileScreen.name){
             Scaffoldlayout(navController = navController)
         }

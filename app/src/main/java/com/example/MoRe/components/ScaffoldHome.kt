@@ -34,9 +34,11 @@ fun ScaffoldHome(
     searchViewModel: SearchViewModel,
     navController: NavController,
     email: String?,
+    pass: String?,
 ) {
 
     Log.d("TAG", "ScaffoldHome: $email")
+    Log.d("TAG", "ScaffoldHome: $pass")
     val searchWidgetState by searchViewModel.searchWidgetState
     val searchTextState by searchViewModel.searchTextState
     Scaffold(

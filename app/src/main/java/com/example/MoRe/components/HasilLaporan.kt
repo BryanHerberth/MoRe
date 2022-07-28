@@ -97,7 +97,7 @@ fun DateStartPickerLayout(){
     val datePickerDialog = DatePickerDialog(
         context, { d, year1 , month1 , day1 ->
             val month = month1 + 1
-            date.value = "$day1/$month1/$year1"
+            date.value = "$day1/$month/$year1"
         }, year, month, day
     )
     TextField(
@@ -142,8 +142,8 @@ fun DateEndPickerLayout() {
 
     val dateEndPickerDialog = DatePickerDialog(
         context, { d, year2, month2, day2 ->
-            val month = month2 + 1
-            eDate.value = "$day2/$month2/$year2"
+            val endMonth = month2 + 1
+            eDate.value = "$day2/$endMonth/$year2"
         }, eYear, eMonth, eDay
     )
     TextField(

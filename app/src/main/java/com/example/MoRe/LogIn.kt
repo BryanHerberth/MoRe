@@ -69,6 +69,7 @@ fun loginForm(navController: NavHostController) {
     val passwordFocusRequest = FocusRequester.Default
     val keyboardController = LocalSoftwareKeyboardController.current
     val default ="test"
+    val defaultpass ="pass"
     val modifier = Modifier
         .height(250.dp)
         .width(400.dp)
@@ -89,18 +90,6 @@ fun loginForm(navController: NavHostController) {
             enabled = true,
             passwordVisibility = passwordVisibility
         )
-        Column(modifier = Modifier
-            .fillMaxWidth(),
-            horizontalAlignment = Alignment.End
-
-            ) {
-            Text(text = "Lupa kata sandi?",
-                style = MaterialTheme.typography.h6,
-                color = Color.Gray,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
-        }
-        
         Spacer(modifier = Modifier.height(10.dp))
         Column(modifier = Modifier
             .fillMaxWidth(),
@@ -108,9 +97,8 @@ fun loginForm(navController: NavHostController) {
         ) {
             OutlinedButton(
                 onClick = {
-                          navController.popBackStack()
-                    navController.navigate(MoReScreens.HomeScreen.name +"/${email.value}" )
-
+                    navController.popBackStack()
+                    navController.navigate(MoReScreens.HomeScreen.name +"/${email.value}/${password.value}" )
             },
                 modifier = Modifier
                     .padding(4.dp)

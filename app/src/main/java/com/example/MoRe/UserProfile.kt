@@ -185,6 +185,9 @@ fun userData() {
     val openDialog:MutableState<Boolean> = remember {
         mutableStateOf(false)
     }
+    val opennameDialog:MutableState<Boolean> = remember {
+        mutableStateOf(false)
+    }
     Column {
         OutlinedTextField(value = text, onValueChange = { newText ->
             text = newText
@@ -194,15 +197,15 @@ fun userData() {
             readOnly = true,
             trailingIcon = {
                 IconButton(onClick = {
-                    openDialog.value = true
+                    opennameDialog.value = true
                 }) {
                     Icon(imageVector = Icons.Filled.Create, contentDescription = "Edit",
                     )
-                    if (openDialog.value) {
+                    if (opennameDialog.value) {
 
                         AlertDialog(
                             onDismissRequest = {
-                                openDialog.value = false
+                                opennameDialog.value = false
                                 text2 = text
                             },
                             title = {
@@ -224,6 +227,7 @@ fun userData() {
                             dismissButton = {
                                 TextButton(onClick = {
                                     text2 = text
+                                    opennameDialog.value = false
                                 }) {
                                     Text(
                                         text = "Batal",
@@ -234,7 +238,7 @@ fun userData() {
                             },
                             confirmButton = {
                                 TextButton(onClick = {
-                                    openDialog.value = false
+                                    opennameDialog.value = false
                                     text = text2
                                 }) {
                                     Text(
@@ -299,6 +303,7 @@ fun userData() {
                             dismissButton = {
                                 TextButton(onClick = {
                                     phonenum2 = phonenum
+                                    openDialog.value = false
                                 }) {
                                     Text(
                                         text = "Batal",
@@ -313,7 +318,7 @@ fun userData() {
                                     phonenum = phonenum2
                                 }) {
                                     Text(
-                                        text = "Ubah nama",
+                                        text = "Ubah Nomor",
                                         color = BlueApp,
                                         fontSize = 15.sp,
                                     )

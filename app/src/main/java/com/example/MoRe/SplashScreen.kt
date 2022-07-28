@@ -30,12 +30,12 @@ fun moreSplashScreen(navController: NavController){
     LaunchedEffect(key1 = true){
         scale.animateTo(
             targetValue = 0.9f,
-            animationSpec = tween(durationMillis = 800,
+            animationSpec = tween(durationMillis = 500,
                 easing = {
                     OvershootInterpolator(8f)
                         .getInterpolation(it)
                 }))
-        delay(2000L)
+        delay(1200L)
         navController.navigate(MoReScreens.LoginScreen.name )
 
     }
