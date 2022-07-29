@@ -111,8 +111,7 @@ fun SwitchAppbar(
                 onSearchClicked = onSearchTriggered,
                 navController = navController,
                 idPabrik = null,
-                idMesin = null
-                )
+                idMesin = null)
         }
         SearchWidgetState.OPENED -> {
             SearchAppBar(
@@ -129,8 +128,7 @@ fun SwitchAppbar(
 fun AppBarCompose( onSearchClicked: () -> Unit,
                    navController: NavController,
                    idPabrik: String?,
-                   idMesin: String?
-                   ) {
+                   idMesin: String?) {
     TopAppBar(
         title = {
             Box(modifier = Modifier.fillMaxWidth(),

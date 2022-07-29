@@ -95,8 +95,8 @@ fun ScaffoldDetailMesin(navController: NavController,
             },
             navigationIcon = {
                 IconButton(onClick = {
-                    navController.navigate(MoReScreens.PabrikScreen.name) {
-                        popUpTo(MoReScreens.PabrikScreen.name)
+                    navController.navigate(MoReScreens.PabrikScreen.name +"/{$idPabrik}") {
+                        popUpTo(MoReScreens.PabrikScreen.name+"/{$idPabrik}")
                         {
                             inclusive = true
                         }

@@ -291,7 +291,7 @@ fun SwitchBar2(
             MesinAppBar (
                 onSearchClicked = onSearchTriggered
             ,
-            navController = navController)
+            navController = navController, email = null, password = null)
         }
         SearchWidgetState.OPENED -> {
             SearchAppBar(
@@ -306,7 +306,9 @@ fun SwitchBar2(
 
 @Composable
 fun MesinAppBar( onSearchClicked: () -> Unit,
-                 navController: NavController
+                 navController: NavController,
+                 email: String?,
+                 password: String?
                  ) {
     TopAppBar(
         modifier = Modifier.fillMaxWidth(),
@@ -322,8 +324,8 @@ fun MesinAppBar( onSearchClicked: () -> Unit,
         },
         navigationIcon = {
             IconButton(onClick = {
-                navController.navigate(MoReScreens.HomeScreen.name) {
-                    popUpTo(MoReScreens.HomeScreen.name)
+                navController.navigate(MoReScreens.HomeScreen.name +"/${email}/${password}") {
+                    popUpTo(MoReScreens.HomeScreen.name +"/${email}/${password}")
                     {
                         inclusive = true
                     }

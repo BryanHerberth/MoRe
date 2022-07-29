@@ -50,7 +50,10 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 @Composable
-fun CustomAppbar(name:String, navController: NavController) {
+fun CustomAppbar(name:String, navController: NavController,
+                 email : String?,
+                 password : String?
+                 ) {
     Column {
         TopAppBar(title = {
             Row(
@@ -71,8 +74,8 @@ fun CustomAppbar(name:String, navController: NavController) {
 
             navigationIcon = {
                 IconButton(onClick = {
-                        navController.navigate(MoReScreens.HomeScreen.name){
-                        popUpTo(MoReScreens.HomeScreen.name)
+                        navController.navigate(MoReScreens.HomeScreen.name +"/${email}/${password}"){
+                        popUpTo(MoReScreens.HomeScreen.name +"/${email}/${password}")
                         {
                             inclusive = true
                         }
@@ -93,7 +96,7 @@ fun Scaffoldlayout(navController: NavController) {
     Scaffold(
         topBar = {
             CustomAppbar("Profil",
-                navController = navController)
+                navController = navController, email = null , password = null)
         },
         content = {
             Box(

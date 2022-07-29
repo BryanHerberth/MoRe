@@ -59,7 +59,7 @@ fun ScaffoldNotif(
     val idMesin = rememberSaveable { mutableStateOf("2") }
     Scaffold(
         topBar = {
-            CustomAppbar(name = "Notifikasi", navController = navController)
+            CustomAppbar(name = "Notifikasi", navController = navController, email = null , password = null)
         },
         content = {
             Column(modifier = Modifier.padding(12.dp)) {
