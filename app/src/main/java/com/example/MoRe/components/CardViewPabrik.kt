@@ -76,6 +76,7 @@ fun CardPabrik(
                         .data(data = resPabrik.gambar_pabrik)
                         .crossfade(true)
                         .build(),
+                        alignment = Alignment.Center,
                         contentDescription = "Foto Pabrik",
                         contentScale = ContentScale.Fit // Perlu di sesuaiikannnn
                     )
