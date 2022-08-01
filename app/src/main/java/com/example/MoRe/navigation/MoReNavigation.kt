@@ -50,8 +50,7 @@ fun MoReNavHost(
                 navController = navController,
                 scope = scope,
                 modalBottomSheetState = modalBottomSheetState,
-                idPabrik = navPabrik.arguments?.getString("idPabrik"),
-                )
+                idPabrik = navPabrik.arguments?.getString("idPabrik"))
         }
         val detailScreen =MoReScreens.DetailScreen.name
         composable("$detailScreen/{idPabrik}/{idMesin}",
@@ -118,6 +117,19 @@ fun MoReNavHost(
             ScaffoldNotif(navController = navController,
                 idPabrik = navNotif.arguments?.getString("idPabrik"),
                 idMesin = navNotif.arguments?.getString("idMesin"))
+        }
+
+        val memberScreen  = MoReScreens.MemberScreen.name
+        composable("$memberScreen/{idPabrik}",
+            arguments = listOf(
+                navArgument(name = "idPabrik"){
+                    type = NavType.StringType
+                    defaultValue = "1"
+                    nullable = true
+                })){navMember ->
+            ScaffoldMember(navController = navController,
+                idPabrik = navMember.arguments?.getString("idPabrik"))
+
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,16 +27,22 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 val navController = rememberNavController()
-                StatusBarchange()
-                ModalBottomSheet{
-                        state: ModalBottomSheetState, scope: CoroutineScope ->
-                    ScaffoldListMesin(
-                        searchViewModel = SearchViewModel(), scope = scope,
-                        modalBottomSheetState = state, navController = navController, idPabrik = null
-                    )
-                    MoReApp(scope = scope, modalBottomSheetState = state)
-                }
+                val modalBottomSheetState = rememberModalBottomSheetState(
+                    initialValue =ModalBottomSheetValue.Hidden
+                )
 
+                val scope = rememberCoroutineScope()
+                StatusBarchange()
+//                ModalBottomSheet{
+//                        state: ModalBottomSheetState, scope: CoroutineScope ->
+//                    ScaffoldListMesin(
+//                        searchViewModel = SearchViewModel(), scope = scope,
+//                        modalBottomSheetState = state, navController = navController, idPabrik = null
+//                    )
+//
+//                }
+
+                MoReApp(scope, modalBottomSheetState)
             }
         }
     }

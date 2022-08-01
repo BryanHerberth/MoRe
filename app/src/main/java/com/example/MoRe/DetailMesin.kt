@@ -35,7 +35,9 @@ import androidx.navigation.NavController
 import com.example.MoRe.components.*
 import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.DaftarLaporan
+import com.example.MoRe.model.DaftarMonitoring
 import com.example.MoRe.model.getDataLaporan
+import com.example.MoRe.model.getDataMonitor
 import com.example.MoRe.navigation.MoReNavHost
 import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.res.getmesin.Mesin
@@ -217,119 +219,131 @@ fun Tabs(pagerState: PagerState,
 
 
 @Composable
-fun PemantauanLayout() {
+fun PemantauanLayout(
+    monitoring: List<DaftarMonitoring> = getDataMonitor()
+) {
     Column(modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally,
+
+        ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                Card(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .width(150.dp)
-                        ,
-                    elevation = 6.dp,
-//                        border = BorderStroke(4.dp, color = Color.LightGray),
-                    shape = RoundedCornerShape(corner = CornerSize(16.dp))
-                ) {
-                    Column(
-                        modifier = Modifier.padding(4.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(text = "90", style = MaterialTheme.typography.h3)
-                        Text(text = "(%)", style = MaterialTheme.typography.h4)
-                        Text(
-                            text = "Kecepatan Mesin",
-                            style = MaterialTheme.typography.h5,
-                            modifier = Modifier.padding(6.dp, 0.dp)
-                        )
-                    }
-                }
-                Card(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .width(150.dp)
-                        ,
-                    elevation = 6.dp,
-//                        border = BorderStroke(4.dp, color = Color.LightGray),
-                    shape = RoundedCornerShape(corner = CornerSize(16.dp))
-                ) {
-                    Column(
-                        modifier = Modifier.padding(4.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(text = "124", style = MaterialTheme.typography.h3)
-                        Text(text = " I/ Min", style = MaterialTheme.typography.h4)
-                        Text(
-                            text = "Hasil Produksi",
-                            style = MaterialTheme.typography.h5,
-                            modifier = Modifier.padding(6.dp, 0.dp)
-                        )
+            LazyColumn{
+                    items(items = monitoring)
+                    {
+                        CardMonitoring(monitoring = it)
                     }
                 }
             }
         }
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                Card(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .width(150.dp)
-                    ,
-                    elevation = 6.dp,
-//                        border = BorderStroke(4.dp, color = Color.LightGray),
-                    shape = RoundedCornerShape(corner = CornerSize(16.dp))
-                ) {
-                    Column(
-                        modifier = Modifier.padding(4.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(text = "90", style = MaterialTheme.typography.h3)
-                        Text(text = "(%)", style = MaterialTheme.typography.h4)
-                        Text(
-                            text = "Kecepatan Mesin",
-                            style = MaterialTheme.typography.h5,
-                            modifier = Modifier.padding(6.dp, 0.dp)
-                        )
-                    }
-                }
-                Card(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .width(150.dp)
-                    ,
-                    elevation = 6.dp,
-//                        border = BorderStroke(4.dp, color = Color.LightGray),
-                    shape = RoundedCornerShape(corner = CornerSize(16.dp))
-                ) {
-                    Column(
-                        modifier = Modifier.padding(4.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(text = "124", style = MaterialTheme.typography.h3)
-                        Text(text = " I/ Min", style = MaterialTheme.typography.h4)
-                        Text(
-                            text = "Hasil Produksi",
-                            style = MaterialTheme.typography.h5,
-                            modifier = Modifier.padding(6.dp, 0.dp)
-                        )
-                    }
-                }
-            }
-        }
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.Center,
+//            ) {
+//                Card(
+//                    modifier = Modifier
+//                        .padding(10.dp)
+//                        .width(150.dp)
+//                        ,
+//                    elevation = 6.dp,
+////                        border = BorderStroke(4.dp, color = Color.LightGray),
+//                    shape = RoundedCornerShape(corner = CornerSize(16.dp))
+//                ) {
+//                    Column(
+//                        modifier = Modifier.padding(4.dp),
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                    ) {
+//                        Text(text = "90", style = MaterialTheme.typography.h3)
+//                        Text(text = "(%)", style = MaterialTheme.typography.h4)
+//                        Text(
+//                            text = "Kecepatan Mesin",
+//                            style = MaterialTheme.typography.h5,
+//                            modifier = Modifier.padding(6.dp, 0.dp)
+//                        )
+//                    }
+//                }
+//                Card(
+//                    modifier = Modifier
+//                        .padding(10.dp)
+//                        .width(150.dp)
+//                        ,
+//                    elevation = 6.dp,
+////                        border = BorderStroke(4.dp, color = Color.LightGray),
+//                    shape = RoundedCornerShape(corner = CornerSize(16.dp))
+//                ) {
+//                    Column(
+//                        modifier = Modifier.padding(4.dp),
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                    ) {
+//                        Text(text = "124", style = MaterialTheme.typography.h3)
+//                        Text(text = " I/ Min", style = MaterialTheme.typography.h4)
+//                        Text(
+//                            text = "Hasil Produksi",
+//                            style = MaterialTheme.typography.h5,
+//                            modifier = Modifier.padding(6.dp, 0.dp)
+//                        )
+//                    }
+//                }
+//            }
+//        }
+//        Column(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.Center,
+//            ) {
+//                Card(
+//                    modifier = Modifier
+//                        .padding(10.dp)
+//                        .width(150.dp)
+//                    ,
+//                    elevation = 6.dp,
+////                        border = BorderStroke(4.dp, color = Color.LightGray),
+//                    shape = RoundedCornerShape(corner = CornerSize(16.dp))
+//                ) {
+//                    Column(
+//                        modifier = Modifier.padding(4.dp),
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                    ) {
+//                        Text(text = "90", style = MaterialTheme.typography.h3)
+//                        Text(text = "(%)", style = MaterialTheme.typography.h4)
+//                        Text(
+//                            text = "Kecepatan Mesin",
+//                            style = MaterialTheme.typography.h5,
+//                            modifier = Modifier.padding(6.dp, 0.dp)
+//                        )
+//                    }
+//                }
+//                Card(
+//                    modifier = Modifier
+//                        .padding(10.dp)
+//                        .width(150.dp)
+//                    ,
+//                    elevation = 6.dp,
+////                        border = BorderStroke(4.dp, color = Color.LightGray),
+//                    shape = RoundedCornerShape(corner = CornerSize(16.dp))
+//                ) {
+//                    Column(
+//                        modifier = Modifier.padding(4.dp),
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                    ) {
+//                        Text(text = "124", style = MaterialTheme.typography.h3)
+//                        Text(text = " I/ Min", style = MaterialTheme.typography.h4)
+//                        Text(
+//                            text = "Hasil Produksi",
+//                            style = MaterialTheme.typography.h5,
+//                            modifier = Modifier.padding(6.dp, 0.dp)
+//                        )
+//                    }
+//                }
+//            }
+//        }
     }
-}
+
 
 
 @Composable

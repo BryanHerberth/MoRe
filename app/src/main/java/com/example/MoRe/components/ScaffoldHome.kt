@@ -86,6 +86,7 @@ fun ScaffoldHome(
                 },
                 onSearchClicked ={
                                  Log.d("Searched text", it)
+                    searchViewModel.searchPabrikList(it)
                 },
                 onSearchTriggered = {
                     searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)

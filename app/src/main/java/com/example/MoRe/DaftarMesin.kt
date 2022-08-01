@@ -160,6 +160,8 @@ fun ScaffoldListMesin(
     // API STOP
 
 
+
+
     Scaffold(
     topBar = {
         Column(
@@ -232,11 +234,8 @@ fun ScaffoldListMesin(
                                 horizontalArrangement = Arrangement.End
                             ) {
                                 IconButton(onClick = {
+                                    navController.navigate(MoReScreens.MemberScreen.name +"/$idPabrik")
 
-                                    scope.launch {
-                                        modalBottomSheetState.show()
-                                    }
-                                    Log.d(TAG, "ScaffoldListMesin: Scafoold where")
                                 }) {
                                     Icon(
                                         imageVector = Icons.Outlined.AccountCircle,
@@ -302,7 +301,7 @@ fun ScaffoldListMesin(
 @ExperimentalMaterialApi
 fun ModalBottomSheet(
     listUser: List<DaftarUser> = getUser(),
-    activityContentScope: @Composable (state: ModalBottomSheetState , scope: CoroutineScope ) -> Unit
+//    activityContentScope: @Composable (state: ModalBottomSheetState , scope: CoroutineScope ) -> Unit
 //    StatusUser: String?
     ) {
     Log.e("Button Sheat", "Active")
@@ -343,27 +342,10 @@ fun ModalBottomSheet(
 
         sheetState = modalBottomSheetState,
         sheetContent = {
-            LazyColumn{
-                val sorted = listUser.groupBy { it.tipeUser}
-                sorted.forEach { (tipeUser, idUser ) ->
-                    stickyHeader {
-                        Text(text = "$tipeUser",
-                            style = MaterialTheme.typography.h4,
-                        )
-                    }
 
-                    items(items = idUser)
-                    {
-                        Log.e("Masuk ke ModelButton Sheat", "")
-                        CardUser(pengguna = it)
-                    }
-                }
-
-            }
         }
     ) {
-
-        activityContentScope(modalBottomSheetState, scope)
+//        activityContentScope(modalBottomSheetState, scope)
     }
 }
 

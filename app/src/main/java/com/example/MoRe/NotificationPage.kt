@@ -88,7 +88,7 @@ fun ScaffoldNotif(
 
     Scaffold(
         topBar = {
-            CustomAppbar(name = "Notifikasi", navController = navController, email = null , password = null)
+            CustomAppbar(name = "Notifikasi", navController = navController, email = null , password = null, idPabrik = null)
         },
         content = {
             Column(modifier = Modifier.padding(12.dp)) {

@@ -3,7 +3,7 @@ package com.example.MoRe.model
 import com.example.MoRe.R
 
 data class DaftarPabrik(
-    val  id : String,
+    val id : String,
     val namaPabrik : String,
     val alamatPabrik : String,
     val fotoPabrik: String
@@ -18,7 +18,7 @@ fun getPabrik(): List<DaftarPabrik>{
             "https://i.picsum.photos/id/1000/5626/3635.jpg?hmac=qWh065Fr_M8Oa3sNsdDL8ngWXv2Jb-EE49ZIn6c0P-g",
             ),
         DaftarPabrik(id ="0002",
-            namaPabrik = "PT Numalos Abadi",
+            namaPabrik = "PT Numalos Aqua",
             alamatPabrik = "Jl. Pulau Irian, No. 17 KIM I, Deli Serdang \n Sumatera Utara - Indonesia",
             "https://pbs.twimg.com/media/FYpVBlKaIAELber?format=jpg&name=4096x4096",
         ),

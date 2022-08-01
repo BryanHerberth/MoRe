@@ -70,7 +70,7 @@ fun CardPabrik(
                     .wrapContentHeight(),
                 elevation = 8.dp
             ) {
-                Column() {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     AsyncImage(model = ImageRequest.Builder(LocalContext.current)
 //                        .data(data = pabrik.fotoPabrik)
                         .data(data = resPabrik.gambar_pabrik)
