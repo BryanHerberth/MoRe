@@ -12,9 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +28,13 @@ import com.example.MoRe.model.DaftarPabrik
 import com.example.MoRe.model.SearchWidgetState
 import com.example.MoRe.model.getPabrik
 import com.example.MoRe.navigation.MoReScreens
+import com.example.MoRe.network.model.base.Resource
+import com.example.MoRe.network.model.res.getpabrik.ResGetPabrik
+import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ScaffoldHome(
@@ -41,6 +45,28 @@ fun ScaffoldHome(
     pass: String?,
 
 ) {
+    // API START
+    var responseGetPabrik by remember {
+        mutableStateOf<ResGetPabrik?>(null)
+    }
+    suspend fun getPabrik(){
+        val repository = Repository()
+        coroutineScope {
+            launch(Dispatchers.IO){
+                val response = repository.getPabrik()
+                launch(Dispatchers.Main){
+                    responseGetPabrik = Resource.Success(response).data?.body()
+                    Log.d("Response Pabrik : ", responseGetPabrik?.data?.pabrik.toString())
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit){
+        getPabrik()
+    }
+
+    // API STOP
 
     Log.d("TAG", "ScaffoldHome: $email")
     Log.d("TAG", "ScaffoldHome: $pass")
@@ -83,11 +109,19 @@ fun ScaffoldHome(
                 )
                 Card() {
                     LazyColumn{
-                        items(items = listPabrik)
-                        {
-                            CardPabrik(pabrik = it, navController = navController)
+                        responseGetPabrik?.data?.let { it1 ->
+                            items(items = it1.pabrik){
+                                Log.d("pabrik ke - :", it.toString())
+                                CardPabrik(resPabrik = it, navController = navController)
+                            }
                         }
                     }
+//                    LazyColumn{
+//                        items(items = listPabrik)
+//                        {
+//                            CardPabrik(pabrik = it, navController = navController)
+//                        }
+//                    }
                 }
                 Spacer(modifier = Modifier.height(235.dp))
             }

@@ -1,6 +1,7 @@
 package com.example.MoRe
 
-import android.widget.Space
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -10,11 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -22,21 +19,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.navigation.MoReScreens
+import com.example.MoRe.network.model.base.Resource
+import com.example.MoRe.network.model.req.ReqLogin
+import com.example.MoRe.network.model.res.login.ResLogin
+import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
+import kotlinx.coroutines.*
 
+import retrofit2.Response
 
 @Composable
 fun moreLogInScreen(navController: NavHostController) {
@@ -58,18 +61,53 @@ fun moreLogInScreen(navController: NavHostController) {
     }
 }
 
-
 @OptIn(ExperimentalComposeUiApi::class)
-
 @Composable
-fun loginForm(navController: NavHostController) {
-    val email = rememberSaveable { mutableStateOf("") }
-    val password = rememberSaveable { mutableStateOf("") }
+fun loginForm(
+    navController: NavHostController
+) {
+    val email = rememberSaveable { mutableStateOf("linerico24@gmail.com") }
+    val password = rememberSaveable { mutableStateOf("test1234") }
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
     val passwordFocusRequest = FocusRequester.Default
     val keyboardController = LocalSoftwareKeyboardController.current
     val default ="test"
     val defaultpass ="pass"
+    val context = LocalContext.current
+
+
+
+    // START API -----------------------------------------------------------------------------------
+    var responseLogin by remember {
+        mutableStateOf<Resource<Response<ResLogin>?>?>(null)
+    }
+
+    suspend fun postLogin (email: String, password: String){
+        val repository = Repository()
+        coroutineScope {
+            launch(Dispatchers.IO) {
+                try {
+                    val response = repository.postLogin(ReqLogin(email, password))
+                    if (response.code() != 201){
+
+                    } else {
+                        responseLogin = Resource.Success(response)
+                        (responseLogin as Resource.Success<Response<ResLogin>?>).data?.body()?.data?.let {
+                            SessionManager.saveAccessToken(
+                                it.accessToken)
+                        }
+                        Log.d("Token dari Sessien Manager", SessionManager.accessToken)
+//                        localDataSource.setAuthToken((responseLogin as Resource.Success<Response<ResLogin>?>).data?.body()?.data?.accessToken)
+                    }
+                } catch (e: Exception){
+                    Log.e("Error", e.message.toString())
+                }
+            }
+        }
+    }
+
+    // STOP API ------------------------------------------------------------------------------------
+    val composableScope = rememberCoroutineScope()
     val modifier = Modifier
         .height(250.dp)
         .width(400.dp)
@@ -82,7 +120,7 @@ fun loginForm(navController: NavHostController) {
             onAction = KeyboardActions{
                 passwordFocusRequest.requestFocus()
             })
-        
+
         PasswordInput(
             modifier = Modifier.focusRequester(passwordFocusRequest),
             passwordState = password,
@@ -97,8 +135,16 @@ fun loginForm(navController: NavHostController) {
         ) {
             OutlinedButton(
                 onClick = {
-                    navController.popBackStack()
-                    navController.navigate(MoReScreens.HomeScreen.name +"/${email.value}/${password.value}" )
+                    composableScope.launch {
+                        postLogin(email.value, password.value)
+                    }
+
+                    if(responseLogin?.data?.code() != 201){
+                        Toast.makeText(context, "loginGagal", Toast.LENGTH_SHORT).show()
+                    } else{
+                        Toast.makeText(context, "login Sukses", Toast.LENGTH_LONG).show()
+                        navController.navigate(MoReScreens.HomeScreen.name +"/${email.value}/${password.value}" )
+                    }
             },
                 modifier = Modifier
                     .padding(4.dp)

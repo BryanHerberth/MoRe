@@ -17,7 +17,8 @@ data class Notifikasi(
     val text: String,
     val baca: Boolean,
     val nama_pabrik: String,
-    val nama_mesin: String
+    val nama_mesin: String,
+    val gambar_mesin: String
 )
 
 data class ResPutNotifikasi(

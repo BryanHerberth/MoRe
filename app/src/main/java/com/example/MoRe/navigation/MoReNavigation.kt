@@ -12,11 +12,13 @@ import com.example.MoRe.*
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.ScaffoldHome
 import kotlinx.coroutines.CoroutineScope
-
+//private lateinit var startViewModel: StartViewModel
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MoReNavHost(scope: CoroutineScope,
-                modalBottomSheetState: ModalBottomSheetState,) {
+fun MoReNavHost(
+    scope: CoroutineScope,
+    modalBottomSheetState: ModalBottomSheetState
+) {
     val navController = rememberNavController()
 
     NavHost(navController = navController,
@@ -41,12 +43,14 @@ fun MoReNavHost(scope: CoroutineScope,
                     type = NavType.StringType
                     defaultValue = "1"
                     nullable = true
-                })){navPabrik ->
-            ScaffoldListMesin(searchViewModel = SearchViewModel(),
+                }
+                    )){navPabrik ->
+            ScaffoldListMesin(
+                searchViewModel = SearchViewModel(),
                 navController = navController,
                 scope = scope,
                 modalBottomSheetState = modalBottomSheetState,
-                idPabrik = navPabrik.arguments?.getString("idPabrik")
+                idPabrik = navPabrik.arguments?.getString("idPabrik"),
                 )
         }
         val detailScreen =MoReScreens.DetailScreen.name

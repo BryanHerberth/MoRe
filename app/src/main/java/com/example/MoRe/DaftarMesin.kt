@@ -21,10 +21,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,12 +40,20 @@ import coil.request.ImageRequest
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.*
 import com.example.MoRe.components.SwitchAppbar
+import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.*
 import com.example.MoRe.navigation.MoReScreens
+import com.example.MoRe.network.model.base.Resource
+import com.example.MoRe.network.model.res.DataPabrik
+import com.example.MoRe.network.model.res.getmember.ResGetMember
+import com.example.MoRe.network.model.res.getmesin.ResGetMesin
+import com.example.MoRe.network.model.res.getpabrik.ResGetPabrikById
+import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
@@ -98,7 +104,60 @@ fun ScaffoldListMesin(
 ) {
     val searchWidgetState by searchViewModel.searchWidgetState
     val searchTextState by searchViewModel.searchTextState
+    val myPabrik = SessionManager.getPabrikData()
+
+    Log.e("myPabrik := ", myPabrik.toString())
+//    val activePabrik = rememberSaveable { mutableStateOf(SessionManager.getPabrikData())}
     Log.d("TAG", "ScaffoldHome: $idPabrik")
+//    Log.d("Session Pabrik : ", activePabrik.toString())
+
+    // API START
+    var responseGetPabrikById by remember{
+        mutableStateOf<ResGetPabrikById?>(null)
+    }
+    var responseGetMesin by remember{
+        mutableStateOf<ResGetMesin?>(null)
+    }
+
+    suspend fun getPabrikById(idPabrik: String?){
+        val repository = Repository()
+        coroutineScope {
+            launch(Dispatchers.IO) {
+                Log.e("error : ", "Sebelum response $idPabrik")
+                try{
+                    val response = repository.getParikById(idPabrik ?: "")
+                    Log.e("error : ", "setelah response")
+                    launch(Dispatchers.Main){
+                        responseGetPabrikById = Resource.Success(response).data?.body()
+                        Log.d("ResponseGetPabrikById : ", response.body().toString())
+                    }
+                } catch (e: Exception){
+                    Log.e("Error getPabrikById : ", e.message.toString())
+                }
+
+            }
+        }
+    }
+
+    suspend fun getMesin(idPabrik: String?) {
+        val repository = Repository()
+        coroutineScope {
+            launch(Dispatchers.IO) {
+                val response = repository.getMesin(idPabrik ?: "")
+                launch (Dispatchers.Main){
+                    responseGetMesin = Resource.Success(response).data?.body()
+                    Log.d("Response Mesin : ", responseGetMesin.toString())
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit){
+//        getPabrikById(idPabrik)
+        getMesin(idPabrik)
+    }
+
+    // API STOP
 
 
     Scaffold(
@@ -149,7 +208,8 @@ fun ScaffoldListMesin(
             ) {
                 Column() {
                     AsyncImage(model = ImageRequest.Builder(LocalContext.current)
-                        .data(data = pabrik.fotoPabrik)
+//                        .data(data = pabrik.fotoPabrik)
+                        .data(data = myPabrik?.gambar_pabrik)
                         .crossfade(true)
                         .build(),
                         contentDescription = "Foto Pabrik",
@@ -161,10 +221,12 @@ fun ScaffoldListMesin(
                         horizontalAlignment = Alignment.Start
                     ) {
                         Row() {
-                            Text(
-                                text = pabrik.namaPabrik,
-                                style = MaterialTheme.typography.h6
-                            )
+                            myPabrik?.nama_pabrik?.let { it1 ->
+                                Text(
+                                    text = it1,
+                                    style = MaterialTheme.typography.h6
+                                )
+                            }
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.End
@@ -184,7 +246,8 @@ fun ScaffoldListMesin(
                             }
                         }
                         Text(
-                            text = pabrik.alamatPabrik,
+//                            text = pabrik.alamatPabrik,
+                            text = "${myPabrik?.alamat_pabrik}, ${myPabrik?.kab_kota_pabrik}, ${myPabrik?.provinsi_pabrik}",
                             style = MaterialTheme.typography.caption
                         )
                     }
@@ -216,10 +279,15 @@ fun ScaffoldListMesin(
                         .fillMaxHeight()
                 ) {
                     LazyColumn {
-                        items(items = listMesin)
-                        {
-                            CardMesin(mesin = it, navController = navController, idPabrik = idPabrik)
+                        responseGetMesin?.data?.let { it1 ->
+                            items(items = it1.mesin){
+                                CardMesin(resMesin=it, navController = navController, idPabrik = idPabrik)
+                            }
                         }
+//                        items(items = listMesin)
+//                        {
+//                            CardMesin(mesin = it, navController = navController, idPabrik = idPabrik)
+//                        }
                     }
                 }
             }
@@ -237,6 +305,7 @@ fun ModalBottomSheet(
     activityContentScope: @Composable (state: ModalBottomSheetState , scope: CoroutineScope ) -> Unit
 //    StatusUser: String?
     ) {
+    Log.e("Button Sheat", "Active")
 
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue =ModalBottomSheetValue.Hidden
@@ -248,21 +317,44 @@ fun ModalBottomSheet(
 //    val newUserList = getUser().filter { pengguna ->
 //        pengguna.tipeUser == StatusUser
 //    }
+    val ActivePabrik = SessionManager.getPabrikData()
+    // START API ----------------------------------
+    var responseGetMember by remember {
+        mutableStateOf<ResGetMember?>(null)
+    }
+    suspend fun getMember(){
+        val repository = Repository()
+        coroutineScope {
+            launch(Dispatchers.IO){
+                val response = repository.getMember(idPabrik = ActivePabrik?.id_pabrik!!)
+                launch(Dispatchers.Main){
+                    responseGetMember = Resource.Success(response).data?.body()
+                    Log.d("Response member :-> ", responseGetMember?.data?.anggota.toString())
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit){
+        getMember()
+    }
+    // STOP API -----------------------------------
     ModalBottomSheetLayout(
+
         sheetState = modalBottomSheetState,
         sheetContent = {
             LazyColumn{
-
                 val sorted = listUser.groupBy { it.tipeUser}
-
                 sorted.forEach { (tipeUser, idUser ) ->
                     stickyHeader {
                         Text(text = "$tipeUser",
                             style = MaterialTheme.typography.h4,
                         )
                     }
+
                     items(items = idUser)
                     {
+                        Log.e("Masuk ke ModelButton Sheat", "")
                         CardUser(pengguna = it)
                     }
                 }
@@ -270,6 +362,7 @@ fun ModalBottomSheet(
             }
         }
     ) {
+
         activityContentScope(modalBottomSheetState, scope)
     }
 }

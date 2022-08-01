@@ -1,5 +1,6 @@
 package com.example.MoRe.components
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -25,17 +26,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.DaftarPabrik
 import com.example.MoRe.model.getPabrik
 import com.example.MoRe.navigation.MoReScreens
+import com.example.MoRe.network.model.res.DataPabrik
+import com.google.gson.Gson
 
 
 @Composable
-fun CardPabrik(pabrik: DaftarPabrik = getPabrik()[0],
-        onItemClick : (String) -> Unit ={},
-               navController: NavController
+fun CardPabrik(
+//    pabrik: DaftarPabrik = getPabrik()[0],
+    resPabrik: DataPabrik,
+    onItemClick : (String) -> Unit ={},
+    navController: NavController
 ){
-    val idPabrik = rememberSaveable { mutableStateOf("1") }
+    val idPabrik = rememberSaveable { mutableStateOf(resPabrik.id_pabrik) }
 
     Box(modifier = Modifier
         .fillMaxHeight()
@@ -53,18 +59,26 @@ fun CardPabrik(pabrik: DaftarPabrik = getPabrik()[0],
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        navController.navigate(MoReScreens.PabrikScreen.name+"/${idPabrik.value}")
+                        try{
+                            SessionManager.savePabrik(resPabrik)
+                            navController.navigate(MoReScreens.PabrikScreen.name+"/${idPabrik.value}")
+                        } catch (e: Exception){
+                            Log.e("Error nav daftarMesin",e.message.toString())
+                        }
+
                     }
                     .wrapContentHeight(),
                 elevation = 8.dp
             ) {
                 Column() {
                     AsyncImage(model = ImageRequest.Builder(LocalContext.current)
-                        .data(data = pabrik.fotoPabrik)
+//                        .data(data = pabrik.fotoPabrik)
+                        .data(data = resPabrik.gambar_pabrik)
                         .crossfade(true)
                         .build(),
                         contentDescription = "Foto Pabrik",
-                        contentScale = ContentScale.Crop)
+                        contentScale = ContentScale.Fit // Perlu di sesuaiikannnn
+                    )
 //                    Image(painter = painterResource(id = pabrik.fotoPabrik),
 //                        contentDescription = "foto pabrik",
 //                        modifier = Modifier
@@ -78,10 +92,18 @@ fun CardPabrik(pabrik: DaftarPabrik = getPabrik()[0],
                         ,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = pabrik.namaPabrik,
+//                        Text(text = pabrik.namaPabrik,
+//                            style = MaterialTheme.typography.h6
+//                        )
+//
+//                        Text(text = pabrik.alamatPabrik,
+//                            style = MaterialTheme.typography.caption
+//                        )
+                        Text(text = resPabrik.nama_pabrik,
                             style = MaterialTheme.typography.h6
                         )
-                        Text(text = pabrik.alamatPabrik,
+                        Text(
+                            text = "${resPabrik.alamat_pabrik}, ${resPabrik.kab_kota_pabrik}, ${resPabrik.provinsi_pabrik}",
                             style = MaterialTheme.typography.caption
                         )
                     }

@@ -56,7 +56,7 @@ interface ApiService {
 
     // PANDINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
     @DELETE("/authentications")
-    suspend fun deleteUserLogin()
+    suspend fun deleteUserLogin(): Response<String>
 
     // Pabrik
     @GET("/pabrik")

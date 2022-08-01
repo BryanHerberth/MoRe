@@ -33,10 +33,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.MoRe.components.*
+import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.DaftarLaporan
 import com.example.MoRe.model.getDataLaporan
 import com.example.MoRe.navigation.MoReNavHost
 import com.example.MoRe.navigation.MoReScreens
+import com.example.MoRe.network.model.res.getmesin.Mesin
 import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.google.accompanist.pager.*
@@ -64,14 +66,20 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterialApi
 //@Preview(showBackground = true)
 @Composable
-fun ScaffoldDetailMesin(navController: NavController,
-                        idPabrik : String?,
-                        idMesin : String?)
-{
-    Log.d("TAG", "DetailMesin: $idPabrik")
+fun ScaffoldDetailMesin(
+    navController: NavController,
+    idPabrik : String?,
+    idMesin : String?
+) {
+    Log.d("TAG", "DetailPabrik: $idPabrik")
     Log.d("TAG", "DetailMesin: $idMesin")
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
+    val myMesin = SessionManager.getMesinData()
+    var activeMesin by remember {
+        mutableStateOf<Mesin?>(null)
+    }
+    activeMesin = myMesin
 
     Scaffold() {
 
@@ -117,7 +125,13 @@ fun ScaffoldDetailMesin(navController: NavController,
             .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CardMesin(navController = navController, idPabrik = idPabrik)
+//            try {
+//                CardMesin(resMesin = myMesin!! ,navController = navController, idPabrik = idPabrik)
+//            } catch (e: Exception){
+//                Log.e("Error CardMesin Detail Mesin : ", e.message.toString())
+//            }
+            CardMesin(clickable =false , resMesin = activeMesin!! ,navController = navController, idPabrik = idPabrik)
+
         }
         Spacer(modifier = Modifier.height(20.dp))
         Tabs(pagerState = pagerState, scope = coroutineScope)
