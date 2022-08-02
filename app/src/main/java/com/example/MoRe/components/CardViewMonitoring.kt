@@ -38,23 +38,34 @@ fun CardMonitoring(
         elevation = 6.dp,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Start
         ) {
-            Text(text = monitoring.jenisMonitoring,
+            Text(
+                text = monitoring.jenisMonitoring,
                 style = MaterialTheme.typography.h5,
+                modifier = Modifier.padding(horizontal = 5.dp)
+
 
             )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
             Text(
                 text = monitoring.valueMonitoring,
                 style = MaterialTheme.typography.h3,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 20.dp)
+                modifier = Modifier.padding(horizontal = 10.dp)
 
-                )
-            Text(text = monitoring.satuanMonitoring,
+            )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
+        ){
+        Text(text = monitoring.satuanMonitoring,
                 style = MaterialTheme.typography.h4,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 20.dp)
+                modifier = Modifier.padding(horizontal = 10.dp)
             )
         }
     }

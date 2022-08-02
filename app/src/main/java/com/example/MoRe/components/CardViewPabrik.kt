@@ -65,20 +65,22 @@ fun CardPabrik(
                         } catch (e: Exception){
                             Log.e("Error nav daftarMesin",e.message.toString())
                         }
-
                     }
-                    .wrapContentHeight(),
-                elevation = 8.dp
+//                    .wrapContentHeight(),
+                ,elevation = 8.dp
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
                     AsyncImage(model = ImageRequest.Builder(LocalContext.current)
 //                        .data(data = pabrik.fotoPabrik)
                         .data(data = resPabrik.gambar_pabrik)
                         .crossfade(true)
                         .build(),
-                        alignment = Alignment.Center,
                         contentDescription = "Foto Pabrik",
-                        contentScale = ContentScale.Fit // Perlu di sesuaiikannnn
+                        contentScale = ContentScale.Inside
+//                        modifier = Modifier.fillMaxWidth()
+//                            .fillMaxHeight()
+                        // Perlu di sesuaiikannnn
                     )
 //                    Image(painter = painterResource(id = pabrik.fotoPabrik),
 //                        contentDescription = "foto pabrik",

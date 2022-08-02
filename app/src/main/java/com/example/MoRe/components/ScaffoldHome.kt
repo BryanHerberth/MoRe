@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import com.example.MoRe.SearchBar
 import com.example.MoRe.ViewModel.SearchViewModel
@@ -86,7 +87,6 @@ fun ScaffoldHome(
                 },
                 onSearchClicked ={
                                  Log.d("Searched text", it)
-                    searchViewModel.searchPabrikList(it)
                 },
                 onSearchTriggered = {
                     searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
@@ -101,13 +101,13 @@ fun ScaffoldHome(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 ) {
-                SearchBar(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .background(BlueApp),
-                    hint = "telusuri"
-                )
+//                SearchBar(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(16.dp)
+//                        .background(BlueApp),
+//                    hint = "telusuri"
+//                )
                 Card() {
                     LazyColumn{
                         responseGetPabrik?.data?.let { it1 ->
@@ -153,7 +153,9 @@ fun SwitchAppbar(
                 text = searchTextState,
                 onTextChange = onTextChange,
                 onCloseClicked = onCloseClicked,
-                onSearchClicked = onSearchClicked
+                onSearchClicked = onSearchClicked,
+                navController = navController,
+                searchViewModel = hiltNavGraphViewModel()
             )
         }
     }

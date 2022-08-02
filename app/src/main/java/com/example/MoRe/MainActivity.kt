@@ -16,6 +16,7 @@ import com.example.MoRe.components.StatusBarchange
 import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.navigation.MoReNavHost
 import com.example.MoRe.ui.theme.MyApplicationTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 
 

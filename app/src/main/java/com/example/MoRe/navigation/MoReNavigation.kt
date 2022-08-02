@@ -3,6 +3,7 @@ package com.example.MoRe.navigation
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,6 +12,7 @@ import androidx.navigation.navArgument
 import com.example.MoRe.*
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.ScaffoldHome
+import com.example.MoRe.network.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 //private lateinit var startViewModel: StartViewModel
 @OptIn(ExperimentalMaterialApi::class)
@@ -46,7 +48,7 @@ fun MoReNavHost(
                 }
                     )){navPabrik ->
             ScaffoldListMesin(
-                searchViewModel = SearchViewModel(),
+                searchViewModel = hiltNavGraphViewModel(),
                 navController = navController,
                 scope = scope,
                 modalBottomSheetState = modalBottomSheetState,
@@ -90,7 +92,7 @@ fun MoReNavHost(
                 }
             )) { navBack ->
             ScaffoldHome(
-                searchViewModel = SearchViewModel(),
+                searchViewModel = SearchViewModel(repository = Repository()),
                 navController = navController,
                 email = navBack.arguments?.getString("email"),
                 pass = navBack.arguments?.getString("pass"),
