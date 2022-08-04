@@ -41,61 +41,32 @@ fun CardMonitoring(
         elevation = 6.dp,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Text(
+                text = monitoring.jenisMonitoring,
+                    style = MaterialTheme.typography.h5,
+                    modifier = Modifier.padding(horizontal = 5.dp)
+                )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-//                text = monitoring.jenisMonitoring,
-                text = resMonitor.nama,
-                style = MaterialTheme.typography.h5,
-
+                text = monitoring.valueMonitoring,
+                style = MaterialTheme.typography.h3,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 10.dp)
             )
-            if (resMonitor.satuan=="run/stop"){
-                if(resMonitor.value == 1){
-                    Text(
-//                text = monitoring.valueMonitoring,
-                        text = "run",
-                        style = MaterialTheme.typography.h3,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(horizontal = 20.dp)
+        }
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
+        ){
 
-                    )
-                }else{
-                    Text(
-//                text = monitoring.valueMonitoring,
-                        text = "stop",
-                        style = MaterialTheme.typography.h3,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(horizontal = 20.dp)
-
-                    )
-                }
-            } else if(resMonitor.satuan=="hour"){
-                val tempHour= resMonitor.value/60
-                val tempMin = resMonitor.value % 60
-                Text(
-                    text = "${tempHour}:${tempMin}",
-                    style = MaterialTheme.typography.h3,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 20.dp)
-
-                )
-            }else{
-                Text(
-//                text = monitoring.valueMonitoring,
-                    text = resMonitor.value.toString(),
-                    style = MaterialTheme.typography.h3,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 20.dp)
-
-                )
-            }
-
-            Text(
-//                text = monitoring.satuanMonitoring,
-                text = resMonitor.satuan,
+            Text(text = monitoring.satuanMonitoring,
                 style = MaterialTheme.typography.h4,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 20.dp)
+                modifier = Modifier.padding(horizontal = 10.dp)
             )
         }
     }
