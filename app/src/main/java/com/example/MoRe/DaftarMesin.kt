@@ -39,7 +39,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.*
-import com.example.MoRe.components.SwitchAppbar
+//import com.example.MoRe.components.SwitchAppbar
 import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.*
 import com.example.MoRe.navigation.MoReScreens

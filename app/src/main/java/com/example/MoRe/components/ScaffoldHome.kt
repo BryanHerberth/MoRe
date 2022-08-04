@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.MoRe.SearchBar
+//import com.example.MoRe.SearchBar
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.DaftarPabrik
@@ -38,6 +38,8 @@ import com.example.MoRe.ui.theme.BlueApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Composable
 fun ScaffoldHome(
@@ -52,6 +54,9 @@ fun ScaffoldHome(
     var responseGetPabrik by remember {
         mutableStateOf<ResGetPabrik?>(null)
     }
+    var listPabrik by remember {
+        mutableStateOf<ArrayList<DataPabrik>?>(null)
+    }
     suspend fun getPabrik(){
         val repository = Repository()
         coroutineScope {
@@ -59,6 +64,7 @@ fun ScaffoldHome(
                 val response = repository.getPabrik()
                 launch(Dispatchers.Main){
                     responseGetPabrik = Resource.Success(response).data?.body()
+                    listPabrik = responseGetPabrik?.data?.pabrik
                     Log.d("Response Pabrik : ", responseGetPabrik?.data?.pabrik.toString())
                 }
             }
@@ -102,25 +108,32 @@ fun ScaffoldHome(
     val searchTextState by searchViewModel.searchTextState
     Scaffold(
         topBar = {
-            SwitchAppbar(
-                searchWidgetState = searchWidgetState,
-                searchTextState = searchTextState,
-                onTextChange = {
-                               searchViewModel.updateSearchTextState(newValue = it)
-                },
-                onCloseClicked = {
-                                 searchViewModel.updateSearchTextState(newValue = "")
-                                searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
-                },
-                onSearchClicked ={
-                                 Log.d("Searched text", it)
-                    searchViewModel.searchPabrikList(it)
-                },
-                onSearchTriggered = {
-                    searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
-                },
-                navController = navController
-            )
+                 AppBarCompose(
+//                     onSearchClicked = {  },
+                     navController = navController,
+                     idPabrik = null,
+                     idMesin = null,
+                     resPabrik = listPabrik
+                 )
+//            SwitchAppbar(
+//                searchWidgetState = searchWidgetState,
+//                searchTextState = searchTextState,
+//                onTextChange = {
+//
+//                               searchViewModel.updateSearchTextState(newValue = it)
+//                },
+//                onCloseClicked = {
+//                                 searchViewModel.updateSearchTextState(newValue = "")
+//                                searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
+//                },
+//                onSearchClicked ={
+//                                 Log.d("Searched text", it)
+//                },
+//                onSearchTriggered = {
+//                    searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
+//                },
+//                navController = navController
+//            )
         },
         content = {
             Surface(modifier =
@@ -129,69 +142,113 @@ fun ScaffoldHome(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 ) {
-                SearchBar(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .background(BlueApp),
-                    hint = "telusuri"
-                )
+//                SearchBar(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(16.dp)
+//                        .background(BlueApp),
+//                    hint = "telusuri"
+//                )
                 Card() {
-                    LazyColumn{
+//                    val searchedPabrik = searchTextState
+//                    var filteredPabrik: ArrayList<String>
+//                    val listPabrik = responseGetPabrik?.data?.pabrik.toString()
+                    LazyColumn {
+//                        if (searchedPabrik.isEmpty()) {
                         responseGetPabrik?.data?.let { it1 ->
-                            items(items = it1.pabrik){
+                            items(items = it1.pabrik) {
                                 Log.d("pabrik ke - :", it.toString())
-                                CardPabrik(resPabrik = it, navController = navController)
+                                CardPabrik(
+                                    resPabrik = it,
+                                    navController = navController
+                                )
                             }
                         }
                     }
+//                            }
+//                            Log.d("TAG", "$listPabrik: ")
+//                        } else {
+//                            val resultList = ArrayList<String>()
+////                            if (listPabrik != null) {
+//                                for (nama_pabrik in listPabrik ) {
+//                                    if (searchTextState.lowercase(Locale.getDefault())
+//                                            .contains(searchTextState.lowercase(Locale.getDefault()))
+//                                    ) {
+//                                        resultList.add(nama_pabrik.toString())
+////                                    listPabrik.add(listPabrik[0])
+//                                    }
+//                                }
+////                            }
+//
+//                            resultList
+//                            Log.d("pabrik ke - :", "{${resultList}}" )
+//
+//                        }
+////                        responseGetPabrik?.data?.let { it1 ->
+////                            items(items = it1.pabrik){
+////                                Log.d("pabrik ke - :", it.toString())
+////                                CardPabrik(resPabrik = it, navController = navController)
+////                            }
+////                        }
+////                    }
 //                    LazyColumn{
 //                        items(items = listPabrik)
 //                        {
 //                            CardPabrik(pabrik = it, navController = navController)
 //                        }
 //                    }
-                }
+
                 Spacer(modifier = Modifier.height(235.dp))
             }
-        },
+        }
+
+
+}
     )
 }
 
-@Composable
-fun SwitchAppbar(
-    searchWidgetState: SearchWidgetState,
-    searchTextState: String,
-    onTextChange: (String) -> Unit,
-    onCloseClicked: () -> Unit,
-    onSearchClicked: (String) -> Unit,
-    onSearchTriggered: () -> Unit,
-    navController: NavController
-){
-    when(searchWidgetState){
-        SearchWidgetState.CLOSED -> {
-            AppBarCompose (
-                onSearchClicked = onSearchTriggered,
-                navController = navController,
-                idPabrik = null,
-                idMesin = null)
-        }
-        SearchWidgetState.OPENED -> {
-            SearchAppBar(
-                text = searchTextState,
-                onTextChange = onTextChange,
-                onCloseClicked = onCloseClicked,
-                onSearchClicked = onSearchClicked
-            )
-        }
-    }
-}
+
+
+
+//@Composable
+//fun SwitchAppbar(
+//    searchWidgetState: SearchWidgetState,
+//    searchTextState: String,
+//    onTextChange: (String) -> Unit,
+//    onCloseClicked: () -> Unit,
+//    onSearchClicked: (String) -> Unit,
+//    onSearchTriggered: () -> Unit,
+//    navController: NavController
+//){
+//    when(searchWidgetState){
+//        SearchWidgetState.CLOSED -> {
+//            AppBarCompose (
+//                onSearchClicked = onSearchTriggered,
+//                navController = navController,
+//                idPabrik = null,
+//                idMesin = null,
+//
+//                )
+//        }
+//        SearchWidgetState.OPENED -> {
+//            SearchAppBar(
+//                text = searchTextState,
+//                onTextChange = onTextChange,
+//                onCloseClicked = onCloseClicked,
+//                onSearchClicked = onSearchClicked
+//            )
+//        }
+//    }
+//}
 
 @Composable
-fun AppBarCompose( onSearchClicked: () -> Unit,
+fun AppBarCompose(
+//    onSearchClicked: () -> Unit,
                    navController: NavController,
                    idPabrik: String?,
-                   idMesin: String?) {
+                   idMesin: String?,
+                   resPabrik: ArrayList<DataPabrik>?
+) {
     TopAppBar(
         title = {
             Box(modifier = Modifier.fillMaxWidth(),
@@ -222,7 +279,7 @@ fun AppBarCompose( onSearchClicked: () -> Unit,
         },
         actions = {
             IconButton(onClick = {
-                onSearchClicked()
+                navController.navigate(MoReScreens.SearchScreen.name)
             }){
                 Icon(imageVector = Icons.Filled.Search,
                     contentDescription = "Search",

@@ -15,6 +15,7 @@ import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.StatusBarchange
 import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.navigation.MoReNavHost
+import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.CoroutineScope
 
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
 //
 //                }
 
-                MoReApp(scope, modalBottomSheetState)
+                MoReApp(scope, modalBottomSheetState, searchViewModel = SearchViewModel(Repository()))
             }
         }
     }
@@ -52,7 +53,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MoReApp(
     scope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState
+    modalBottomSheetState: ModalBottomSheetState,
+    searchViewModel: SearchViewModel
 ) {
     
     Surface(
@@ -62,7 +64,10 @@ fun MoReApp(
             Column(verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                MoReNavHost(scope = scope, modalBottomSheetState = modalBottomSheetState)
+                MoReNavHost(scope = scope, modalBottomSheetState = modalBottomSheetState,
+                    searchViewModel = SearchViewModel(
+                    Repository()
+                ))
             }
         }
     )

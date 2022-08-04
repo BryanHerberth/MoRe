@@ -5,7 +5,6 @@ data class DaftarLaporan(
     val Laporan : String ,
     val TanggalMulai :String,
     val DataLaporan : String,
-
     ){
 
 }

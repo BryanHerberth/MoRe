@@ -107,6 +107,7 @@ fun DateStartPickerLayout(){
         mutableStateOf("")
     }
 
+
     val datePickerDialog = DatePickerDialog(
         context, { d, year1 , month1 , day1 ->
             val month = month1 + 1
@@ -116,7 +117,9 @@ fun DateStartPickerLayout(){
     )
     TextField(
         value = "${date.value}",
-        onValueChange = {   },
+        onValueChange = {
+
+        },
         label ={ Text(text = "Start Date") } ,
         readOnly = true,
         trailingIcon = {
@@ -146,6 +149,7 @@ fun DateStartPickerLayout(){
 @Composable
 fun DateEndPickerLayout() {
 
+
     val eCalendar = Calendar.getInstance()
     val eYear = eCalendar.get(Calendar.YEAR)
     val eMonth = eCalendar.get(Calendar.MONTH)
@@ -171,8 +175,11 @@ fun DateEndPickerLayout() {
             Log.d("EndDate Picker : ", eDate.value)
         }, eYear, eMonth, eDay
     )
+
+    val edateConvert = eDate.value.toLong()
+
     TextField(
-        value = "${eDate.value}",
+        value = "${edateConvert}",
         onValueChange = { },
         label = { Text(text = "End Date") },
         readOnly = true,
