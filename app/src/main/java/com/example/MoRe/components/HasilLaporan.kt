@@ -18,6 +18,7 @@ import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -52,33 +53,50 @@ fun HasilTampilkan(
 
             ) {
             Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
+                modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(2.dp)
+                    modifier = Modifier.fillMaxWidth()
                 ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start,
+                    ) {
+                        Text(text = "Nomor",
+                            style = MaterialTheme.typography.h6,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+//                    Spacer(modifier = Modifier.weight(0.04f))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(horizontal = 40.dp)
+                    ) {
+                        Text(
+                            text = "Waktu Pencatatan",
+                            style = MaterialTheme.typography.h6,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+//                    Spacer(modifier = Modifier.padding(horizontal = 20.dp))
 
-                    Text(text = "Nomor",
-                        style = MaterialTheme.typography.h6,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.weight(0.1f))
-                    Text(text = "Waktu Pencatatan",
-                        style = MaterialTheme.typography.h6,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.weight(0.1f))
-                    Text(text = "Hasil",
-                        style = MaterialTheme.typography.h6,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier.padding(horizontal = 5.dp)
+
+                    ) {
+                        Text(
+                            text = "Hasil",
+                            style = MaterialTheme.typography.h6,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
                 LazyColumn{
                     val laporanSort = resLaporan.groupBy { it.nomor}
 
-                    laporanSort.forEach { (nomor, timestamp, ) ->
+                    laporanSort.forEach { (nomor, timestamp ) ->
                         stickyHeader {
                         }
                         items(items = timestamp){
@@ -176,10 +194,8 @@ fun DateEndPickerLayout() {
         }, eYear, eMonth, eDay
     )
 
-    val edateConvert = eDate.value.toLong()
-
     TextField(
-        value = "${edateConvert}",
+        value = "${eDate.value}",
         onValueChange = { },
         label = { Text(text = "End Date") },
         readOnly = true,

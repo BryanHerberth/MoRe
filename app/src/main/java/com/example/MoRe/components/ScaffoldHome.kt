@@ -30,6 +30,7 @@ import com.example.MoRe.model.SearchWidgetState
 import com.example.MoRe.model.getPabrik
 import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.base.Resource
+import com.example.MoRe.network.model.res.DataPabrik
 import com.example.MoRe.network.model.res.ResGetUser
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrik
 import com.example.MoRe.network.model.res.getuser.User
@@ -115,25 +116,6 @@ fun ScaffoldHome(
                      idMesin = null,
                      resPabrik = listPabrik
                  )
-//            SwitchAppbar(
-//                searchWidgetState = searchWidgetState,
-//                searchTextState = searchTextState,
-//                onTextChange = {
-//
-//                               searchViewModel.updateSearchTextState(newValue = it)
-//                },
-//                onCloseClicked = {
-//                                 searchViewModel.updateSearchTextState(newValue = "")
-//                                searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
-//                },
-//                onSearchClicked ={
-//                                 Log.d("Searched text", it)
-//                },
-//                onSearchTriggered = {
-//                    searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
-//                },
-//                navController = navController
-//            )
         },
         content = {
             Surface(modifier =
@@ -198,7 +180,7 @@ fun ScaffoldHome(
 //                        }
 //                    }
 
-                Spacer(modifier = Modifier.height(235.dp))
+//                Spacer(modifier = Modifier.height(235.dp))
             }
         }
 
@@ -288,7 +270,6 @@ fun AppBarCompose(
             IconButton(onClick = {
                 navController.navigate(MoReScreens.NotifScreen.name +"/$idPabrik/${idMesin}")
             }) {
-
                 Icon(
                     imageVector = Icons.Filled.Notifications,
                     contentDescription = "notifications",

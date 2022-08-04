@@ -14,7 +14,6 @@ import com.example.MoRe.*
 import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.ScaffoldHome
 import com.example.MoRe.network.repository.Repository
-import com.example.MoRe.HomeViewModel
 import com.example.MoRe.model.DaftarPabrik
 import kotlinx.coroutines.CoroutineScope
 //private lateinit var startViewModel: StartViewModel

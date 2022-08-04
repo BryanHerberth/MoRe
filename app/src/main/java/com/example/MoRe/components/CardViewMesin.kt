@@ -35,7 +35,7 @@ import com.example.MoRe.network.model.res.getmesin.Mesin
 //@Preview(showBackground = true)
 @Composable
 fun CardMesin(
-    mesin : DaftarMesinNotif = getDataMesin()[0],
+//    mesin : DaftarMesinNotif = getDataMesin()[0],
     resMesin : Mesin = Mesin("", "", "", "", "", ""),
     onItemClick : (String) -> Unit ={},
     navController: NavController,

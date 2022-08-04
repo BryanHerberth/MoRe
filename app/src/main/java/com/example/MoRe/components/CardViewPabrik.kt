@@ -37,11 +37,11 @@ import com.google.gson.Gson
 @Composable
 fun CardPabrik(
 //    pabrik: DaftarPabrik = getPabrik()[0],
-    resPabrik: DataPabrik?,
+    resPabrik: DataPabrik,
     onItemClick : (String) -> Unit ={},
     navController: NavController
 ){
-    val idPabrik = rememberSaveable { mutableStateOf(resPabrik?.id_pabrik) }
+    val idPabrik = rememberSaveable { mutableStateOf(resPabrik.id_pabrik) }
 
     Box(modifier = Modifier
         .fillMaxHeight()
@@ -59,12 +59,12 @@ fun CardPabrik(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-//                        try{
-//                            SessionManager.savePabrik(resPabrik)
-//                            navController.navigate(MoReScreens.PabrikScreen.name+"/${idPabrik.value}")
-//                        } catch (e: Exception){
-//                            Log.e("Error nav daftarMesin",e.message.toString())
-//                        }
+                        try{
+                            SessionManager.savePabrik(resPabrik)
+                            navController.navigate(MoReScreens.PabrikScreen.name+"/${idPabrik.value}")
+                        } catch (e: Exception){
+                            Log.e("Error nav daftarMesin",e.message.toString())
+                        }
 
                     }
                     .wrapContentHeight(),
@@ -73,7 +73,7 @@ fun CardPabrik(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     AsyncImage(model = ImageRequest.Builder(LocalContext.current)
 //                        .data(data = pabrik.fotoPabrik)
-                        .data(data = resPabrik?.gambar_pabrik)
+                        .data(data = resPabrik.gambar_pabrik)
                         .crossfade(true)
                         .build(),
                         alignment = Alignment.Center,

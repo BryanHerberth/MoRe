@@ -35,10 +35,15 @@ import kotlin.collections.ArrayList
 @Composable
 fun MainScreen(navController: NavController) {
     val textState = remember { mutableStateOf(TextFieldValue("")) }
-    Column {
-        SearchView(textState)
+
+    Scaffold(
+        topBar = {
+            SearchView(textState)
+        },
+
+    content = {
         PabrikList(navController = navController, state = textState)
-    }
+    })
 }
 
 
@@ -104,16 +109,16 @@ fun SearchViewPreview() {
 @Composable
 fun PabrikList(navController: NavController,
                 state: MutableState<TextFieldValue>,
-                ) {
-    val countries =  getPabrik()
-    var filteredCountries: ArrayList<DaftarPabrik>
+               ) {
+    val daftarPabrik =  getPabrik()
+    var filteredPabrik: ArrayList<DaftarPabrik>
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         val searchedText = state.value.text
-        filteredCountries = if (searchedText.isEmpty()) {
-            countries
+        filteredPabrik = if (searchedText.isEmpty()) {
+            daftarPabrik
         } else {
             val resultList = ArrayList<DaftarPabrik>()
-            for (namaPabrik in countries) {
+            for (namaPabrik in daftarPabrik) {
                 if (namaPabrik.namaPabrik.lowercase(Locale.getDefault())
                         .contains(searchedText.lowercase(Locale.getDefault()))
                 ) {
@@ -122,7 +127,7 @@ fun PabrikList(navController: NavController,
             }
             resultList
         }
-        items(filteredCountries) { filteredCountry ->
+        items(filteredPabrik) { filteredCountry ->
 //            CountryListItem(
 //                countryText = filteredCountry.namaPabrik,
 //                onItemClick = { selectedCountry ->
@@ -141,31 +146,31 @@ fun PabrikList(navController: NavController,
 //                    }
 //                }
 //            )
-            CardPabrik(navController = navController, resPabrik =  null )
+//            CardPabrik(navController = navController, resPabrik =  null )
         }
     }
 }
 
 
 
-@Composable
-fun CountryListItem(countryText: String, onItemClick: (String) -> Unit) {
-    Row(
-        modifier = Modifier
-            .clickable(onClick = {
-                onItemClick(countryText)
-            })
-            .background(Color.White)
-            .fillMaxWidth()
-            .padding(8.dp, 16.dp)
-    ) {
-        Text(text = countryText, fontSize = 18.sp, color = Color.White)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CountryListItemPreview(pabrik : DaftarPabrik = getPabrik()[0]) {
-    CountryListItem(countryText = pabrik.namaPabrik, onItemClick = { })
-}
+//@Composable
+//fun CountryListItem(countryText: String, onItemClick: (String) -> Unit) {
+//    Row(
+//        modifier = Modifier
+//            .clickable(onClick = {
+//                onItemClick(countryText)
+//            })
+//            .background(Color.White)
+//            .fillMaxWidth()
+//            .padding(8.dp, 16.dp)
+//    ) {
+//        Text(text = countryText, fontSize = 18.sp, color = Color.White)
+//    }
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun CountryListItemPreview(pabrik : DaftarPabrik = getPabrik()[0]) {
+//    CountryListItem(countryText = pabrik.namaPabrik, onItemClick = { })
+//}
 

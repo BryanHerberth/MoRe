@@ -170,25 +170,25 @@ fun ScaffoldListMesin(
                 .background(BlueApp)
 
         ) {
-
-            SwitchBar2(
-                searchWidgetState = searchWidgetState,
-                searchTextState = searchTextState,
-                onTextChange = {
-                    searchViewModel.updateSearchTextState(newValue = it)
-                },
-                onCloseClicked = {
-                    searchViewModel.updateSearchTextState(newValue = "")
-                    searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
-                },
-                onSearchClicked = {
-                    Log.d("Searched text", it)
-                },
-                onSearchTriggered = {
-                    searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
-                },
-                navController = navController
-            )
+            MesinAppBar(onSearchClicked = { /*TODO*/ }, navController = navController, email = null, password = null     )
+//            SwitchBar2(
+//                searchWidgetState = searchWidgetState,
+//                searchTextState = searchTextState,
+//                onTextChange = {
+//                    searchViewModel.updateSearchTextState(newValue = it)
+//                },
+//                onCloseClicked = {
+//                    searchViewModel.updateSearchTextState(newValue = "")
+//                    searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
+//                },
+//                onSearchClicked = {
+//                    Log.d("Searched text", it)
+//                },
+//                onSearchTriggered = {
+//                    searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
+//                },
+//                navController = navController
+//            )
         }
     }
 ) {
@@ -383,8 +383,7 @@ fun SwitchBar2(
 fun MesinAppBar( onSearchClicked: () -> Unit,
                  navController: NavController,
                  email: String?,
-                 password: String?
-                 ) {
+                 password: String?) {
     TopAppBar(
         modifier = Modifier.fillMaxWidth(),
         title = {
@@ -413,17 +412,17 @@ fun MesinAppBar( onSearchClicked: () -> Unit,
                 )
             }
         },
-        actions = {
-            IconButton(onClick = {
-                onSearchClicked()
-            }) {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Search",
-                    tint = Color.White
-                )
-            }
-        },
+//        actions = {
+//            IconButton(onClick = {
+//                onSearchClicked()
+//            }) {
+//                Icon(
+//                    imageVector = Icons.Filled.Search,
+//                    contentDescription = "Search",
+//                    tint = Color.White
+//                )
+//            }
+//        },
         backgroundColor = BlueApp
     )
 }

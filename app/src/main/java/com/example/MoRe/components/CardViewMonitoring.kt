@@ -26,50 +26,86 @@ import com.example.MoRe.network.model.res.monitor.ResGetMonitor
 @Composable
 fun CardMonitoring(
     resMonitor : Monitor,
-    monitoring : DaftarMonitoring = getDataMonitor()[0],
+//    monitoring : DaftarMonitoring = getDataMonitor()[0],
     onItemClick : (String) -> Unit ={},
 //    navController: NavController,
-){
-
-    Card(modifier = Modifier
-        .padding(4.dp)
-        .fillMaxWidth()
-        .height(100.dp)
-        .clickable {
-        },
-        shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-        elevation = 6.dp,
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
+) {
+    Box(contentAlignment = Alignment.Center) {
+        Card(
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxWidth()
+                .height(100.dp)
+                .clickable {
+                },
+            shape = RoundedCornerShape(corner = CornerSize(16.dp)),
+            elevation = 6.dp,
         ) {
-            Text(
-                text = monitoring.jenisMonitoring,
-                    style = MaterialTheme.typography.h5,
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start
+            ) {
+                Text(
+                    text = resMonitor.nama,
+                    style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(horizontal = 5.dp)
                 )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = monitoring.valueMonitoring,
-                style = MaterialTheme.typography.h3,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 10.dp)
-            )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End
-        ){
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                if (resMonitor.satuan == "run/stop") {
+                    if (resMonitor.value == 1) {
+                        Text(
+                            text = "run",
+                            style = MaterialTheme.typography.h3,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(horizontal = 20.dp)
 
-            Text(text = monitoring.satuanMonitoring,
-                style = MaterialTheme.typography.h4,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 10.dp)
-            )
+                        )
+                    } else {
+                        Text(
+                            text = "stop",
+                            style = MaterialTheme.typography.h3,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(horizontal = 20.dp)
+
+                        )
+                    }
+                } else if (resMonitor.satuan == "hour") {
+                    val tempHour = resMonitor.value / 60
+                    val tempMin = resMonitor.value % 60
+                    Text(
+                        text = "${tempHour}:${tempMin}",
+                        style = MaterialTheme.typography.h3,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = 20.dp)
+
+                    )
+                } else {
+                    Text(
+//                text = monitoring.valueMonitoring,
+                        text = resMonitor.value.toString(),
+                        style = MaterialTheme.typography.h3,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = 20.dp)
+
+                    )
+                }
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = resMonitor.satuan,
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 10.dp)
+                )
+            }
         }
     }
 }
-
 
