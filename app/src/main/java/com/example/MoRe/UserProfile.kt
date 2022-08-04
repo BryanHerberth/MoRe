@@ -236,22 +236,12 @@ fun ProfileImage(navController: NavController) {
                 painter = painter,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(120.dp)
-                    .clickable { launcher.launch("image/*") },
+                    .size(120.dp),
+//                    .clickable { launcher.launch("image/*") },
                 contentScale = ContentScale.Crop
             )
         }
         Spacer(modifier = Modifier.padding(4.dp))
-
-        TextButton(onClick = {
-            launcher.launch("image/*")
-        }) {
-            Text(
-                text = "Ubah Gambar",
-                color = BlueApp, fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-            )
-        }
         userData(navController)
     }
 }
