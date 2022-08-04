@@ -137,14 +137,15 @@ fun loginForm(
                 onClick = {
                     composableScope.launch {
                         postLogin(email.value, password.value)
+                        if(responseLogin?.data?.code() != 201){
+                            Toast.makeText(context, "loginGagal", Toast.LENGTH_SHORT).show()
+                        } else{
+                            Toast.makeText(context, "login Sukses", Toast.LENGTH_LONG).show()
+                            navController.navigate(MoReScreens.HomeScreen.name +"/${email.value}/${password.value}" )
+                        }
                     }
 
-                    if(responseLogin?.data?.code() != 201){
-                        Toast.makeText(context, "loginGagal", Toast.LENGTH_SHORT).show()
-                    } else{
-                        Toast.makeText(context, "login Sukses", Toast.LENGTH_LONG).show()
-                        navController.navigate(MoReScreens.HomeScreen.name +"/${email.value}/${password.value}" )
-                    }
+
             },
                 modifier = Modifier
                     .padding(4.dp)

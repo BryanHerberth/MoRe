@@ -6,7 +6,7 @@ data class ResGetVarLaporan(
 )
 
 data class DataVal(
-    val variable : Array<String>
+    val variabel : List<String>
 )
 
 //data class ResGetLaporan(

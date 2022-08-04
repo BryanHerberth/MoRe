@@ -1,5 +1,7 @@
 package com.example.MoRe
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -7,15 +9,14 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -28,7 +29,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.MoRe.navigation.MoReScreens
+import com.example.MoRe.network.model.base.Resource
+import com.example.MoRe.network.model.req.ReqRegister
+import com.example.MoRe.network.model.req.ReqSendVerifikasi
+import com.example.MoRe.network.model.res.register.ResRegister
+import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
 
 @Composable
@@ -58,8 +68,58 @@ fun registerForm(navController: NavController) {
     val confirmPass = rememberSaveable { mutableStateOf("") }
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
     val passwordFocusRequest = FocusRequester.Default
+    val context = LocalContext.current
+    // START API
+    var responseRegister by remember {
+        mutableStateOf<ResRegister?>(null)
+    }
+    var errorMessage by remember {
+        mutableStateOf<String?>(null)
+    }
+
+    suspend fun postRegitser(nama: String, email: String, password: String, noTlpn: String) {
+        val repository = Repository()
+        val req = ReqRegister(nama, email, password, noTlpn)
+        suspend fun postSendVerifikasi(email: String) {
+            val repository = Repository()
+            val req = ReqSendVerifikasi(email)
+            coroutineScope {
+                launch(Dispatchers.IO) {
+                    try {
+                        val response = repository.postUserSendVerifikasi(req)
+                        Log.d("responseSendVerifikasi : ", response.toString())
+                    } catch (e: Exception){
+                        Log.e("Error SendVerifikasi : ", e.message.toString())
+                    }
+                }
+            }
+        }
+        coroutineScope {
+            launch(Dispatchers.IO){
+                try{
+                    val response = repository.postUserRegister(req)
+                    if(response.code()==201){
+                        errorMessage = ""
+                        Log.d("response Register : ", response.toString())
+                        postSendVerifikasi(email)
+                    } else{
+                        errorMessage =
+                            Log.e("response Register Error : ", response.message().toString()).toString()
+
+                    }
+                } catch (e: Exception){
+                    Log.e("Error Register SignUpScreen.kt : ", e.message.toString())
+                }
+            }
+        }
+
+    }
+
+    // STOP API
+    val composableScope = rememberCoroutineScope()
+
     val modifier = Modifier
-        .height(450.dp)
+        .height(600.dp)
         .width(400.dp)
         .background(MaterialTheme.colors.background)
         .verticalScroll(rememberScrollState())
@@ -94,7 +154,7 @@ fun registerForm(navController: NavController) {
 
         ConfirmpasswordInput(
             modifier = Modifier.focusRequester(passwordFocusRequest),
-            passwordState = password,
+            passwordState = confirmPassword,
             labelId = "Konfirmasi Password",
             enabled = true,
             passwordVisibility = passwordVisibility
@@ -109,7 +169,16 @@ fun registerForm(navController: NavController) {
             OutlinedButton(
                 onClick = {
 //                    navController.popBackStack()
-                    navController.navigate(MoReScreens.VerificationScreen.name)
+                    // Fungsi Daftar dijalankann
+                    if (password.value != confirmPassword.value){
+                        Toast.makeText(context, "Password dan Konfirmasi Password tidak valid", Toast.LENGTH_SHORT).show()
+                    } else{
+                        composableScope.launch {
+                            postRegitser(namaLengkap.value,email.value,password.value ,noHp.value)
+                            navController.navigate(MoReScreens.VerificationScreen.name+"/${email.value}")
+                        }
+                    }
+//                    navController.navigate(MoReScreens.VerificationScreen.name+"/${email.value}")
 
                 },
                 modifier = Modifier
@@ -130,7 +199,9 @@ fun registerForm(navController: NavController) {
             }
         }
     }
-    Spacer(modifier = Modifier.height(200.dp))
+    Spacer(
+        modifier = Modifier.height(0.dp)
+    )
     Column(verticalArrangement = Arrangement.spacedBy(16.dp, alignment = Alignment.Bottom),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

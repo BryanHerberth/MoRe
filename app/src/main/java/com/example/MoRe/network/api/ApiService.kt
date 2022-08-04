@@ -1,10 +1,7 @@
 package com.example.MoRe.network.api
 
 import com.example.MoRe.network.model.ResStart
-import com.example.MoRe.network.model.req.ReqLogin
-import com.example.MoRe.network.model.req.ReqRegister
-import com.example.MoRe.network.model.req.ReqSendVerifikasi
-import com.example.MoRe.network.model.req.ReqVerifikasi
+import com.example.MoRe.network.model.req.*
 import com.example.MoRe.network.model.res.ResGetUser
 import com.example.MoRe.network.model.res.ResSendVerifikasi
 import com.example.MoRe.network.model.res.ResVerifikasi
@@ -17,10 +14,12 @@ import com.example.MoRe.network.model.res.getpabrik.ResGetPabrik
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrikById
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrikByName
 import com.example.MoRe.network.model.res.laporan.ResGetVarLaporan
+import com.example.MoRe.network.model.res.laporan.ResLaporanByName
 import com.example.MoRe.network.model.res.login.ResLogin
 import com.example.MoRe.network.model.res.monitor.ResGetMonitor
 import com.example.MoRe.network.model.res.notifikasi.ResGetNotifikasi
 import com.example.MoRe.network.model.res.notifikasi.ResPutNotifikasi
+import com.example.MoRe.network.model.res.putUser.ResPutUser
 import com.example.MoRe.network.model.res.register.ResRegister
 import retrofit2.Response
 import retrofit2.http.*
@@ -35,7 +34,7 @@ interface ApiService {
         @Body reqRegister: ReqRegister
     ): Response<ResRegister>
 
-    @POST("/users/sendVerifikasi")
+    @POST("/users/sendverifikasi")
     suspend fun postUserSendVerifikasi(
         @Body reqSendVerifikasi: ReqSendVerifikasi
     ): Response<ResSendVerifikasi>
@@ -47,6 +46,11 @@ interface ApiService {
 
     @GET("/users")
     suspend fun getUser() : Response<ResGetUser>
+
+    @PUT("/users")
+    suspend fun putUser(
+        @Body reqPutUser: ReqPutUser
+    ): Response<ResPutUser>
 
     // Authentications
     @POST("/authentications")
@@ -116,6 +120,13 @@ interface ApiService {
         @Path("id") idPabrik: String,
         @Path("idMesin") idMesin: String
     )
+
+    @POST("/pabrik/{id}/mesin/{idMesin}/laporanbyname")
+    suspend fun postLaporanByName(
+        @Path("id") idPabrik: String,
+        @Path("idMesin") idMesin: String,
+        @Body reqLaporan: ReqLaporan
+    ) : Response<ResLaporanByName>
 
     // Dokumen
     @GET("/pabrik/{id}/mesin/{idMesin}/dokumen")

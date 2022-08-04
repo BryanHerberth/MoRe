@@ -16,10 +16,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.MoRe.model.DaftarLaporan
 import com.example.MoRe.model.getDataLaporan
+import com.example.MoRe.network.model.res.laporan.LaporanByName
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
-fun  CardViewLaporan(daftarLaporan: DaftarLaporan = getDataLaporan()[0]) {
+fun  CardViewLaporan(
+    resLaporan: LaporanByName,
+//    daftarLaporan: DaftarLaporan = getDataLaporan()[0]
+) {
     Card(modifier = Modifier
         .padding(4.dp)
         .fillMaxWidth(),
@@ -31,18 +35,18 @@ fun  CardViewLaporan(daftarLaporan: DaftarLaporan = getDataLaporan()[0]) {
             Row(modifier = Modifier
                 .padding(4.dp)
             ) {
-                Text(text = daftarLaporan.Nomor,
+                Text(text = resLaporan.nomor,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(4.dp)
                         .weight(0.01f)
                 )
                 Text(
-                    text = daftarLaporan.TanggalMulai,
+                    text = resLaporan.timestamp,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(4.dp)
                         .weight(0.02f)
                     )
-                Text(text = daftarLaporan.DataLaporan,
+                Text(text = resLaporan.value,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(4.dp)
 //                        .weight(0.1f)

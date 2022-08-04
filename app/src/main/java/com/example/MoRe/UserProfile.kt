@@ -2,6 +2,7 @@ package com.example.MoRe
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -40,13 +41,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.navigation.MoReScreens
+import com.example.MoRe.network.model.base.Resource
+import com.example.MoRe.network.model.req.ReqPutUser
+import com.example.MoRe.network.model.res.ResGetUser
+import com.example.MoRe.network.model.res.getuser.User
+import com.example.MoRe.network.model.res.putUser.ResPutUser
+import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.example.MoRe.ui.theme.Teal200
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -139,6 +148,38 @@ fun CustomAppbar2(name:String,
 
 @Composable
 fun Scaffoldlayout(navController: NavController) {
+
+//    // START API
+//    var responsegetUser by remember {
+//        mutableStateOf<ResGetUser?>(null)
+//    }
+//    var activeUser by remember {
+//        mutableStateOf<User?>(User("", "", "", "", "", true, ""))
+//    }
+//
+//    suspend fun getUser(){
+//        val repository = Repository()
+//        coroutineScope {
+//            launch(Dispatchers.IO) {
+//                try{
+//                    val response =  repository.getUser()
+//                    launch(Dispatchers.Main) {
+//                        responsegetUser = Resource.Success(response).data?.body()
+//                        activeUser = responsegetUser?.data?.user
+//                        Log.d("Response Get Data User", responsegetUser.toString())
+//                    }
+//                } catch (e: Exception){
+//                    Log.e("error get User on UserProfile.kt : ", e.message.toString())
+//                }
+//            }
+//        }
+//    }
+//
+//    LaunchedEffect(Unit){
+//        getUser()
+//    }
+    // STOP API
+
     Scaffold(
         topBar = {
             CustomAppbar("Profil",
@@ -156,15 +197,16 @@ fun Scaffoldlayout(navController: NavController) {
                     color = Color.White,
                 )
                 {
-                    ProfileImage()
+                    ProfileImage(navController)
                 }
             }
         })
 }
 
 @Composable
-fun ProfileImage() {
+fun ProfileImage(navController: NavController) {
     val imageUri = rememberSaveable { mutableStateOf("") }
+//    val imgProfil = activeUser.foto_profil // ini foto profilnya tolong di implemen
     val painter = rememberAsyncImagePainter(
         if (imageUri.value.isEmpty())
             R.drawable.ic_user
@@ -210,26 +252,28 @@ fun ProfileImage() {
                 fontSize = 20.sp,
             )
         }
-        userData()
+        userData(navController)
     }
 }
 
 @Composable
-fun userData() {
+fun userData(navController: NavController) {
+    var activeUser = User("", "", "", "", "", true, "")
+    activeUser = SessionManager.getUserData()!!
     var text by remember {
-        mutableStateOf("Erico")
+        mutableStateOf(activeUser?.nama_pengguna)
     }
     var text2 by remember {
-        mutableStateOf("Erico")
+        mutableStateOf(activeUser?.nama_pengguna)
     }
     var email by remember {
-        mutableStateOf("erico@mail.com")
+        mutableStateOf(activeUser?.email)
     }
     var phonenum by remember {
-        mutableStateOf("081234567890")
+        mutableStateOf(activeUser?.no_telepon)
     }
     var phonenum2 by remember {
-        mutableStateOf("081234567890")
+        mutableStateOf(activeUser?.no_telepon)
     }
     val openDialog:MutableState<Boolean> = remember {
         mutableStateOf(false)
@@ -237,6 +281,30 @@ fun userData() {
     val opennameDialog:MutableState<Boolean> = remember {
         mutableStateOf(false)
     }
+
+    // START API
+    var responseEditUser by remember {
+        mutableStateOf<ResPutUser?>(null)
+    }
+
+    suspend fun putUser(nama: String, noTelpn: String){
+        val repository = Repository()
+        coroutineScope {
+            launch(Dispatchers.IO) {
+                try {
+                    val response = repository.putUser(ReqPutUser(nama, "", noTelpn))
+                    launch(Dispatchers.Main) {
+                        responseEditUser = Resource.Success(response).data?.body()
+                    }
+                } catch (e: Exception){
+                    Log.e("Error Edit User on UserProfule.kt : ", e.message.toString())
+                }
+            }
+        }
+    }
+    val composableScope = rememberCoroutineScope()
+    // STOP API
+
     Column {
         OutlinedTextField(value = text, onValueChange = { newText ->
             text = newText
@@ -288,6 +356,9 @@ fun userData() {
                             confirmButton = {
                                 TextButton(onClick = {
                                     opennameDialog.value = false
+                                    composableScope.launch {
+                                        putUser(text2, phonenum)
+                                    }
                                     text = text2
                                 }) {
                                     Text(
@@ -328,6 +399,7 @@ fun userData() {
                         AlertDialog(
                             onDismissRequest = {
                                 openDialog.value = false
+
                                 phonenum2 = phonenum
                             },
                             title = {
@@ -364,6 +436,9 @@ fun userData() {
                             confirmButton = {
                                 TextButton(onClick = {
                                     openDialog.value = false
+                                    composableScope.launch {
+                                        putUser(text, phonenum2)
+                                    }
                                     phonenum = phonenum2
                                 }) {
                                     Text(
@@ -388,7 +463,10 @@ fun userData() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                SessionManager.logOut()
+                navController.navigate(MoReScreens.LoginScreen.name)
+            },
             modifier = Modifier.size(260.dp, 40.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Red,

@@ -17,19 +17,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.MoRe.R
 import com.example.MoRe.model.DaftarUser
 import com.example.MoRe.model.getUser
+import com.example.MoRe.network.model.res.getmember.Anggota
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun CardUser (
-    pengguna : DaftarUser = getUser()[0],
+    resPengguna: Anggota
+//    pengguna: Anggota = getUser()[0],
 //    onItemClick : (String) -> Unit ={}
 ){
 
@@ -65,22 +70,36 @@ fun CardUser (
                     .size(30.dp),
                 border = BorderStroke(2.dp, color = Color.Black)
             ) {
-                Image(
-                    imageVector = pengguna.fotoUser,
-                    contentDescription = null,
+//                Image(
+//                    imageVector = pengguna.fotoUser,
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .size(10.dp)
+//                        .padding(2.dp),
+//                    contentScale = ContentScale.Crop
+//                )
+                AsyncImage(model = ImageRequest.Builder(LocalContext.current)
+                    .data(data = resPengguna.foto_profil)
+                    .crossfade(true)
+                    .build(),
                     modifier = Modifier
                         .size(10.dp)
                         .padding(2.dp),
-                    contentScale = ContentScale.Crop
+                    contentDescription = "Foto User",
+                    contentScale = ContentScale.Fit // Perlu di sesuaiikannnn
                 )
             }
             Column(modifier = Modifier
                 .padding(4.dp)
             ) {
-                Text(text = pengguna.namaUser,
+                Text(
+//                    text = pengguna.namaUser,
+                    text = resPengguna.nama_pengguna,
                     style = MaterialTheme.typography.h6
                 )
-                Text(text = pengguna.emailUser,
+                Text(
+//                    text = pengguna.emailUser,
+                    text = resPengguna.email,
                     style = MaterialTheme.typography.caption
                 )
             }

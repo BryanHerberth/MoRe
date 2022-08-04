@@ -16,7 +16,7 @@ data class ResGetMesinById(
 )
 
 data class ArrData(
-    val mesin: Array<Mesin>
+    val mesin: ArrayList<Mesin>
 )
 
 data class Data(

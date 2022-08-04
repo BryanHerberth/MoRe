@@ -7,6 +7,7 @@ import android.util.Log
 import com.example.MoRe.network.model.res.Data
 import com.example.MoRe.network.model.res.DataPabrik
 import com.example.MoRe.network.model.res.getmesin.Mesin
+import com.example.MoRe.network.model.res.getuser.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Delay
@@ -67,6 +68,32 @@ object SessionManager {
             null
         }
     }
+    fun saveUser(user: User){
+        val jsonText = Gson().toJson(user)
+        editor.putString(SessionConstant.ACTIVE_USER, jsonText).apply()
+    }
+
+    fun getUserData(): User? {
+        return try{
+            val jsonText = sharedPreferences.getString(SessionConstant.ACTIVE_USER, "")
+            return when {
+                !TextUtils.isEmpty(jsonText) -> Gson().fromJson(jsonText, object : TypeToken<User>() {}.type)
+                else -> null
+            }
+        } catch (e: Exception){
+            null
+        }
+    }
+    fun saveStartDate(start: String){
+        editor.putString(SessionConstant.STARTDATE, start).apply()
+    }
+    val getStartDate: String get() = sharedPreferences.getString(SessionConstant.STARTDATE, "") ?: ""
+
+    fun saveStopDate(stop: String){
+        editor.putString(SessionConstant.STOPDATE, stop).apply()
+    }
+    val getStopDate: String get() = sharedPreferences.getString(SessionConstant.STOPDATE, "") ?: ""
+
 
 
     fun logOut() {
@@ -77,6 +104,9 @@ object SessionManager {
         const val ACCESS_TOKEN = "accessToken"
         const val ACTIVE_PABRIK = "pabrik"
         const val ACTIVE_MESIN = "mesin"
+        const val ACTIVE_USER = "user"
+        const val STARTDATE = "startDate"
+        const val STOPDATE = "stopDate"
         const val OAUTH_DATA = "oauthData"
     }
 }

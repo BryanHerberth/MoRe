@@ -18,11 +18,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.MoRe.model.DaftarMonitoring
 import com.example.MoRe.model.getDataMonitor
+import com.example.MoRe.network.model.res.monitor.Monitor
+import com.example.MoRe.network.model.res.monitor.ResGetMonitor
 
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun CardMonitoring(
+    resMonitor : Monitor,
     monitoring : DaftarMonitoring = getDataMonitor()[0],
     onItemClick : (String) -> Unit ={},
 //    navController: NavController,
@@ -40,18 +43,56 @@ fun CardMonitoring(
         Row(verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = monitoring.jenisMonitoring,
+            Text(
+//                text = monitoring.jenisMonitoring,
+                text = resMonitor.nama,
                 style = MaterialTheme.typography.h5,
 
             )
-            Text(
-                text = monitoring.valueMonitoring,
-                style = MaterialTheme.typography.h3,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 20.dp)
+            if (resMonitor.satuan=="run/stop"){
+                if(resMonitor.value == 1){
+                    Text(
+//                text = monitoring.valueMonitoring,
+                        text = "run",
+                        style = MaterialTheme.typography.h3,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = 20.dp)
+
+                    )
+                }else{
+                    Text(
+//                text = monitoring.valueMonitoring,
+                        text = "stop",
+                        style = MaterialTheme.typography.h3,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = 20.dp)
+
+                    )
+                }
+            } else if(resMonitor.satuan=="hour"){
+                val tempHour= resMonitor.value/60
+                val tempMin = resMonitor.value % 60
+                Text(
+                    text = "${tempHour}:${tempMin}",
+                    style = MaterialTheme.typography.h3,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 20.dp)
 
                 )
-            Text(text = monitoring.satuanMonitoring,
+            }else{
+                Text(
+//                text = monitoring.valueMonitoring,
+                    text = resMonitor.value.toString(),
+                    style = MaterialTheme.typography.h3,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 20.dp)
+
+                )
+            }
+
+            Text(
+//                text = monitoring.satuanMonitoring,
+                text = resMonitor.satuan,
                 style = MaterialTheme.typography.h4,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(horizontal = 20.dp)

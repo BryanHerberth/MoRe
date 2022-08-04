@@ -18,7 +18,7 @@ data class ResGetPabrikById(
 )
 
 data class DataArr(
-    val pabrik: List<DataPabrik>
+    val pabrik: ArrayList<DataPabrik>
 )
 data class Data(
     val pabrik: Array<DataPabrik>

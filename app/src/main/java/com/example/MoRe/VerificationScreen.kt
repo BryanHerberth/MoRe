@@ -1,20 +1,21 @@
 package com.example.MoRe
 
 import android.hardware.lights.Light
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -23,11 +24,29 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.MoRe.navigation.MoReScreens
+import com.example.MoRe.network.model.base.Resource
+import com.example.MoRe.network.model.req.ReqSendVerifikasi
+import com.example.MoRe.network.model.req.ReqVerifikasi
+import com.example.MoRe.network.model.res.ResVerifikasi
+import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
 
 @Composable
-fun moreVerifScreen(navController: NavController) {
+fun moreVerifScreen(
+    navController: NavController,
+    email: String?
+) {
+    Log.d("Email verification Screen", email!!)
+
+    // API START
+
+    // API STOP
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
@@ -46,7 +65,7 @@ fun moreVerifScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            VerifForm(navController = navController)
+            VerifForm(navController = navController, email)
 
         }
     }
@@ -54,13 +73,57 @@ fun moreVerifScreen(navController: NavController) {
 
 
 @Composable
-fun VerifForm(navController: NavController) {
+fun VerifForm(
+    navController: NavController,
+    email: String
+) {
     val verificationPin = rememberSaveable {
         mutableStateOf("")
     }
     val passwordFocusRequest = FocusRequester.Default
+    val context = LocalContext.current
+    // START API
+    var responseVerify by remember{
+        mutableStateOf<Resource<Response<ResVerifikasi>?>?>(null)
+    }
+    suspend fun postSendVerifikasi(email: String)  {
+        val repository = Repository()
+        val req = ReqSendVerifikasi(email)
+        coroutineScope {
+            launch(Dispatchers.IO) {
+                try {
+                    val response = repository.postUserSendVerifikasi(req)
+                    Log.d("responseSendVerifikasi : ", response.toString())
+                } catch (e: Exception){
+                    Log.e("Error SendVerifikasi : ", e.message.toString())
+                }
+            }
+        }
+    }
+
+    suspend fun postVerify(email: String, kode: String) {
+        val repository = Repository()
+        val req = ReqVerifikasi(email, kode)
+        coroutineScope {
+            launch(Dispatchers.IO) {
+                try {
+                    val response = repository.postUserVerifikasi(req)
+                    Log.d("responseVerifikasiEmail : ", response.toString())
+                    launch(Dispatchers.Main) {
+                        responseVerify = Resource.Success(response)
+                    }
+                } catch (e: Exception){
+                    Log.e("Error Verifikasi : ", e.message.toString())
+                }
+            }
+        }
+    }
+
+    // STOP API
+    val composableScope = rememberCoroutineScope()
+
     val modifier = Modifier
-        .height(250.dp)
+        .height(600.dp)
         .width(400.dp)
         .background(MaterialTheme.colors.background)
         .verticalScroll(rememberScrollState())
@@ -77,11 +140,17 @@ fun VerifForm(navController: NavController) {
             horizontalAlignment = Alignment.End
 
         ) {
-            Text(text = "Kirim ulang kode verifikasi",
-                style = MaterialTheme.typography.h6,
-                color = BlueApp,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
+            TextButton(onClick = {
+                composableScope.launch {
+                    postSendVerifikasi(email)
+                }
+            }) {
+                Text(text = "Kirim ulang kode verifikasi",
+                    style = MaterialTheme.typography.h6,
+                    color = BlueApp,
+                    modifier = Modifier.padding(horizontal = 20.dp)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -91,8 +160,18 @@ fun VerifForm(navController: NavController) {
         ) {
             OutlinedButton(
                 onClick = {
-                    navController.popBackStack()
-                    navController.navigate(MoReScreens.LoginScreen.name)
+                    composableScope.launch {
+                        postVerify(email, verificationPin.value)
+                        if(responseVerify?.data?.code() != 200){
+                            Toast.makeText(context, "Kode yang anda masukan tidak valid", Toast.LENGTH_SHORT).show()
+                        } else{
+                            Toast.makeText(context, "Verifikasi Sukses", Toast.LENGTH_SHORT).show()
+//                            navController.popBackStack()
+                            navController.navigate(MoReScreens.LoginScreen.name)
+                        }
+                    }
+//                    navController.popBackStack()
+//                    navController.navigate(MoReScreens.LoginScreen.name)
                 },
                 modifier = Modifier
                     .padding(4.dp)

@@ -24,12 +24,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.MoRe.SearchBar
 import com.example.MoRe.ViewModel.SearchViewModel
+import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.DaftarPabrik
 import com.example.MoRe.model.SearchWidgetState
 import com.example.MoRe.model.getPabrik
 import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.base.Resource
+import com.example.MoRe.network.model.res.ResGetUser
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrik
+import com.example.MoRe.network.model.res.getuser.User
 import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
 import kotlinx.coroutines.Dispatchers
@@ -61,9 +64,34 @@ fun ScaffoldHome(
             }
         }
     }
+    var responsegetUser by remember {
+        mutableStateOf<ResGetUser?>(null)
+    }
+    var activeUser by remember {
+        mutableStateOf<User?>(User("", "", "", "", "", true, ""))
+    }
+
+    suspend fun getUser(){
+        val repository = Repository()
+        coroutineScope {
+            launch(Dispatchers.IO) {
+                try{
+                    val response =  repository.getUser()
+                    launch(Dispatchers.Main) {
+                        responsegetUser = Resource.Success(response).data?.body()
+                        SessionManager.saveUser(responsegetUser?.data?.user!!)
+                        Log.d("User from shared reference : ", SessionManager.getUserData().toString())
+                    }
+                } catch (e: Exception){
+                    Log.e("error get User on UserProfile.kt : ", e.message.toString())
+                }
+            }
+        }
+    }
 
     LaunchedEffect(Unit){
         getPabrik()
+        getUser()
     }
 
     // API STOP

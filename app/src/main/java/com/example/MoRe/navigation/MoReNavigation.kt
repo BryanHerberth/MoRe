@@ -21,6 +21,8 @@ fun MoReNavHost(
 ) {
     val navController = rememberNavController()
 
+
+
     NavHost(navController = navController,
         startDestination = MoReScreens.SplashScreen.name
         ){
@@ -35,6 +37,23 @@ fun MoReNavHost(
         composable(MoReScreens.SignUpScreen.name){
             moreSignUpScreen(navController = navController)
         }
+        val verifikasiScreen = MoReScreens.VerificationScreen.name
+        composable("$verifikasiScreen/{email}",
+            arguments = listOf(
+                navArgument(name = "email"){
+                    type = NavType.StringType
+                    defaultValue = ""
+                    nullable = true
+                }
+            )){ navVerifikasi ->
+            moreVerifScreen(
+                navController = navController,
+                email = navVerifikasi.arguments?.getString("email")
+            )
+        }
+//        composable(MoReScreens.VerificationScreen.name){
+//            moreVerifScreen(navController = navController)
+//        }
 
         val pabrikScreen  = MoReScreens.PabrikScreen.name
         composable("$pabrikScreen/{idPabrik}",
@@ -70,9 +89,7 @@ fun MoReNavHost(
                 idPabrik = navDetails.arguments?.getString("idPabrik"),
                 idMesin = navDetails.arguments?.getString("idMesin"))
         }
-        composable(MoReScreens.VerificationScreen.name){
-            moreVerifScreen(navController = navController)
-        }
+
 
         val Homeroute = MoReScreens.HomeScreen.name
         composable("$Homeroute/{email}/{pass}",

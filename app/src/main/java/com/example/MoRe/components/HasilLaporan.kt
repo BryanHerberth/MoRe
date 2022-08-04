@@ -2,6 +2,7 @@ package com.example.MoRe.components
 
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -22,12 +23,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.DaftarLaporan
 import com.example.MoRe.model.getDataLaporan
+import com.example.MoRe.network.model.res.laporan.DataLaporan
+import com.example.MoRe.network.model.res.laporan.LaporanByName
+import com.example.MoRe.network.model.res.laporan.ResLaporanByName
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @ExperimentalFoundationApi
 @Composable
-fun HasilTampilkan(laporan: List<DaftarLaporan> = getDataLaporan()){
+fun HasilTampilkan(
+    laporan: List<DaftarLaporan> = getDataLaporan(),
+    resLaporan: List<LaporanByName>
+){
     Card(modifier = Modifier
         .padding(4.dp)
         .fillMaxWidth(),
@@ -63,13 +76,13 @@ fun HasilTampilkan(laporan: List<DaftarLaporan> = getDataLaporan()){
                     )
                 }
                 LazyColumn{
-                    val laporanSort = laporan.groupBy { it.Nomor}
+                    val laporanSort = resLaporan.groupBy { it.nomor}
 
-                    laporanSort.forEach { (Nomor, Tanggal, ) ->
+                    laporanSort.forEach { (nomor, timestamp, ) ->
                         stickyHeader {
                         }
-                        items(items = Tanggal){
-                            CardViewLaporan(daftarLaporan = it)
+                        items(items = timestamp){
+                            CardViewLaporan(resLaporan = it)
                         }
                     }
                 }
@@ -97,7 +110,8 @@ fun DateStartPickerLayout(){
     val datePickerDialog = DatePickerDialog(
         context, { d, year1 , month1 , day1 ->
             val month = month1 + 1
-            date.value = "$day1/$month/$year1"
+            date.value = "$day1-$month-$year1"
+            SessionManager.saveStartDate(date.value)
         }, year, month, day
     )
     TextField(
@@ -106,7 +120,11 @@ fun DateStartPickerLayout(){
         label ={ Text(text = "Start Date") } ,
         readOnly = true,
         trailingIcon = {
-            IconButton(onClick = {datePickerDialog.show()}) {
+            IconButton(
+                onClick = {
+                    datePickerDialog.show()
+                }
+            ) {
                 Image(imageVector = Icons.Outlined.ArrowDropDown, contentDescription = "DropDownArrow")
             }
         },
@@ -138,12 +156,19 @@ fun DateEndPickerLayout() {
     var eDate = remember {
         mutableStateOf("")
     }
+//    fun dateToTimeStamp(date: String){
+//        val myDate = SimpleDateFormat("dd-MM-yyyy").parse("2-08-2022")
+//        Log.d("TimeStamp End : ", Timestamp(year = 2022))
+//    }
+
 
 
     val dateEndPickerDialog = DatePickerDialog(
         context, { d, year2, month2, day2 ->
             val endMonth = month2 + 1
-            eDate.value = "$day2/$endMonth/$year2"
+            eDate.value = "$day2-$endMonth-$year2"
+            SessionManager.saveStopDate(eDate.value)
+            Log.d("EndDate Picker : ", eDate.value)
         }, eYear, eMonth, eDay
     )
     TextField(
@@ -152,7 +177,13 @@ fun DateEndPickerLayout() {
         label = { Text(text = "End Date") },
         readOnly = true,
         trailingIcon = {
-            IconButton(onClick = { dateEndPickerDialog.show() }) {
+            IconButton(
+                onClick = {
+                    dateEndPickerDialog.show()
+                    Log.d("EndDatePick date", eDate.value)
+//                    dateToTimeStamp(eDate.value)
+                }
+            ) {
                 Image(
                     imageVector = Icons.Outlined.ArrowDropDown,
                     contentDescription = "DropDownArrow"

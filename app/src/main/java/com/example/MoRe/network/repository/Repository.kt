@@ -3,20 +3,22 @@ package com.example.MoRe.network.repository
 import android.util.Log
 import com.example.MoRe.network.api.RetrofitInstance
 import com.example.MoRe.network.model.ResStart
-import com.example.MoRe.network.model.req.ReqLogin
-import com.example.MoRe.network.model.req.ReqRegister
-import com.example.MoRe.network.model.req.ReqSendVerifikasi
-import com.example.MoRe.network.model.req.ReqVerifikasi
+import com.example.MoRe.network.model.req.*
 import com.example.MoRe.network.model.res.ResGetUser
 import com.example.MoRe.network.model.res.ResSendVerifikasi
 import com.example.MoRe.network.model.res.ResVerifikasi
+import com.example.MoRe.network.model.res.dokumen.ResGetDokumen
 import com.example.MoRe.network.model.res.getmember.ResGetMember
 import com.example.MoRe.network.model.res.getmesin.ResGetMesin
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrik
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrikById
+import com.example.MoRe.network.model.res.laporan.ResGetVarLaporan
+import com.example.MoRe.network.model.res.laporan.ResLaporanByName
 import com.example.MoRe.network.model.res.login.ResLogin
+import com.example.MoRe.network.model.res.monitor.ResGetMonitor
 import com.example.MoRe.network.model.res.notifikasi.ResGetNotifikasi
 import com.example.MoRe.network.model.res.notifikasi.ResPutNotifikasi
+import com.example.MoRe.network.model.res.putUser.ResPutUser
 import com.example.MoRe.network.model.res.register.ResRegister
 import dagger.hilt.android.scopes.ActivityScoped
 import retrofit2.Response
@@ -41,6 +43,9 @@ class Repository @Inject constructor(
     }
     suspend fun getUser() : Response<ResGetUser>{
         return RetrofitInstance.api.getUser()
+    }
+    suspend fun putUser(reqPutUser: ReqPutUser): Response<ResPutUser>{
+        return RetrofitInstance.api.putUser(reqPutUser)
     }
 
     // Authentications
@@ -78,6 +83,26 @@ class Repository @Inject constructor(
 
     suspend fun putNotifikasi(idNotifikasi: String): Response<ResPutNotifikasi>{
         return RetrofitInstance.api.putNotifikasi(idNotifikasi)
+    }
+
+    // Monitor
+    suspend fun getMonitor(idPabrik: String, idMesin: String): Response<ResGetMonitor>{
+        return RetrofitInstance.api.getMonitor(idPabrik, idMesin)
+    }
+
+    // Laporan
+    suspend fun getLaporanVariabel(idPabrik: String, idMesin: String): Response<ResGetVarLaporan>{
+        return  RetrofitInstance.api.getLaporanVariabel(idPabrik, idMesin)
+    }
+
+    // Dokumen
+    suspend fun getDokumen(idPabrik: String, idMesin: String): Response<ResGetDokumen>{
+        return RetrofitInstance.api.getDokumen(idPabrik, idMesin)
+    }
+
+    // Laporan
+    suspend fun postLaporan(idPabrik: String, idMesin: String, reqLaporan: ReqLaporan): Response<ResLaporanByName>{
+        return RetrofitInstance.api.postLaporanByName(idPabrik,idMesin, reqLaporan)
     }
 
 

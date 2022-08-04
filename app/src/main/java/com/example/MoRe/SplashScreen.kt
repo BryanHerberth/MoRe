@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
+import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.ResStart
 import com.example.MoRe.network.model.base.BaseResponse
@@ -75,7 +76,11 @@ fun moreSplashScreen(
     }
     val email = rememberSaveable { mutableStateOf("Erico") }
     val password = rememberSaveable { mutableStateOf("1234") }
-    val loggedIn = false
+    var loggedIn = false
+    val token = SessionManager.accessToken
+    if(token!=""){
+        loggedIn = true
+    }
     LaunchedEffect(key1 = true) {
         scale.animateTo(
             targetValue = 0.9f,
