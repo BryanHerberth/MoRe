@@ -33,8 +33,13 @@ fun CardMonitoring(
 ) {
 
     var myBorder = BorderStroke(1.dp, color = Color.LightGray)
+    var myBackgroundColor = Color.White
+    var alarmColor = Color.Black
     if(resMonitor.alarm && resMonitor.enableAlarm){
         myBorder = BorderStroke(2.dp, color = Color.Red)
+        myBackgroundColor = Color.Red
+        alarmColor = Color.White
+
     }
     Box(contentAlignment = Alignment.Center) {
         Card(
@@ -46,7 +51,8 @@ fun CardMonitoring(
                 },
             shape = RoundedCornerShape(corner = CornerSize(16.dp)),
             elevation = 6.dp,
-            border = myBorder
+            border = myBorder,
+            backgroundColor = myBackgroundColor
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -54,6 +60,7 @@ fun CardMonitoring(
             ) {
                 Text(
                     text = resMonitor.nama,
+                    color = alarmColor,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(horizontal = 5.dp)
                 )
@@ -67,6 +74,7 @@ fun CardMonitoring(
                         Text(
                             text = "run",
                             style = MaterialTheme.typography.h3,
+                            color = alarmColor,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(horizontal = 20.dp)
 
@@ -75,6 +83,7 @@ fun CardMonitoring(
                         Text(
                             text = "stop",
                             style = MaterialTheme.typography.h3,
+                            color = alarmColor,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(horizontal = 20.dp)
 
@@ -86,6 +95,8 @@ fun CardMonitoring(
                     Text(
                         text = "${tempHour}:${tempMin}",
                         style = MaterialTheme.typography.h3,
+                        color = alarmColor,
+
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(horizontal = 20.dp)
 
@@ -95,8 +106,10 @@ fun CardMonitoring(
 //                text = monitoring.valueMonitoring,
                         text = resMonitor.value.toString(),
                         style = MaterialTheme.typography.h3,
+                        color = alarmColor,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(horizontal = 20.dp)
+
 
                     )
                 }
@@ -108,6 +121,7 @@ fun CardMonitoring(
                 Text(
                     text = resMonitor.satuan,
                     style = MaterialTheme.typography.h5,
+                    color = alarmColor,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 10.dp)
                 )

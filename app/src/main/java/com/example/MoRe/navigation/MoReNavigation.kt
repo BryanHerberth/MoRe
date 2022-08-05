@@ -22,8 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 fun MoReNavHost(
     scope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    searchViewModel: SearchViewModel,
-
+    searchViewModel: SearchViewModel
     ) {
     val navController = rememberNavController()
 

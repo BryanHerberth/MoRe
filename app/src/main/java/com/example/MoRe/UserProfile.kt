@@ -237,7 +237,6 @@ fun ProfileImage(navController: NavController) {
                 contentDescription = null,
                 modifier = Modifier
                     .size(120.dp),
-//                    .clickable { launcher.launch("image/*") },
                 contentScale = ContentScale.Crop
             )
         }
@@ -461,7 +460,12 @@ fun userData(navController: NavController) {
                 }
 //                Log.d("Session Selesai", "")
                 try{
-                    navController.navigate(MoReScreens.LoginScreen.name)
+                    navController.navigate(MoReScreens.LoginScreen.name){
+                        popUpTo(MoReScreens.SplashScreen.name)
+                        {
+                            inclusive = true
+                        }
+                    }
                 } catch (e: Exception){
                     Log.e("userProfil navError : ", e.message.toString())
                 }

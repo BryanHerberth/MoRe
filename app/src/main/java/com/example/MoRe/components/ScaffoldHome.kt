@@ -192,36 +192,7 @@ fun ScaffoldHome(
 
 
 
-//@Composable
-//fun SwitchAppbar(
-//    searchWidgetState: SearchWidgetState,
-//    searchTextState: String,
-//    onTextChange: (String) -> Unit,
-//    onCloseClicked: () -> Unit,
-//    onSearchClicked: (String) -> Unit,
-//    onSearchTriggered: () -> Unit,
-//    navController: NavController
-//){
-//    when(searchWidgetState){
-//        SearchWidgetState.CLOSED -> {
-//            AppBarCompose (
-//                onSearchClicked = onSearchTriggered,
-//                navController = navController,
-//                idPabrik = null,
-//                idMesin = null,
-//
-//                )
-//        }
-//        SearchWidgetState.OPENED -> {
-//            SearchAppBar(
-//                text = searchTextState,
-//                onTextChange = onTextChange,
-//                onCloseClicked = onCloseClicked,
-//                onSearchClicked = onSearchClicked
-//            )
-//        }
-//    }
-//}
+
 
 @Composable
 fun AppBarCompose(
@@ -245,12 +216,7 @@ fun AppBarCompose(
         },
         navigationIcon = {
             IconButton(onClick = {
-                navController.navigate(MoReScreens.ProfileScreen.name){
-//                    popUpTo(MoReScreens.HomeScreen.name)
-//                    {
-//                        inclusive = true
-//                    }
-                }
+                navController.navigate(MoReScreens.ProfileScreen.name)
             }) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,

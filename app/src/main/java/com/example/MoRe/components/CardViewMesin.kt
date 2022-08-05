@@ -31,6 +31,7 @@ import com.example.MoRe.model.DaftarMesinNotif
 import com.example.MoRe.model.getDataMesin
 import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.res.getmesin.Mesin
+import com.example.MoRe.network.model.res.monitor.Monitor
 
 //@Preview(showBackground = true)
 @Composable
@@ -40,7 +41,7 @@ fun CardMesin(
     onItemClick : (String) -> Unit ={},
     navController: NavController,
     idPabrik :String?,
-    clickable: Boolean = true
+    clickable: Boolean = true,
 ){
     val idMesin = rememberSaveable { mutableStateOf(resMesin.id_mesin) }
     SessionManager.saveMesin(resMesin)
@@ -48,8 +49,16 @@ fun CardMesin(
         .padding(4.dp)
         .fillMaxWidth()
         .clickable {
-            navController.navigate(MoReScreens.DetailScreen.name +"/$idPabrik/${idMesin.value}")
+            navController.navigate(MoReScreens.DetailScreen.name + "/$idPabrik/${idMesin.value}")
         }
+
+    var online = true
+    /**
+     * Perlu Passing Api Baru If dibawah bisa jalan
+     */
+//    if(resMonitor.alarm && resMonitor.enableAlarm){
+//        online = false
+//    }
     if(!clickable){
         tempModifier = Modifier
             .padding(4.dp)
@@ -76,11 +85,6 @@ fun CardMesin(
                     contentDescription = "Foto Mesin",
                     contentScale = ContentScale.Fit // Perlu di sesuaiikannnn
                 )
-//                Image(
-//                    painter = painterResource(
-//                        id = mesin.fotoMesin
-//                    ),
-//                    contentDescription = "Foto Mesin")
             }
             Column(modifier = Modifier
                 .padding(4.dp)
@@ -102,6 +106,23 @@ fun CardMesin(
                     text = resMesin.merek_mesin,
                     style = MaterialTheme.typography.caption
                 )
+//                Spacer(modifier = Modifier.height(5.dp))
+                if (online) {
+                    Text(
+//                    text = mesin.merekMesin,
+                        text = "Online",
+                        color = Color.Green,
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.subtitle1
+                    )
+                } else{
+                    Text(
+//                    text = mesin.merekMesin,
+                        text = "OFFLINE",
+                        color = Color.Red,
+                        style = MaterialTheme.typography.caption
+                    )
+                }
             }
         }
     }
