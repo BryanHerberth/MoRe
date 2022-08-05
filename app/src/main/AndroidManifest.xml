@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/more_logo"
         android:label="MoRe"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/more_logo"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MyApplication">
@@ -19,61 +19,8 @@
             android:label="@string/title_activity_datepicker_test"
             android:theme="@style/Theme.MyApplication" />
         <activity
-            android:name=".DetailMesin"
-            android:exported="true"
-            android:label="@string/title_activity_detail_mesin"
-            android:theme="@style/Theme.MyApplication">
-        </activity>
-        <activity
-            android:name=".BotShetTest"
-            android:exported="false"
-            android:label="@string/title_activity_bot_shet_test"
-            android:theme="@style/Theme.MyApplication" />
-        <activity
-            android:name=".DaftarMesin"
-            android:exported="true"
-            android:label="@string/title_activity_daftar_mesin"
-            android:theme="@style/Theme.MyApplication"></activity>
-        <activity
-            android:name=".NotificationPage"
-            android:exported="false"
-            android:label="@string/title_activity_notification_page"
-            android:theme="@style/Theme.MyApplication" />
-        <activity
-            android:name=".Home"
-            android:exported="true"
-            android:label="@string/title_activity_home"
-            android:theme="@style/Theme.MyApplication" />
-        <activity
-            android:name=".HomeScreen"
-            android:exported="true"
-            android:label="@string/title_activity_home_screen"
-            android:theme="@style/Theme.MyApplication">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
-            android:name=".ComposeTest"
-            android:exported="true"
-            android:label="@string/title_activity_compose_test"
-            android:theme="@style/Theme.MyApplication" />
-        <activity
-            android:name=".Verifikasi"
-            android:exported="false" />
-        <activity
-            android:name=".SignUp"
-            android:exported="false" />
-        <activity
-            android:name=".SignIn"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
-            android:label="Sign in" >
+            android:label="MoRe" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
