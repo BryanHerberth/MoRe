@@ -57,35 +57,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
-//class DaftarMesin : ComponentActivity() {
-//    @OptIn(ExperimentalMaterialApi::class)
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//
-//
-//        val searchViewModel: SearchViewModel by viewModels()
-//
-//
-//
-//        super.onCreate(savedInstanceState)
-//        setContent {
-//
-//            val systemUiController = rememberSystemUiController()
-//            val useDarkIcons = MaterialTheme.colors.isLight
-//
-//            SideEffect {
-//                systemUiController.setSystemBarsColor(
-//                    color = BlueApp,
-//                    darkIcons = useDarkIcons
-//                )
-//            }
-//            ModalBottomSheet{
-//                state: ModalBottomSheetState, scope: CoroutineScope ->
-//                ScaffoldListMesin(searchViewModel = SearchViewModel(), scope = scope,
-//                    modalBottomSheetState = state)
-//            }
-//        }
-//    }
-//}
 
 
 
@@ -171,27 +142,9 @@ fun ScaffoldListMesin(
 
         ) {
             MesinAppBar(onSearchClicked = { /*TODO*/ }, navController = navController, email = null, password = null     )
-//            SwitchBar2(
-//                searchWidgetState = searchWidgetState,
-//                searchTextState = searchTextState,
-//                onTextChange = {
-//                    searchViewModel.updateSearchTextState(newValue = it)
-//                },
-//                onCloseClicked = {
-//                    searchViewModel.updateSearchTextState(newValue = "")
-//                    searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
-//                },
-//                onSearchClicked = {
-//                    Log.d("Searched text", it)
-//                },
-//                onSearchTriggered = {
-//                    searchViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
-//                },
-//                navController = navController
-//            )
         }
-    }
-) {
+    })
+    {
     Column(
         modifier = Modifier
             .padding(5.dp)

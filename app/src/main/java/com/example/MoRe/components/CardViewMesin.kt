@@ -33,7 +33,6 @@ import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.res.getmesin.Mesin
 import com.example.MoRe.network.model.res.monitor.Monitor
 
-//@Preview(showBackground = true)
 @Composable
 fun CardMesin(
 //    mesin : DaftarMesinNotif = getDataMesin()[0],

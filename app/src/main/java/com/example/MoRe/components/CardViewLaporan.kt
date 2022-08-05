@@ -18,11 +18,9 @@ import com.example.MoRe.model.DaftarLaporan
 import com.example.MoRe.model.getDataLaporan
 import com.example.MoRe.network.model.res.laporan.LaporanByName
 
-//@Preview(showBackground = true)
 @Composable
 fun  CardViewLaporan(
     resLaporan: LaporanByName,
-//    daftarLaporan: DaftarLaporan = getDataLaporan()[0]
 ) {
     Card(modifier = Modifier
         .padding(4.dp)

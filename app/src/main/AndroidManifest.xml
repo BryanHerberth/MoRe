@@ -12,7 +12,8 @@
         android:roundIcon="@drawable/more_logo"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.MyApplication">
+        android:theme="@style/Theme.MyApplication"
+        android:exported="true">
         <activity
             android:name=".DatepickerTest"
             android:exported="false"

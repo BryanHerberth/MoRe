@@ -35,23 +35,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
-//class NotificationPage : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContent {
-//            val systemUiController = rememberSystemUiController()
-//            val useDarkIcons = MaterialTheme.colors.isLight
-//
-//            SideEffect {
-//                systemUiController.setStatusBarColor(
-//                    color = BlueApp,
-//                    darkIcons = useDarkIcons
-//                )
-//            }
-//            ScaffoldNotif()
-//        }
-//    }
-//}
 
 
 @Composable
@@ -110,9 +93,3 @@ fun ScaffoldNotif(
 }
 
 
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview2(nav) {
-//    ScaffoldNotif(navController = )
-//}

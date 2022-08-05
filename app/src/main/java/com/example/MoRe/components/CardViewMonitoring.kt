@@ -23,13 +23,10 @@ import com.example.MoRe.network.model.res.monitor.Monitor
 import com.example.MoRe.network.model.res.monitor.ResGetMonitor
 
 
-//@Preview(showBackground = true)
 @Composable
 fun CardMonitoring(
     resMonitor : Monitor,
-//    monitoring : DaftarMonitoring = getDataMonitor()[0],
     onItemClick : (String) -> Unit ={},
-//    navController: NavController,
 ) {
 
     var myBorder = BorderStroke(1.dp, color = Color.LightGray)

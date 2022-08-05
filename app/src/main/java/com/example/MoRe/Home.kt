@@ -46,18 +46,7 @@ import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-//class Home : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//
-//        val searchViewModel: SearchViewModel by viewModels()
-//
-//        super.onCreate(savedInstanceState)
-//        setContent {
-//            StatusBarchange()
-//            ScaffoldHome(searchViewModel = searchViewModel)
-//        }
-//    }
-//}
+
 
 
 
@@ -115,11 +104,4 @@ fun SearchBar(
 }
 
 
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview3() {
-//    MyApplicationTheme {
-//        ScaffoldHome(searchViewModel = SearchViewModel(), navController = )
-//    }
-//}
 

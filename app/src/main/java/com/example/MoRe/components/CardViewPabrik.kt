@@ -80,26 +80,14 @@ fun CardPabrik(
                         contentDescription = "Foto Pabrik",
                         contentScale = ContentScale.Fit // Perlu di sesuaiikannnn
                     )
-//                    Image(painter = painterResource(id = pabrik.fotoPabrik),
-//                        contentDescription = "foto pabrik",
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                        ,
-//                        contentScale = ContentScale.Fit
-//                    )
+
                     Column(modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 12.dp, bottom = 12.dp, start = 8.dp, end = 8.dp)
                         ,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-//                        Text(text = pabrik.namaPabrik,
-//                            style = MaterialTheme.typography.h6
-//                        )
-//
-//                        Text(text = pabrik.alamatPabrik,
-//                            style = MaterialTheme.typography.caption
-//                        )
+
                         Text(text = resPabrik!!.nama_pabrik,
                             style = MaterialTheme.typography.h6
                         )

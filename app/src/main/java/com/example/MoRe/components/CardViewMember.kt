@@ -30,27 +30,13 @@ import com.example.MoRe.model.DaftarUser
 import com.example.MoRe.model.getUser
 import com.example.MoRe.network.model.res.getmember.Anggota
 
-//@Preview(showBackground = true)
 @Composable
 fun CardUser (
     resPengguna: Anggota
-//    pengguna: Anggota = getUser()[0],
-//    onItemClick : (String) -> Unit ={}
+
 ){
 
     var expanded by  remember{ mutableStateOf(false)}
-//    val imageUri = rememberSaveable { mutableStateOf("") }
-//    val painter = rememberAsyncImagePainter(
-//        if (imageUri.value.isEmpty())
-//            pengguna.fotoUser
-//        else
-//            imageUri.value
-//    )
-//    val launcher = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.GetContent()
-//    ) { uri: Uri? ->
-//        uri?.let { imageUri.value = it.toString() }
-//    }
     Card(modifier = Modifier
         .fillMaxWidth()
         .clickable {
@@ -70,14 +56,7 @@ fun CardUser (
                     .size(30.dp),
                 border = BorderStroke(2.dp, color = Color.Black)
             ) {
-//                Image(
-//                    imageVector = pengguna.fotoUser,
-//                    contentDescription = null,
-//                    modifier = Modifier
-//                        .size(10.dp)
-//                        .padding(2.dp),
-//                    contentScale = ContentScale.Crop
-//                )
+
                 AsyncImage(model = ImageRequest.Builder(LocalContext.current)
                     .data(data = resPengguna.foto_profil)
                     .crossfade(true)
@@ -117,45 +96,3 @@ fun CardUser (
     }
 }
 
-//@Composable
-//fun PopupMenu(
-//    menuItems: List<String>,
-//    onClickCallbacks: List<() -> Unit>,
-//    showMenu: Boolean,
-//    onDismiss: () -> Unit,
-//    toggle: @Composable () -> Unit,
-//) {
-//    DropdownMenu(
-//        toggle = toggle,
-//        expanded = showMenu,
-//        onDismissRequest = { onDismiss() },
-//    ) {
-//        menuItems.forEachIndexed { index, item ->
-//            DropdownMenuItem(onClick = {
-//                onDismiss()
-//                onClickCallbacks[index]
-//            }) {
-//                Text(text = item)
-//            }
-//        }
-//    }
-//}
-//
-//@Preview
-//@Composable
-//fun Toggle() {
-//    var showMenu by remember { mutableStateOf(false) }
-//
-//    PopupMenu(
-//        menuItems = listOf("Delete"),
-//        onClickCallbacks = listOf { println("Deleted") },
-//        showMenu = showMenu,
-//        onDismiss = { showMenu = false }) {
-//        Text(
-//            modifier = Modifier.clickable(onClick = {}, onLongClick = {
-//                showMenu = true
-//            }),
-//            text = "Long click here",
-//        )
-//    }
-//}
