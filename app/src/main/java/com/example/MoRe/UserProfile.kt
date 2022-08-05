@@ -467,7 +467,6 @@ fun userData(navController: NavController) {
                 text = "Keluar",
                 style = MaterialTheme.typography.button,
                 color = Color.White
-
             )
         }
     }

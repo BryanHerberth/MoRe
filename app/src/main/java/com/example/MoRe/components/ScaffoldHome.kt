@@ -260,13 +260,13 @@ fun AppBarCompose(
             }
         },
         actions = {
-            IconButton(onClick = {
-                navController.navigate(MoReScreens.SearchScreen.name)
-            }){
-                Icon(imageVector = Icons.Filled.Search,
-                    contentDescription = "Search",
-                    tint = Color.White)
-            }
+//            IconButton(onClick = {
+//                navController.navigate(MoReScreens.SearchScreen.name)
+//            }){
+//                Icon(imageVector = Icons.Filled.Search,
+//                    contentDescription = "Search",
+//                    tint = Color.White)
+//            }
             IconButton(onClick = {
                 navController.navigate(MoReScreens.NotifScreen.name +"/$idPabrik/${idMesin}")
             }) {
