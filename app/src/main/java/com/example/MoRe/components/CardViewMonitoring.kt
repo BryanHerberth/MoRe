@@ -1,6 +1,7 @@
 package com.example.MoRe.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -30,6 +31,11 @@ fun CardMonitoring(
     onItemClick : (String) -> Unit ={},
 //    navController: NavController,
 ) {
+
+    var myBorder = BorderStroke(1.dp, color = Color.LightGray)
+    if(resMonitor.alarm && resMonitor.enableAlarm){
+        myBorder = BorderStroke(2.dp, color = Color.Red)
+    }
     Box(contentAlignment = Alignment.Center) {
         Card(
             modifier = Modifier
@@ -40,6 +46,7 @@ fun CardMonitoring(
                 },
             shape = RoundedCornerShape(corner = CornerSize(16.dp)),
             elevation = 6.dp,
+            border = myBorder
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,

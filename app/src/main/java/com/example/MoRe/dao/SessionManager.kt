@@ -97,7 +97,12 @@ object SessionManager {
 
 
     fun logOut() {
-        editor.clear().commit()
+        try{
+            editor.clear().commit()
+        } catch (e: Exception){
+            Log.e("Error Session Manager : ", e.message.toString())
+        }
+
     }
 
     object SessionConstant {

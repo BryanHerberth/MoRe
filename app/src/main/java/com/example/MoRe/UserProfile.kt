@@ -454,8 +454,18 @@ fun userData(navController: NavController) {
     ) {
         Button(
             onClick = {
-                SessionManager.logOut()
-                navController.navigate(MoReScreens.LoginScreen.name)
+                try{
+                    SessionManager.saveAccessToken("")
+                } catch(e: Exception){
+                    Log.e("UserLogin Session manager Error : ", e.message.toString())
+                }
+//                Log.d("Session Selesai", "")
+                try{
+                    navController.navigate(MoReScreens.LoginScreen.name)
+                } catch (e: Exception){
+                    Log.e("userProfil navError : ", e.message.toString())
+                }
+
             },
             modifier = Modifier.size(260.dp, 40.dp),
             colors = ButtonDefaults.buttonColors(
