@@ -5,28 +5,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 //import com.example.MoRe.SearchBar
-import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.DaftarPabrik
-import com.example.MoRe.model.SearchWidgetState
 import com.example.MoRe.model.getPabrik
 import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.base.Resource
@@ -45,7 +37,6 @@ import kotlin.collections.ArrayList
 @Composable
 fun ScaffoldHome(
     listPabrik: List<DaftarPabrik> = getPabrik(),
-    searchViewModel: SearchViewModel,
     navController: NavController,
     email: String?,
     pass: String?,
@@ -105,8 +96,6 @@ fun ScaffoldHome(
 
     Log.d("TAG", "ScaffoldHome: $email")
     Log.d("TAG", "ScaffoldHome: $pass")
-    val searchWidgetState by searchViewModel.searchWidgetState
-    val searchTextState by searchViewModel.searchTextState
     Scaffold(
         topBar = {
                  AppBarCompose(

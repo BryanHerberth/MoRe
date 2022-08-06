@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
-import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.StatusBarchange
 import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.navigation.MoReNavHost
@@ -34,16 +33,7 @@ class MainActivity : ComponentActivity() {
 
                 val scope = rememberCoroutineScope()
                 StatusBarchange()
-//                ModalBottomSheet{
-//                        state: ModalBottomSheetState, scope: CoroutineScope ->
-//                    ScaffoldListMesin(
-//                        searchViewModel = SearchViewModel(), scope = scope,
-//                        modalBottomSheetState = state, navController = navController, idPabrik = null
-//                    )
-//
-//                }
-
-                MoReApp(scope, modalBottomSheetState, searchViewModel = SearchViewModel(Repository()))
+                MoReApp(scope, modalBottomSheetState)
             }
         }
     }
@@ -54,7 +44,6 @@ class MainActivity : ComponentActivity() {
 fun MoReApp(
     scope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    searchViewModel: SearchViewModel
 ) {
     
     Surface(
@@ -65,9 +54,7 @@ fun MoReApp(
                 horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                 MoReNavHost(scope = scope, modalBottomSheetState = modalBottomSheetState,
-                    searchViewModel = SearchViewModel(
-                    Repository()
-                ))
+                )
             }
         }
     )

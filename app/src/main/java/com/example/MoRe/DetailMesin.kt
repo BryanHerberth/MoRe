@@ -58,26 +58,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
-//@ExperimentalMaterialApi
-//class DetailMesin : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//        setContent {
-//            MyApplicationTheme {
-//                StatusBarchange()
-//                Surface(color = MaterialTheme.colors.background) {
-//                    ScaffoldDetailMesin()
-//                }
-//            }
-//        }
-//    }
-//}
 
 
 @OptIn(ExperimentalPagerApi::class)
 @ExperimentalMaterialApi
-//@Preview(showBackground = true)
 @Composable
 fun ScaffoldDetailMesin(
     navController: NavController,
@@ -145,10 +129,10 @@ fun ScaffoldDetailMesin(
             navigationIcon = {
                 IconButton(onClick = {
                     navController.navigate(MoReScreens.PabrikScreen.name +"/{$idPabrik}") {
-                        popUpTo(MoReScreens.PabrikScreen.name+"/{$idPabrik}")
-                        {
-                            inclusive = true
-                        }
+//                        popUpTo(MoReScreens.PabrikScreen.name+"/{$idPabrik}")
+//                        {
+//                            inclusive = true
+//                        }
                     }
                 }) {
                     Icon(

@@ -36,7 +36,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.CardPabrik
 import com.example.MoRe.components.ScaffoldHome
 import com.example.MoRe.components.StatusBarchange

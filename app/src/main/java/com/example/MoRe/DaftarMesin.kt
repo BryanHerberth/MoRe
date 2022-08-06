@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.*
 //import com.example.MoRe.components.SwitchAppbar
 import com.example.MoRe.dao.SessionManager
@@ -63,19 +62,15 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ScaffoldListMesin(
-    searchViewModel: SearchViewModel,
     listMesin: List<DaftarMesinNotif> = getDataMesin(),
     pabrik: DaftarPabrik = getPabrik()[0],
     scope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     navController: NavController,
     idPabrik: String?,
-//                      bottomSheetScaffoldState: BottomSheetScaffoldState
 
 ) {
-    val searchWidgetState by searchViewModel.searchWidgetState
-    val searchTextState by searchViewModel.searchTextState
-    val myPabrik = SessionManager.getPabrikData()
+      val myPabrik = SessionManager.getPabrikData()
 
     Log.e("myPabrik := ", myPabrik.toString())
 //    val activePabrik = rememberSaveable { mutableStateOf(SessionManager.getPabrikData())}
@@ -141,7 +136,10 @@ fun ScaffoldListMesin(
                 .background(BlueApp)
 
         ) {
-            MesinAppBar(onSearchClicked = { /*TODO*/ }, navController = navController, email = null, password = null     )
+            MesinAppBar(onSearchClicked = { /*TODO*/ },
+                navController = navController,
+                email = null,
+                password = null  )
         }
     })
     {
@@ -304,33 +302,6 @@ fun ModalBottomSheet(
 
 
 
-@Composable
-fun SwitchBar2(
-    searchWidgetState: SearchWidgetState,
-    searchTextState: String,
-    onTextChange: (String) -> Unit,
-    onCloseClicked: () -> Unit,
-    onSearchClicked: (String) -> Unit,
-    onSearchTriggered: () -> Unit,
-    navController: NavController
-){
-    when(searchWidgetState){
-        SearchWidgetState.CLOSED -> {
-            MesinAppBar (
-                onSearchClicked = onSearchTriggered
-            ,
-            navController = navController, email = null, password = null)
-        }
-        SearchWidgetState.OPENED -> {
-            SearchAppBar(
-                text = searchTextState,
-                onTextChange = onTextChange,
-                onCloseClicked = onCloseClicked,
-                onSearchClicked = onSearchClicked
-            )
-        }
-    }
-}
 
 @Composable
 fun MesinAppBar( onSearchClicked: () -> Unit,

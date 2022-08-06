@@ -11,7 +11,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.MoRe.*
-import com.example.MoRe.ViewModel.SearchViewModel
 import com.example.MoRe.components.ScaffoldHome
 import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.model.DaftarPabrik
@@ -22,7 +21,6 @@ import kotlinx.coroutines.CoroutineScope
 fun MoReNavHost(
     scope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    searchViewModel: SearchViewModel
     ) {
     val navController = rememberNavController()
 
@@ -74,7 +72,6 @@ fun MoReNavHost(
                 }
                     )){navPabrik ->
             ScaffoldListMesin(
-                searchViewModel = SearchViewModel(repository = Repository()) ,
                 navController = navController,
                 scope = scope,
                 modalBottomSheetState = modalBottomSheetState,
@@ -116,7 +113,6 @@ fun MoReNavHost(
                 }
             )) { navBack ->
             ScaffoldHome(
-                searchViewModel = SearchViewModel(repository = Repository()) ,
                 navController = navController,
                 email = navBack.arguments?.getString("email"),
                 pass = navBack.arguments?.getString("pass"))

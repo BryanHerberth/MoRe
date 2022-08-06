@@ -65,7 +65,6 @@ fun CardPabrik(
                         } catch (e: Exception){
                             Log.e("Error nav daftarMesin",e.message.toString())
                         }
-
                     }
                     .wrapContentHeight(),
                 elevation = 8.dp

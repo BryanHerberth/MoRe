@@ -77,7 +77,6 @@ fun CardMesin(
                 elevation = 5.dp
             ) {
                 AsyncImage(model = ImageRequest.Builder(LocalContext.current)
-//                        .data(data = pabrik.fotoPabrik)
                     .data(data = resMesin.gambar_mesin)
                     .crossfade(true)
                     .build(),
