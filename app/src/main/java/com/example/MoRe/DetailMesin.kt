@@ -275,6 +275,7 @@ fun PemantauanLayout(
     LaunchedEffect(Unit){
         while (true) {
             getMonitor(idPabrik, idMesin)
+            delay (2000)
         }
     }
 
