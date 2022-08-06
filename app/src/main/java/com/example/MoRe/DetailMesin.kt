@@ -53,11 +53,7 @@ import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
 import com.example.MoRe.ui.theme.MyApplicationTheme
 import com.google.accompanist.pager.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-
+import kotlinx.coroutines.*
 
 
 @OptIn(ExperimentalPagerApi::class)
@@ -277,7 +273,9 @@ fun PemantauanLayout(
     }
 
     LaunchedEffect(Unit){
-        getMonitor(idPabrik, idMesin)
+        while (true) {
+            getMonitor(idPabrik, idMesin)
+        }
     }
 
     // API STOP
@@ -335,7 +333,7 @@ fun DokumenLayout(
     }
 
     LaunchedEffect(Unit){
-        getDokumen(idPabrik, idMesin)
+            getDokumen(idPabrik, idMesin)
     }
 
     // API STOP
