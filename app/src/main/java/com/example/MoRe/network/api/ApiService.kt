@@ -10,6 +10,7 @@ import com.example.MoRe.network.model.res.getmember.ResGetMember
 import com.example.MoRe.network.model.res.getmesin.ResGetMesin
 import com.example.MoRe.network.model.res.getmesin.ResGetMesinById
 import com.example.MoRe.network.model.res.getmesin.ResGetMesinByName
+import com.example.MoRe.network.model.res.getmesin.ResGetStatusMesin
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrik
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrikById
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrikByName
@@ -99,6 +100,12 @@ interface ApiService {
         @Path("id") idPabrik: String,
         @Path("idMesin") idMesin: String
     ): Response<ResGetMesinById>
+
+    @GET("/pabrik/{id}/mesin/{idMesin}/status")
+    suspend fun getStatusMesin(
+        @Path("id") idPabrik: String,
+        @Path("idMesin") idMesin: String
+    ): Response<ResGetStatusMesin>
 
     // Monitor
     @GET("pabrik/{id}/mesin/{idMesin}/monitor")

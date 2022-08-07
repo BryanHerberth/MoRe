@@ -70,11 +70,12 @@ fun ScaffoldListMesin(
     idPabrik: String?,
 
 ) {
+    Log.d("idPabrik On Daftar Mesin : ", idPabrik.toString())
       val myPabrik = SessionManager.getPabrikData()
 
-    Log.e("myPabrik := ", myPabrik.toString())
+//    Log.e("myPabrik := ", myPabrik.toString())
 //    val activePabrik = rememberSaveable { mutableStateOf(SessionManager.getPabrikData())}
-    Log.d("TAG", "ScaffoldHome: $idPabrik")
+//    Log.d("TAG", "ScaffoldHome: $idPabrik")
 //    Log.d("Session Pabrik : ", activePabrik.toString())
 
     // API START

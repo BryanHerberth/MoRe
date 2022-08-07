@@ -41,6 +41,8 @@ fun CardMesin(
     navController: NavController,
     idPabrik :String?,
     clickable: Boolean = true,
+    showSts: Boolean = false,
+    statusMesin: Boolean = false
 ){
     val idMesin = rememberSaveable { mutableStateOf(resMesin.id_mesin) }
     SessionManager.saveMesin(resMesin)
@@ -51,7 +53,7 @@ fun CardMesin(
             navController.navigate(MoReScreens.DetailScreen.name + "/$idPabrik/${idMesin.value}")
         }
 
-    var online = true
+    var online = statusMesin
     /**
      * Perlu Passing Api Baru If dibawah bisa jalan
      */
@@ -105,22 +107,25 @@ fun CardMesin(
                     style = MaterialTheme.typography.caption
                 )
 //                Spacer(modifier = Modifier.height(5.dp))
-                if (online) {
-                    Text(
+                if(showSts){
+                    if (online) {
+                        Text(
 //                    text = mesin.merekMesin,
-                        text = "Online",
-                        color = Color.Green,
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.subtitle1
-                    )
-                } else{
-                    Text(
+                            text = "Online",
+                            color = Color.Green,
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.subtitle1
+                        )
+                    } else{
+                        Text(
 //                    text = mesin.merekMesin,
-                        text = "OFFLINE",
-                        color = Color.Red,
-                        style = MaterialTheme.typography.caption
-                    )
+                            text = "OFFLINE",
+                            color = Color.Red,
+                            style = MaterialTheme.typography.caption
+                        )
+                    }
                 }
+
             }
         }
     }

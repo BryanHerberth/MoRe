@@ -95,9 +95,35 @@ fun ScaffoldDetailMesin(
             }
         }
     }
+    var responseStsMesin by remember{
+        mutableStateOf<Boolean?>(false)
+    }
+
+    suspend fun getStatusMesin (idPabrik: String?, idMesin: String?){
+        val repository = Repository()
+        coroutineScope{
+            launch(Dispatchers.IO) {
+                try{
+                    val response = repository.getStatusMesin(idPabrik!!, idMesin!!)
+                    launch(Dispatchers.Main) {
+                        responseStsMesin = Resource.Success(response).data?.body()?.data?.online
+                        Log.d("Status Online Mesin : ", responseStsMesin.toString())
+                    }
+                }catch (e: Exception){
+                    Log.e("Alarm Get Status Mesin on Detail Mesin : ", e.message.toString())
+                }
+            }
+        }
+    }
 
     LaunchedEffect(Unit){
         getLaporanVariabel(idPabrik, idMesin)
+    }
+    LaunchedEffect(Unit){
+        while (true){
+            getStatusMesin(idPabrik, idMesin)
+            delay(2000)
+        }
     }
 
     // STOP API
@@ -124,7 +150,8 @@ fun ScaffoldDetailMesin(
             },
             navigationIcon = {
                 IconButton(onClick = {
-                    navController.navigate(MoReScreens.PabrikScreen.name +"/{$idPabrik}") {
+                    Log.d("idPabrik on Detail Mesin : ", idPabrik.toString())
+                    navController.navigate(MoReScreens.PabrikScreen.name +"/${idPabrik}") {
 //                        popUpTo(MoReScreens.PabrikScreen.name+"/{$idPabrik}")
 //                        {
 //                            inclusive = true
@@ -151,13 +178,13 @@ fun ScaffoldDetailMesin(
 //            } catch (e: Exception){
 //                Log.e("Error CardMesin Detail Mesin : ", e.message.toString())
 //            }
-            CardMesin(clickable =false , resMesin = activeMesin!! ,navController = navController, idPabrik = idPabrik)
+            CardMesin(clickable =false , resMesin = activeMesin!! ,navController = navController, idPabrik = idPabrik, showSts = true, statusMesin = responseStsMesin!!)
 
         }
         Spacer(modifier = Modifier.height(20.dp))
         Tabs(pagerState = pagerState, scope = coroutineScope)
         Spacer(modifier = Modifier.height(10.dp))
-        responseVarLaporan?.data?.let { TabsContent(pagerState = pagerState, idPabrik = idPabrik, idMesin= idMesin, variabel = it.variabel) }
+        responseVarLaporan?.data?.let { TabsContent(pagerState = pagerState, idPabrik = idPabrik, idMesin= idMesin, variabel = it.variabel, stsMesin=responseStsMesin!!) }
         }
     }
 
@@ -167,14 +194,15 @@ fun TabsContent(
     pagerState: PagerState,
     idPabrik : String?,
     idMesin: String?,
-    variabel: List<String>
+    variabel: List<String>,
+    stsMesin: Boolean
 ) {
     HorizontalPager(count = 3,
         state = pagerState,
     ) { page ->
         when (page){
             0 -> {
-                PemantauanLayout(idPabrik = idPabrik, idMesin= idMesin)
+                PemantauanLayout(idPabrik = idPabrik, idMesin= idMesin, stsMesin = stsMesin)
             }
 
             1 -> {
@@ -246,7 +274,8 @@ fun Tabs(pagerState: PagerState,
 fun PemantauanLayout(
     monitoring: List<DaftarMonitoring> = getDataMonitor(),
     idPabrik : String?,
-    idMesin: String?
+    idMesin: String?,
+    stsMesin:Boolean?
 
 ) {
 
@@ -263,7 +292,7 @@ fun PemantauanLayout(
                     val response = repository.getMonitor(idPabrik ?: "", idMesin ?: "")
                     launch(Dispatchers.Main) {
                         responseGetMonitor = Resource.Success(response).data?.body()
-                        Log.d("Rsponse get Monitor : ", responseGetMonitor.toString())
+//                        Log.d("Rsponse get Monitor : ", responseGetMonitor.toString())
                     }
                 }catch (e: Exception){
                     Log.e("Error Get Monitor on DetailMesin.kt : ", e.message.toString())
@@ -289,20 +318,21 @@ fun PemantauanLayout(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LazyColumn{
-                responseGetMonitor?.data?.let { it1 ->
-                    items(items = it1.monitor){
-                        CardMonitoring(resMonitor = it)
+            if(stsMesin==true){
+                LazyColumn{
+                    responseGetMonitor?.data?.let { it1 ->
+                        items(items = it1.monitor){
+                            CardMonitoring(resMonitor = it)
+                        }
                     }
                 }
-//                    items(items = monitoring)
-//                    {
-//                        CardMonitoring(monitoring = it)
-//                    }
-                }
+            }else{
+                Text(text = "Mesin Offline")
             }
+            
         }
     }
+}
 
 @Composable
 fun DokumenLayout(

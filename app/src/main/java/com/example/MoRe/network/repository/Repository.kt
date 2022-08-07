@@ -10,6 +10,7 @@ import com.example.MoRe.network.model.res.ResVerifikasi
 import com.example.MoRe.network.model.res.dokumen.ResGetDokumen
 import com.example.MoRe.network.model.res.getmember.ResGetMember
 import com.example.MoRe.network.model.res.getmesin.ResGetMesin
+import com.example.MoRe.network.model.res.getmesin.ResGetStatusMesin
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrik
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrikById
 import com.example.MoRe.network.model.res.laporan.ResGetVarLaporan
@@ -74,6 +75,10 @@ class Repository @Inject constructor(
     // Mesin
     suspend fun getMesin(idPabrik: String): Response<ResGetMesin>{
         return RetrofitInstance.api.getMesin(idPabrik)
+    }
+
+    suspend fun getStatusMesin(idPabrik: String, idMesin: String): Response<ResGetStatusMesin>{
+        return RetrofitInstance.api.getStatusMesin(idPabrik, idMesin)
     }
 
     // Notifikasi
