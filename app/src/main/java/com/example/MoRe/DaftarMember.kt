@@ -78,16 +78,17 @@ fun ScaffoldMember(
 
 //                    val sorted = listMember.groupBy { it.tipeUser}
                     val sorted = responseGetMember?.data?.anggota?.groupBy { it.status }
-                    Log.d("Soetir Anggota", sorted.toString())
+                    Log.d("Soetir Anggota :: ", sorted.toString())
                     if (sorted != null) {
-                        sorted.forEach { (status, id_pengguna ) ->
+                        sorted.forEach { (status, initial ) ->
+                            Log.d("sorted : ", initial[0].toString())
                             stickyHeader {
                                 Text(text = "$status",
                                     style = MaterialTheme.typography.h4,
                                 )
                             }
-                            responseGetMember?.data?.let { it1 ->
-                                items(items = it1.anggota){
+                            initial.let { it1 ->
+                                items(items = it1){
                                     CardUser(resPengguna = it)
                                 }
                             }
