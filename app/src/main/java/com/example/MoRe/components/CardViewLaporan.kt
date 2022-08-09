@@ -1,6 +1,7 @@
 package com.example.MoRe.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,33 +19,40 @@ import com.example.MoRe.model.DaftarLaporan
 import com.example.MoRe.model.getDataLaporan
 import com.example.MoRe.network.model.res.laporan.LaporanByName
 
+//@Preview(showBackground = true)
 @Composable
 fun  CardViewLaporan(
     resLaporan: LaporanByName,
 ) {
-    Card(modifier = Modifier
-        .padding(4.dp)
-        .fillMaxWidth(),
+    Card(
+        modifier = Modifier
+            .padding(4.dp)
+            .fillMaxWidth(),
         shape = RoundedCornerShape(corner = CornerSize(6.dp)),
         border = BorderStroke(2.dp, color = Color.LightGray)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start) {
-            Row(modifier = Modifier
-                .padding(4.dp)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(4.dp)
             ) {
-                Text(text = resLaporan.nomor,
+                Text(
+                    text = "resLaporan.nomor",
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(4.dp)
                         .weight(0.01f)
                 )
                 Text(
-                    text = resLaporan.timestamp,
+                    text = "resLaporan.timestamp",
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(4.dp)
                         .weight(0.02f)
-                    )
-                Text(text = resLaporan.value,
+                )
+                Text(
+                    text = resLaporan.value,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(4.dp)
 //                        .weight(0.1f)
@@ -53,3 +61,6 @@ fun  CardViewLaporan(
         }
     }
 }
+
+
+

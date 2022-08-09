@@ -32,12 +32,27 @@ fun CardMonitoring(
     var myBorder = BorderStroke(1.dp, color = Color.LightGray)
     var myBackgroundColor = Color.White
     var alarmColor = Color.Black
+
     if(resMonitor.alarm && resMonitor.enableAlarm){
         myBorder = BorderStroke(2.dp, color = Color.Red)
         myBackgroundColor = Color.Red
         alarmColor = Color.White
-
     }
+
+    if (resMonitor.nama == "Status" && resMonitor.value == 2 || resMonitor.value == 3){
+        alarmColor = Color.Black
+        myBackgroundColor = Color(0xFFFFD700)
+        myBorder = BorderStroke(2.dp, color = Color.Yellow)
+
+    } else {
+        if(resMonitor.alarm && resMonitor.enableAlarm){
+            myBorder = BorderStroke(2.dp, color = Color.Red)
+            myBackgroundColor = Color.Red
+            alarmColor = Color.White
+        }
+    }
+
+
     Box(contentAlignment = Alignment.Center) {
         Card(
             modifier = Modifier
@@ -69,29 +84,46 @@ fun CardMonitoring(
                 if (resMonitor.satuan == "run/stop") {
                     if (resMonitor.value == 1) {
                         Text(
-                            text = "run",
+                            text = "RUN",
                             style = MaterialTheme.typography.h3,
                             color = alarmColor,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(horizontal = 20.dp)
 
                         )
-                    } else {
+                    } else if (resMonitor.value == 0){
                         Text(
-                            text = "stop",
+                            text = "STOP",
                             style = MaterialTheme.typography.h3,
                             color = alarmColor,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(horizontal = 20.dp)
 
+                        )
+                    } else if ( resMonitor.value == 2 ){
+                        Text(
+                            text = "STARTUP",
+                            style = MaterialTheme.typography.h5,
+                            color = alarmColor,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(horizontal = 20.dp)
+
+                        )
+                    } else if ( resMonitor.value == 3 ){
+                        Text(
+                            text = "COOLDOWN",
+                            style = MaterialTheme.typography.h5,
+                            color = alarmColor,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(horizontal = 20.dp)
                         )
                     }
                 } else if (resMonitor.satuan == "hour") {
                     val tempHour = resMonitor.value / 60
                     val tempMin = resMonitor.value % 60
                     Text(
-                        text = "${tempHour}:${tempMin}",
-                        style = MaterialTheme.typography.h3,
+                        text = "${"%02d".format(tempHour)}:${"%02d".format(tempMin)}",
+                        style = MaterialTheme.typography.h4,
                         color = alarmColor,
 
                         fontWeight = FontWeight.Bold,

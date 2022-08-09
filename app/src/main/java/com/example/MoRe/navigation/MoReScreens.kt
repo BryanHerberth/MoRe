@@ -11,6 +11,7 @@ enum class MoReScreens {
     PabrikScreen,
     MemberScreen,
     SearchScreen,
+    LaporanScreen,
     DetailScreen;
 
     companion object {
@@ -27,6 +28,7 @@ enum class MoReScreens {
             PabrikScreen.name -> PabrikScreen
             MemberScreen.name -> MemberScreen
             SearchScreen.name -> SearchScreen
+            LaporanScreen.name-> LaporanScreen
             null -> LoginScreen
             else -> throw IllegalArgumentException("Route $route is not recognized")
         }

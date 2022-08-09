@@ -107,7 +107,8 @@ fun CustomAppbar2(name:String,
                  navController: NavController,
                  email : String?,
                  password : String?,
-                  idPabrik: String?
+                  idPabrik: String?,
+                  modifier: Modifier
 ) {
     Column {
         TopAppBar(title = {

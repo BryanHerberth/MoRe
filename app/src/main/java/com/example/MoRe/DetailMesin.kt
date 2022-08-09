@@ -72,6 +72,8 @@ fun ScaffoldDetailMesin(
     var activeMesin by remember {
         mutableStateOf<Mesin?>(null)
     }
+    val scrollState = rememberScrollState()
+
     activeMesin = myMesin
 
     // START API
@@ -172,6 +174,7 @@ fun ScaffoldDetailMesin(
             .fillMaxWidth()
             .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
+
         ) {
 //            try {
 //                CardMesin(resMesin = myMesin!! ,navController = navController, idPabrik = idPabrik)
@@ -184,7 +187,7 @@ fun ScaffoldDetailMesin(
         Spacer(modifier = Modifier.height(20.dp))
         Tabs(pagerState = pagerState, scope = coroutineScope)
         Spacer(modifier = Modifier.height(10.dp))
-        responseVarLaporan?.data?.let { TabsContent(pagerState = pagerState, idPabrik = idPabrik, idMesin= idMesin, variabel = it.variabel, stsMesin=responseStsMesin!!) }
+        responseVarLaporan?.data?.let { TabsContent(pagerState = pagerState, idPabrik = idPabrik, idMesin= idMesin, variabel = it.variabel, stsMesin=responseStsMesin!!, navController = navController) }
         }
     }
 
@@ -195,7 +198,8 @@ fun TabsContent(
     idPabrik : String?,
     idMesin: String?,
     variabel: List<String>,
-    stsMesin: Boolean
+    stsMesin: Boolean,
+    navController: NavController
 ) {
     HorizontalPager(count = 3,
         state = pagerState,
@@ -206,7 +210,7 @@ fun TabsContent(
             }
 
             1 -> {
-                LaporanLayouts(idPabrik = idPabrik, idMesin= idMesin, variabel = variabel)
+                LaporanLayouts(idPabrik = idPabrik, idMesin= idMesin, variabel = variabel, navController = navController)
             }
 
             2 -> {
@@ -232,10 +236,10 @@ fun Tabs(pagerState: PagerState,
         modifier = Modifier.fillMaxWidth()
         ) {
 
-        ScrollableTabRow(selectedTabIndex = pagerState.currentPage,
+        TabRow(selectedTabIndex = pagerState.currentPage,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(15.dp),
+                .padding(horizontal = 15.dp),
             backgroundColor = Color.Transparent,
             divider = { TabRowDefaults.Divider(color = Color.LightGray) },
             indicator = {
@@ -313,12 +317,15 @@ fun PemantauanLayout(
 
     // API STOP
 
-    Column(modifier = Modifier.fillMaxWidth(),
+    Column(modifier = Modifier.fillMaxWidth()
+        .padding(10.dp)
+        ,
         horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+            ,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if(stsMesin==true){
@@ -446,12 +453,14 @@ fun DokumenLayout(
 fun LaporanLayouts(
     idPabrik : String?,
     idMesin: String?,
-    variabel: List<String>
+    variabel: List<String>,
+    navController: NavController
 ){
     val options = variabel
     var optionText by remember{ mutableStateOf("")}
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
+    var nama = selectedOptionText
     val tampilkanClickedState = remember {
         mutableStateOf(false)
     }
@@ -535,13 +544,16 @@ fun LaporanLayouts(
                 ) {
                 OutlinedButton(
                     onClick = {
-
                         val start = SessionManager.getStartDate
                         val stop = SessionManager.getStopDate
-                        composableScope.launch{
-                            postLaporanByName(idPabrik!!, idMesin!!, selectedOptionText, start, stop)
-                            tampilkanClickedState.value = !tampilkanClickedState.value
-                        }
+                            Log.d("TAG", "LaporanView: $idPabrik, $idMesin,{$nama.},$start,$stop")
+
+                            navController.navigate(MoReScreens.LaporanScreen.name +"/$idPabrik/$idMesin/${nama}/$start/$stop")
+
+//                        composableScope.launch{
+//                            postLaporanByName(idPabrik!!, idMesin!!, selectedOptionText, start, stop)
+//                            tampilkanClickedState.value = !tampilkanClickedState.value
+//                        }
                     },
                     modifier = Modifier
                         .padding(4.dp)
@@ -568,5 +580,6 @@ fun LaporanLayouts(
         }
     }
 }
+
 
 

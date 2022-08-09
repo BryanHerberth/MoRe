@@ -67,7 +67,9 @@ fun ScaffoldMember(
                 navController = navController,
                 email = null ,
                 password = null,
-                idPabrik = null)
+                idPabrik = null,
+                modifier = Modifier
+                )
         },
         content = {
             Column(modifier = Modifier.padding(12.dp)) {

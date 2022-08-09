@@ -3,10 +3,7 @@ package com.example.MoRe.components
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -100,7 +97,7 @@ fun HasilTampilkan(
                         stickyHeader {
                         }
                         items(items = timestamp){
-                            CardViewLaporan(resLaporan = it)
+//                            CardViewLaporan(resLaporan = it)
                         }
                     }
                 }
@@ -161,6 +158,11 @@ fun DateStartPickerLayout(){
         modifier = Modifier.border(
             BorderStroke(1.dp, Color.LightGray)
         )
+            .clickable {
+                datePickerDialog.show()
+            },
+                enabled = false
+
     )
 }
 
@@ -194,6 +196,7 @@ fun DateEndPickerLayout() {
         }, eYear, eMonth, eDay
     )
 
+
     TextField(
         value = "${eDate.value}",
         onValueChange = { },
@@ -222,8 +225,12 @@ fun DateEndPickerLayout() {
             trailingIconColor = Color.Black
         ),
         shape = RoundedCornerShape(corner = CornerSize(6.dp)),
-        modifier = Modifier.border(
-            BorderStroke(1.dp, Color.LightGray)
-        )
+        modifier = Modifier
+            .border(
+            BorderStroke(1.dp, Color.LightGray))
+            .clickable {
+                dateEndPickerDialog.show()
+            },
+        enabled = false
     )
 }
