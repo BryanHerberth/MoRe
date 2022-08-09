@@ -237,11 +237,12 @@ fun Tabs(pagerState: PagerState,
                 .fillMaxWidth()
                 .padding(15.dp),
             backgroundColor = Color.Transparent,
-            divider = { TabRowDefaults.Divider(color = Color.Transparent) },
+            divider = { TabRowDefaults.Divider(color = Color.LightGray) },
             indicator = {
                     tabPositions ->
                 TabRowDefaults.Indicator(
-                    modifier = Modifier.pagerTabIndicatorOffset(pagerState,tabPositions)
+                    modifier = Modifier.pagerTabIndicatorOffset(pagerState,tabPositions),
+                    color = BlueApp
                 )
             }
         ) {
@@ -259,7 +260,9 @@ fun Tabs(pagerState: PagerState,
                     Text(text = list[index],
                         style = MaterialTheme.typography.h6,
                         fontWeight = Bold,
-                        color = Color.Black,
+                        color = if ( selected) BlueApp
+                        else Color.LightGray,
+                        modifier = Modifier.padding (vertical = 5.dp)
                         )
                 }
 
