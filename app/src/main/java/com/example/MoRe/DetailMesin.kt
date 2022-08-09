@@ -318,14 +318,12 @@ fun PemantauanLayout(
     // API STOP
 
     Column(modifier = Modifier.fillMaxWidth()
-        .padding(10.dp)
-        ,
+        .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
         Column(
-            modifier = Modifier.fillMaxWidth()
-            ,
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if(stsMesin==true){
@@ -480,7 +478,6 @@ fun LaporanLayouts(
         } catch (e: Exception){
             Log.e("Error DetailMesin Laporan : ", e.message.toString())
         }
-
     }
 
     // STOP API
@@ -546,9 +543,11 @@ fun LaporanLayouts(
                     onClick = {
                         val start = SessionManager.getStartDate
                         val stop = SessionManager.getStopDate
-                            Log.d("TAG", "LaporanView: $idPabrik, $idMesin,{$nama.},$start,$stop")
+                            Log.d("TAG", "LaporanView: $idPabrik, $idMesin,$selectedOptionText,$start,$stop")
 
-                            navController.navigate(MoReScreens.LaporanScreen.name +"/$idPabrik/$idMesin/${nama}/$start/$stop")
+                            navController.navigate(MoReScreens.LaporanScreen.name +"/$idPabrik/$idMesin/$selectedOptionText/$start/$stop"){
+
+                            }
 
 //                        composableScope.launch{
 //                            postLaporanByName(idPabrik!!, idMesin!!, selectedOptionText, start, stop)
@@ -573,11 +572,11 @@ fun LaporanLayouts(
                 }
             }
         }
-        if (tampilkanClickedState.value){
-            HasilTampilkan(resLaporan = responseLaporan?.data?.laporan!!)
-        } else{
-            Box() {}
-        }
+//        if (tampilkanClickedState.value){
+//            HasilTampilkan(resLaporan = responseLaporan?.data?.laporan!!)
+//        } else{
+//            Box() {}
+//        }
     }
 }
 

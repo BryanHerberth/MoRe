@@ -154,7 +154,7 @@ fun MoReNavHost(
         }
         
         val laporanScreen = MoReScreens.LaporanScreen.name
-        composable("$laporanScreen/{idPabrik}/{idMesin}/{nama}/{start}/{stop}/",
+        composable("$laporanScreen/{idPabrik}/{idMesin}/{nama}/{start}/{stop}",
         arguments = listOf(
             navArgument(name = "idPabrik"){
                     type = NavType.StringType
@@ -179,8 +179,8 @@ fun MoReNavHost(
                 navArgument(name = "stop"){
                 type = NavType.StringType
                 defaultValue ="001"
-                nullable = true
-            })){navLaporan ->
+                nullable = true }
+        )){navLaporan ->
             LaporanView(navController = navController,
                 idPabrik = navLaporan.arguments?.getString("idPabrik"),
                 idMesin = navLaporan.arguments?.getString("idMesin"),

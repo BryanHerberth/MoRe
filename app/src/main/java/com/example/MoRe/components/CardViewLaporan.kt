@@ -22,7 +22,8 @@ import com.example.MoRe.network.model.res.laporan.LaporanByName
 //@Preview(showBackground = true)
 @Composable
 fun  CardViewLaporan(
-    resLaporan: LaporanByName,
+    laporan: DaftarLaporan = getDataLaporan()[0],
+//    resLaporan: LaporanByName,
 ) {
     Card(
         modifier = Modifier
@@ -52,7 +53,8 @@ fun  CardViewLaporan(
                         .weight(0.02f)
                 )
                 Text(
-                    text = resLaporan.value,
+//                    text = resLaporan.value,
+                    text = laporan.DataLaporan,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(4.dp)
 //                        .weight(0.1f)
