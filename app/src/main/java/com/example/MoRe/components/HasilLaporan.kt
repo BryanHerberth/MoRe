@@ -37,8 +37,9 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun HasilTampilkan(
     laporan: List<DaftarLaporan> = getDataLaporan(),
-//    resLaporan: List<LaporanByName>
+    resLaporan: List<LaporanByName>
 ){
+    Log.d("Hasil Laporan Mesin : ", resLaporan.toString())
     Card(modifier = Modifier
         .padding(4.dp)
         .fillMaxWidth(),
@@ -90,24 +91,24 @@ fun HasilTampilkan(
                     }
                 }
                 LazyColumn{
-//                    val laporanSort = resLaporan.groupBy { it.nomor}
-//
-//                    laporanSort.forEach { (nomor, timestamp ) ->
-//                        stickyHeader {
-//                        }
-//                        items(items = timestamp){
-//                            CardViewLaporan(resLaporan = it)
-//                        }
-//                    }
-                    val laporanSort = laporan.groupBy { it.Nomor}
+                    val laporanSort = resLaporan.groupBy { it.nomor}
 
-                    laporanSort.forEach { (Nomor, Tanggal ) ->
+                    laporanSort.forEach { (nomor, timestamp ) ->
                         stickyHeader {
                         }
-                        items(items = Tanggal){
-                            CardViewLaporan(laporan = it )
+                        items(items = timestamp){
+                            CardViewLaporan(resLaporan = it)
                         }
                     }
+//                    val laporanSort = laporan.groupBy { it.Nomor}
+//
+//                    laporanSort.forEach { (Nomor, Tanggal ) ->
+//                        stickyHeader {
+//                        }
+//                        items(items = Tanggal){
+//                            CardViewLaporan(laporan = it )
+//                        }
+//                    }
                 }
             }
         }

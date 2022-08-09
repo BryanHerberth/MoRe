@@ -1,5 +1,6 @@
 package com.example.MoRe
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -32,8 +33,10 @@ import com.example.MoRe.network.model.req.ReqLaporan
 import com.example.MoRe.network.model.res.laporan.ResLaporanByName
 import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
+import kotlinx.coroutines.launch
 
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LaporanView(
@@ -44,9 +47,11 @@ fun LaporanView(
     start: String?,
     stop: String?,
     laporan: List<DaftarLaporan> = getDataLaporan(),
-
-
-    ) {
+) {
+    val tampilkanClickedState = remember {
+        mutableStateOf(false)
+    }
+    // API START
     var responseLaporan by remember{
         mutableStateOf<ResLaporanByName?>(null)
     }
@@ -62,7 +67,15 @@ fun LaporanView(
             Log.e("Error DetailMesin Laporan : ", e.message.toString())
         }
     }
-    Log.d("TAG", "LaporanView: $idPabrik, $idMesin, $nama, $start, $stop")
+    LaunchedEffect(Unit){
+//        postLaporanByName(idPabrik!!, idMesin!!, nama!!, start!!, stop!!)
+        Log.d("LaunchedEffect", "error repet..................")
+        postLaporanByName(idPabrik!!, idMesin!!, nama!!, start!!, stop!!)
+        tampilkanClickedState.value = !tampilkanClickedState.value
+    }
+    val composableScope = rememberCoroutineScope()
+     // API STOP
+//    Log.d("TAG", "LaporanView: $idPabrik, $idMesin, $nama, $start, $stop")
     Scaffold(
         topBar = {
             CustomAppbar3(
@@ -102,7 +115,16 @@ fun LaporanView(
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                HasilTampilkan(laporan = laporan)
+                if (tampilkanClickedState.value){
+                    HasilTampilkan(resLaporan = responseLaporan?.data?.laporan!!)
+                } else{
+//        Box() {}
+                }
+//                composableScope.launch {
+//                    postLaporanByName(idPabrik!!, idMesin!!, nama!!, start!!, stop!!)
+//                    tampilkanClickedState.value = !tampilkanClickedState.value
+//                }
+
 
 ////                    val sorted = listMember.groupBy { it.tipeUser}
 //                    val sorted = responseGetMember?.data?.anggota?.groupBy { it.status }
@@ -127,6 +149,7 @@ fun LaporanView(
             }
         },
     )
+
 }
 
 @Composable

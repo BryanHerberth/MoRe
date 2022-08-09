@@ -543,7 +543,7 @@ fun LaporanLayouts(
                     onClick = {
                         val start = SessionManager.getStartDate
                         val stop = SessionManager.getStopDate
-                            Log.d("TAG", "LaporanView: $idPabrik, $idMesin,$selectedOptionText,$start,$stop")
+                            Log.d("TAG", "LaporanView berulang loh...........: $idPabrik, $idMesin,$selectedOptionText,$start,$stop")
 
                             navController.navigate(MoReScreens.LaporanScreen.name +"/$idPabrik/$idMesin/$selectedOptionText/$start/$stop"){
 

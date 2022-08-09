@@ -78,6 +78,7 @@ fun ScaffoldMember(
 
 //                    val sorted = listMember.groupBy { it.tipeUser}
                     val sorted = responseGetMember?.data?.anggota?.groupBy { it.status }
+                    Log.d("Soetir Anggota", sorted.toString())
                     if (sorted != null) {
                         sorted.forEach { (status, id_pengguna ) ->
                             stickyHeader {

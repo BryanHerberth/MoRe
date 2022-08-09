@@ -23,7 +23,7 @@ import com.example.MoRe.network.model.res.laporan.LaporanByName
 @Composable
 fun  CardViewLaporan(
     laporan: DaftarLaporan = getDataLaporan()[0],
-//    resLaporan: LaporanByName,
+    resLaporan: LaporanByName,
 ) {
     Card(
         modifier = Modifier
@@ -41,20 +41,20 @@ fun  CardViewLaporan(
                     .padding(4.dp)
             ) {
                 Text(
-                    text = "resLaporan.nomor",
+                    text = resLaporan.nomor,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(4.dp)
                         .weight(0.01f)
                 )
                 Text(
-                    text = "resLaporan.timestamp",
+                    text = resLaporan.timestamp,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(4.dp)
                         .weight(0.02f)
                 )
                 Text(
-//                    text = resLaporan.value,
-                    text = laporan.DataLaporan,
+                    text = resLaporan.value,
+//                    text = laporan.DataLaporan,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(4.dp)
 //                        .weight(0.1f)
