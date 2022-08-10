@@ -40,12 +40,12 @@ fun HasilTampilkan(
     resLaporan: List<LaporanByName>
 ){
     Log.d("Hasil Laporan Mesin : ", resLaporan.toString())
-    Card(modifier = Modifier
-        .padding(4.dp)
-        .fillMaxWidth(),
-    ) {
+//    Card(modifier = Modifier
+//        .padding(4.dp)
+//        .fillMaxWidth(),
+//    ) {
         Surface(modifier = Modifier
-            .padding(4.dp)
+            .padding(horizontal = 10.dp, vertical = 4.dp)
             .fillMaxWidth()
             .fillMaxHeight(),
             ) {
@@ -113,7 +113,7 @@ fun HasilTampilkan(
             }
         }
     }
-}
+//}
 
 
 

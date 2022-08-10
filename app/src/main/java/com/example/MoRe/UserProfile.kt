@@ -102,50 +102,7 @@ fun CustomAppbar(name:String,
     }
 }
 
-@Composable
-fun CustomAppbar2(name:String,
-                 navController: NavController,
-                 email : String?,
-                 password : String?,
-                  idPabrik: String?,
-                  modifier: Modifier
-) {
-    Column {
-        TopAppBar(title = {
-            Row(
-                modifier = Modifier.fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = "$name",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = White,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(90.dp, 0.dp)
-                )
-            }
-        },
-            backgroundColor = BlueApp,
 
-            navigationIcon = {
-                IconButton(onClick = {
-                    navController.navigate(MoReScreens.PabrikScreen.name +"/{$idPabrik}") {
-                        popUpTo(MoReScreens.PabrikScreen.name+"/{$idPabrik}")
-                        {
-                            inclusive = true
-                        }
-                    }
-                }) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Back Arrow",
-                        tint = White
-                    )
-                }
-            })
-    }
-}
 
 @Composable
 fun Scaffoldlayout(navController: NavController) {

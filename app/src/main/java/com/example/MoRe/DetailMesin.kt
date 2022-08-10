@@ -317,7 +317,8 @@ fun PemantauanLayout(
 
     // API STOP
 
-    Column(modifier = Modifier.fillMaxWidth()
+    Column(modifier = Modifier
+        .fillMaxWidth()
         .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -335,7 +336,21 @@ fun PemantauanLayout(
                     }
                 }
             }else{
-                Text(text = "Mesin Offline")
+                Column(horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Mesin Offline",
+                        style = MaterialTheme.typography.h4,
+                        fontWeight = Bold
+                    )
+                    Text(text = "Silahkan menghubungi Teknisi Lapangan",
+                        style = MaterialTheme.typography.h6,
+                        )
+                    Text(text = "Untuk informasi lebih lanjut",
+                        style = MaterialTheme.typography.h6,
+
+                        )
+                }
             }
             
         }

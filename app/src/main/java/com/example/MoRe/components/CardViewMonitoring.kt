@@ -44,6 +44,10 @@ fun CardMonitoring(
         myBackgroundColor = Color(0xFFFFD700)
         myBorder = BorderStroke(2.dp, color = Color.Yellow)
 
+    } else if (resMonitor.nama =="Status" && resMonitor.value == 1) {
+        alarmColor = Color.Black
+        myBackgroundColor = Color.Green
+        myBorder = BorderStroke(2.dp, color = Color.Green)
     } else {
         if(resMonitor.alarm && resMonitor.enableAlarm){
             myBorder = BorderStroke(2.dp, color = Color.Red)

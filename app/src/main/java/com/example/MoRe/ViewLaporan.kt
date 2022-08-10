@@ -75,7 +75,7 @@ fun LaporanView(
     }
     val composableScope = rememberCoroutineScope()
      // API STOP
-//    Log.d("TAG", "LaporanView: $idPabrik, $idMesin, $nama, $start, $stop")
+    Log.d("TAG", "LaporanView: $idPabrik, $idMesin, $nama, $start, $stop")
     Scaffold(
         topBar = {
             CustomAppbar3(
@@ -83,12 +83,13 @@ fun LaporanView(
                 navController = navController,
                 email = null,
                 password = null,
-                idPabrik = null,
-                idMesin = null,
+                idPabrik = idPabrik,
+                idMesin = idMesin,
             )
         },
         content = {
-            Column(modifier = Modifier.padding(16.dp)
+            Column(modifier = Modifier
+                .padding(16.dp)
                 .fillMaxWidth()
             ) {
                 Column(modifier = Modifier
@@ -180,7 +181,11 @@ fun CustomAppbar3(name:String,
 
             navigationIcon = {
                 IconButton(onClick = {
-                    navController.navigate(MoReScreens.DetailScreen.name + "/${idPabrik}/${idMesin}")
+                    Log.d("idyg dilempar", "${idPabrik.toString()}, ${idMesin.toString()} ")
+                    navController.navigate(MoReScreens.DetailScreen.name + "/${idPabrik}/${idMesin}"){
+
+                    }
+
                 }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
