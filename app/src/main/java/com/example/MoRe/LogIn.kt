@@ -66,8 +66,9 @@ fun moreLogInScreen(navController: NavHostController) {
 fun loginForm(
     navController: NavHostController
 ) {
-    val email = rememberSaveable { mutableStateOf("linerico24@gmail.com") }
-    val password = rememberSaveable { mutableStateOf("test1234") }
+    //"linerico24@gmail.com" //test1234
+    val email = rememberSaveable { mutableStateOf("") }
+    val password = rememberSaveable { mutableStateOf("") }
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
     val passwordFocusRequest = FocusRequester.Default
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -96,7 +97,7 @@ fun loginForm(
                             SessionManager.saveAccessToken(
                                 it.accessToken)
                         }
-                        Log.d("Token dari Sessien Manager", SessionManager.accessToken)
+                        Log.d("Token Manager", SessionManager.accessToken)
 //                        localDataSource.setAuthToken((responseLogin as Resource.Success<Response<ResLogin>?>).data?.body()?.data?.accessToken)
                     }
                 } catch (e: Exception){
