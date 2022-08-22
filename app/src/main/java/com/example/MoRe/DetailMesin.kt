@@ -269,7 +269,6 @@ fun Tabs(pagerState: PagerState,
                         modifier = Modifier.padding (vertical = 5.dp)
                         )
                 }
-
             }
         }
     }

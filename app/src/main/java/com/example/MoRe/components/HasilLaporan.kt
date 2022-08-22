@@ -12,9 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowDropDown
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,7 +38,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.geometry.Offset
@@ -51,14 +48,26 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.MoRe.DokumenLayout
+import com.example.MoRe.LaporanLayouts
+import com.example.MoRe.PemantauanLayout
+import com.example.MoRe.ui.theme.BlueApp
+import com.google.accompanist.pager.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
+@OptIn(ExperimentalPagerApi::class)
 @ExperimentalFoundationApi
 @Composable
 fun HasilTampilkan(
     laporan: List<DaftarLaporan> = getDataLaporan(),
     resLaporan: List<LaporanByName>
 ){
+    val coroutineScope = rememberCoroutineScope()
+    val pagerState = rememberPagerState()
+
     Log.d("Hasil Laporan Mesin : ", resLaporan.toString())
 //    Card(modifier = Modifier
 //        .padding(4.dp)
@@ -69,97 +78,120 @@ fun HasilTampilkan(
             .fillMaxWidth()
             .fillMaxHeight(),
             ) {
-            Column(
-                modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start,
-                    ) {
-                        Text(text = "Nomor",
-                            style = MaterialTheme.typography.h6,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-//                    Spacer(modifier = Modifier.weight(0.04f))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.padding(horizontal = 40.dp)
-                    ) {
-                        Text(
-                            text = "Waktu Pencatatan",
-                            style = MaterialTheme.typography.h6,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-//                    Spacer(modifier = Modifier.padding(horizontal = 20.dp))
+            Column(modifier = Modifier
+                .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally) {
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier.padding(horizontal = 5.dp)
+                LaporanTabs(pagerState = pagerState, scope = coroutineScope)
+                Spacer(modifier = Modifier.height(20.dp))
+                LaporanTabsContent(
+                    pagerState = pagerState,
+                    resLaporan = resLaporan)
+            }
 
-                    ) {
-                        Text(
-                            text = "Hasil",
-                            style = MaterialTheme.typography.h6,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-//                LazyColumn{
-//                    val laporanSort = resLaporan.groupBy { it.nomor}
-//
-//                    laporanSort.forEach { (nomor, timestamp ) ->
-//                        stickyHeader {
-//                        }
-//                        items(items = timestamp){
-//                            CardViewLaporan(resLaporan = it)
-//                        }
-//                    }
-////                    val laporanSort = laporan.groupBy { it.Nomor}
-////
-////                    laporanSort.forEach { (Nomor, Tanggal ) ->
-////                        stickyHeader {
-////                        }
-////                        items(items = Tanggal){
-////                            CardViewLaporan(laporan = it )
-////                        }
-////                    }
-//
-//                }
 
-                val yStep = 50
-                val random = Random
-                /* to test with random points */
-//                val points = (0..9).map {
-//                    var num = random.nextInt(350)
-//                    if (num <= 50)
-//                        num += 100
-//                    num.toFloat()
-//                }
-                /* to test with fixed points */
-                val points = listOf(
-                    100f,150f,200f,250f,300f,350f,400f)
-                Graph(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(500.dp),
-                    xValues = (0..10).map { it + 1 },
-                    yValues = (0..9).map { (it + 1) * yStep },
-                    points = points,
-                    paddingSpace = 16.dp,
-                    verticalStep = yStep
-                )
+
             }
         }
-    }
+
 //}
 
 
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun TableView(
+    laporan: List<DaftarLaporan> = getDataLaporan(),
+    resLaporan: List<LaporanByName>
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start,
+            ) {
+                Text(
+                    text = "Nomor",
+                    style = MaterialTheme.typography.h6,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+//                    Spacer(modifier = Modifier.weight(0.04f))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.padding(horizontal = 40.dp)
+            ) {
+                Text(
+                    text = "Waktu Pencatatan",
+                    style = MaterialTheme.typography.h6,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+//                    Spacer(modifier = Modifier.padding(horizontal = 20.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.padding(horizontal = 5.dp)
+
+            ) {
+                Text(
+                    text = "Hasil",
+                    style = MaterialTheme.typography.h6,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+        LazyColumn {
+            val laporanSort = resLaporan.groupBy { it.nomor }
+
+            laporanSort.forEach { (nomor, timestamp) ->
+                stickyHeader {
+                }
+                items(items = timestamp) {
+                    CardViewLaporan(resLaporan = it)
+                }
+            }
+//                    val laporanSort = laporan.groupBy { it.Nomor}
+//
+//                    laporanSort.forEach { (Nomor, Tanggal ) ->
+//                        stickyHeader {
+//                        }
+//                        items(items = Tanggal){
+//                            CardViewLaporan(laporan = it )
+//                        }
+//                    }
+
+        }
+    }
+}
+
+
+@OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
+@Composable
+fun LaporanTabsContent(
+    pagerState: PagerState,
+    laporan: List<DaftarLaporan> = getDataLaporan(),
+    resLaporan: List<LaporanByName>
+) {
+    HorizontalPager(count = 2,
+        state = pagerState,
+    ) { page ->
+        when (page){
+            0 -> {
+                TableView(resLaporan = resLaporan)
+            }
+
+            1 -> {
+                graphView()
+            }
+        }
+    }
+}
 
 @Composable
 fun DateStartPickerLayout(){
@@ -288,6 +320,86 @@ fun DateEndPickerLayout() {
             },
         enabled = false
     )
+}
+
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun LaporanTabs(pagerState: PagerState,
+         scope: CoroutineScope
+) {
+    val list = listOf(
+        "ChartView",
+        "TableView"
+    )
+    val coroutineScope = rememberCoroutineScope()
+    Column(horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+
+        TabRow(selectedTabIndex = pagerState.currentPage,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 15.dp),
+            backgroundColor = Color.Transparent,
+            divider = { TabRowDefaults.Divider(color = Color.LightGray) },
+            indicator = {
+                    tabPositions ->
+                TabRowDefaults.Indicator(
+                    modifier = Modifier.pagerTabIndicatorOffset(pagerState,tabPositions),
+                    color = BlueApp
+                )
+            }
+        ) {
+            list.forEachIndexed { index, s ->
+                val selected = pagerState.currentPage == index
+
+                Tab(selected = selected, onClick = {
+
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(index)
+                    }
+                },
+                    enabled = true
+                ) {
+                    Text(text = list[index],
+                        style = MaterialTheme.typography.h6,
+                        fontWeight = FontWeight.Bold,
+                        color = if ( selected) BlueApp
+                        else Color.LightGray,
+                        modifier = Modifier.padding (vertical = 5.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun graphView(){
+    val yStep = 50
+    val random = Random
+    /* to test with random points */
+//                val points = (0..9).map {
+//                    var num = random.nextInt(350)
+//                    if (num <= 50)
+//                        num += 100
+//                    num.toFloat()
+//                }
+    /* to test with fixed points */
+    val points = listOf(
+        100f,150f,200f,250f,300f,350f,400f)
+    Graph(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(500.dp),
+        xValues = (0..10).map { it + 1 },
+        yValues = (0..9).map { (it + 1) * yStep },
+        points = points,
+        paddingSpace = 16.dp,
+        verticalStep = yStep
+    )
+
 }
 
 @Composable
