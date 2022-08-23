@@ -103,4 +103,6 @@ dependencies {
 //    kapt "androidx.hilt:hilt-compiler:1.0.0-beta01"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-alpha01'
 
+    implementation 'com.github.madrapps:plot:0.1.1'
+
 }

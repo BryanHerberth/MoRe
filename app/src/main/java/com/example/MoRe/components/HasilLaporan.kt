@@ -53,6 +53,8 @@ import com.example.MoRe.model.LineChartEntity
 import com.example.MoRe.network.model.res.laporan.*
 import com.example.MoRe.ui.theme.*
 import com.google.accompanist.pager.*
+import com.madrapps.plot.line.LineGraph
+import com.madrapps.plot.line.LinePlot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -387,9 +389,10 @@ fun graphView(
     var lineChartData2 = listOf<LineChartEntity>()
 //    var verticalAxisValues2 = listOf<Float>()
     for(index in resChart){
+
         lineChartData2 = lineChartData2 + LineChartEntity(index.value.toFloat(), index.nomor)
 //        verticalAxisValues2 = verticalAxisValues2 + index.value.toFloat()
-//        Log.d("Loop Chart", index.toString())
+        Log.d("Loop Chart", index.toString())
     }
 //    Log.d("lineChartData4 : : ", lineChartData4.toString())
 //    Log.d("Lporan Chart on graph : ", resChart.toString())
@@ -406,7 +409,9 @@ fun graphView(
 //    Log.d("lineChartData4 : : ", lineChartData4.toString())
     Log.d("lineChartData2 : : ", lineChartData2.toString())
 //    Log.d("verticalAxisValues2 :: ", verticalAxisValues2.toString())
-    val verticalAxisValues2 = listOf(100.0f, 200.0f, 300.0f, 400.0f, 500.0f, 600.0f, 700.0f, 800.0f, 900.0f, 1000.0f, 1100.0f, 1200.0f, 1300.0f, 1400.0f, 1500.0f, 1600.0f, 1700.0f, 1800.0f, 1900.0f, 2000.0f, 2100.0f, 2200.0f, 2300.0f, 2400.0f, 2500.0f, 2600.0f, 2700.0f, 2800.0f, 2900.0f, 3000.0f)
+
+
+    val verticalAxisValues2 = listOf(100.0f, 200.0f, 300.0f, 400.0f, 500.0f, 600.0f, 700.0f, 800.0f, 900.0f, 1000.0f, 1100.0f, 1200.0f, 1300.0f, 1400.0f, 1500.0f, 1600.0f, 1700.0f, 1800.0f, 1900.0f, 2000.0f, 2100.0f, 2200.0f, 2300.0f, 2400.0f, 2500.0f, 2600.0f, 2700.0f, 2800.0f)
 //    val yStep = 50
 //    val random = Random
 //    /* to test with random points */
@@ -564,6 +569,18 @@ fun Graph(
     }
 }
 
+
+//@Composable
+//fun testLineGraph(resChart: List<lapo>){
+//    LineGraph(plot = LinePlot(
+//        listOf(
+//            LinePlot.Line(
+//                line
+//            )
+//        )
+//    ))
+//}
+
 @Composable
 fun LineChart(
     modifier: Modifier? = Modifier
@@ -580,13 +597,18 @@ fun LineChart(
     isShowHorizontalLines: Boolean = true,
     strokeWidth: Dp = 4.dp,
     lineColor: Color = Color.Blue,
+
 ) {
 
     val strokeWidthPx = dpToPx(strokeWidth)
     val axisThicknessPx = dpToPx(DefaultAxisThickness)
 
     Canvas(
-        modifier = modifier!!.aspectRatio(1f)
+        modifier = modifier!!
+            .aspectRatio(1f)
+            .horizontalScroll(rememberScrollState())
+            .width(2000.dp)
+            .height(300.dp)
     ) {
 
         val bottomAreaHeight = horizontalAxisLabelFontSize.toPx()
@@ -610,7 +632,7 @@ fun LineChart(
         if (isShowVerticalAxis)
             drawRect(
                 color = axisColor,
-                topLeft = Offset(leftAreaWidth.toFloat(), 0.0f),
+                topLeft = Offset(leftAreaWidth.toFloat(), 0.2f),
                 size = Size(axisThicknessPx, verticalAxisLength)
             )
 
