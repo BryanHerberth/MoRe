@@ -15,3 +15,18 @@ data class LaporanByName(
     val value: String,
     val timestamp: String
 )
+
+data class ResLaporanChart(
+    val status: String,
+    val data: DataLaporanChart
+)
+
+data class DataLaporanChart(
+    val laporan: List<lapo>
+)
+
+data class lapo(
+    val nomor: String,
+    val value: Int,
+    val timestamp: String
+)

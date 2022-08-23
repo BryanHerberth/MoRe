@@ -31,6 +31,7 @@ import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.base.Resource
 import com.example.MoRe.network.model.req.ReqLaporan
 import com.example.MoRe.network.model.res.laporan.ResLaporanByName
+import com.example.MoRe.network.model.res.laporan.ResLaporanChart
 import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
 import kotlinx.coroutines.launch
@@ -55,6 +56,9 @@ fun LaporanView(
     var responseLaporan by remember{
         mutableStateOf<ResLaporanByName?>(null)
     }
+    var responseLaporanChart by remember{
+        mutableStateOf<ResLaporanChart?>(null)
+    }
 
     suspend fun postLaporanByName(idPabrik: String, idMesin: String, nama: String, start: String, stop: String) {
         val repository = Repository()
@@ -62,7 +66,18 @@ fun LaporanView(
             Log.d("ReqLaporan", ReqLaporan(nama, start, stop).toString())
             val response = repository.postLaporan(idPabrik, idMesin, ReqLaporan(nama, start, stop))
             responseLaporan = Resource.Success(response).data?.body()
-            Log.d("Respon laporan : ", responseLaporan?.data?.laporan.toString())
+//            Log.d("Respon laporan : ", responseLaporan?.data?.laporan.toString())
+        } catch (e: Exception){
+            Log.e("Error DetailMesin Laporan : ", e.message.toString())
+        }
+    }
+    suspend fun postLaporanChart(idPabrik: String, idMesin: String, nama: String, start: String, stop: String){
+        val repository = Repository()
+        try{
+            Log.d("ReqLaporan", ReqLaporan(nama, start, stop).toString())
+            val response = repository.postLaporanChart(idPabrik, idMesin, ReqLaporan(nama, start, stop))
+            responseLaporanChart = Resource.Success(response).data?.body()
+//            Log.d("Respon laporan Chart : ", responseLaporanChart?.data?.laporan.toString())
         } catch (e: Exception){
             Log.e("Error DetailMesin Laporan : ", e.message.toString())
         }
@@ -71,6 +86,7 @@ fun LaporanView(
 //        postLaporanByName(idPabrik!!, idMesin!!, nama!!, start!!, stop!!)
         Log.d("LaunchedEffect", "error repet..................")
         postLaporanByName(idPabrik!!, idMesin!!, nama!!, start!!, stop!!)
+        postLaporanChart(idPabrik!!, idMesin!!, nama!!, start!!, stop!!)
         tampilkanClickedState.value = !tampilkanClickedState.value
     }
     val composableScope = rememberCoroutineScope()
@@ -117,7 +133,7 @@ fun LaporanView(
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 if (tampilkanClickedState.value){
-                    HasilTampilkan(resLaporan = responseLaporan?.data?.laporan!!)
+                    HasilTampilkan(resLaporan = responseLaporan?.data?.laporan!!, resChart= responseLaporanChart?.data?.laporan!!)
                 } else{
 //        Box() {}
                 }

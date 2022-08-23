@@ -15,6 +15,7 @@ import com.example.MoRe.network.model.res.getpabrik.ResGetPabrik
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrikById
 import com.example.MoRe.network.model.res.laporan.ResGetVarLaporan
 import com.example.MoRe.network.model.res.laporan.ResLaporanByName
+import com.example.MoRe.network.model.res.laporan.ResLaporanChart
 import com.example.MoRe.network.model.res.login.ResLogin
 import com.example.MoRe.network.model.res.monitor.ResGetMonitor
 import com.example.MoRe.network.model.res.notifikasi.ResGetNotifikasi
@@ -108,6 +109,10 @@ class Repository @Inject constructor(
     // Laporan
     suspend fun postLaporan(idPabrik: String, idMesin: String, reqLaporan: ReqLaporan): Response<ResLaporanByName>{
         return RetrofitInstance.api.postLaporanByName(idPabrik,idMesin, reqLaporan)
+    }
+
+    suspend fun postLaporanChart(idPabrik: String, idMesin: String, reqLaporan: ReqLaporan): Response<ResLaporanChart>{
+        return RetrofitInstance.api.postLaporanChartAndroid(idPabrik, idMesin, reqLaporan)
     }
 
 

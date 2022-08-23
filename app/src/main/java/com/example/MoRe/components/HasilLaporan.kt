@@ -20,9 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.DaftarLaporan
 import com.example.MoRe.model.getDataLaporan
-import com.example.MoRe.network.model.res.laporan.DataLaporan
-import com.example.MoRe.network.model.res.laporan.LaporanByName
-import com.example.MoRe.network.model.res.laporan.ResLaporanByName
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -53,6 +50,7 @@ import com.example.MoRe.LaporanLayouts
 import com.example.MoRe.PemantauanLayout
 import com.example.MoRe.dpToPx
 import com.example.MoRe.model.LineChartEntity
+import com.example.MoRe.network.model.res.laporan.*
 import com.example.MoRe.ui.theme.*
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.CoroutineScope
@@ -64,12 +62,15 @@ import kotlin.random.Random
 @Composable
 fun HasilTampilkan(
     laporan: List<DaftarLaporan> = getDataLaporan(),
-    resLaporan: List<LaporanByName>
+    resLaporan: List<LaporanByName>,
+    resChart: List<lapo>
+//    resLaporanChart:
 ){
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
     Log.d("Hasil Laporan Mesin : ", resLaporan.toString())
+    Log.d("Hasil Laporan Mesin chart : ", resChart.toString())
 //    Card(modifier = Modifier
 //        .padding(4.dp)
 //        .fillMaxWidth(),
@@ -87,7 +88,9 @@ fun HasilTampilkan(
                 Spacer(modifier = Modifier.height(20.dp))
                 LaporanTabsContent(
                     pagerState = pagerState,
-                    resLaporan = resLaporan)
+                    resLaporan = resLaporan,
+                    resChart = resChart
+                )
             }
 
 
@@ -177,7 +180,8 @@ fun TableView(
 fun LaporanTabsContent(
     pagerState: PagerState,
     laporan: List<DaftarLaporan> = getDataLaporan(),
-    resLaporan: List<LaporanByName>
+    resLaporan: List<LaporanByName>,
+    resChart: List<lapo>
 ) {
     HorizontalPager(count = 2,
         state = pagerState,
@@ -188,7 +192,7 @@ fun LaporanTabsContent(
             }
 
             1 -> {
-                graphView()
+                graphView(resChart = resChart)
             }
         }
     }
@@ -377,19 +381,32 @@ fun LaporanTabs(pagerState: PagerState,
 }
 
 @Composable
-fun graphView(){
-
-    val lineChartData2 = listOf(
-        LineChartEntity(1.0f, "9"),
-        LineChartEntity(1.5f, "2"),
-        LineChartEntity(2f, "3"),
-        LineChartEntity(2.5f, "4"),
-        LineChartEntity(3.0f, "5"),
-        LineChartEntity(4.5f, "6"),
-        LineChartEntity(7f, "7"),
-        LineChartEntity(9f, "8"),
-    )
-    val verticalAxisValues2 = listOf(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f)
+fun graphView(
+    resChart: List<lapo>
+){
+    var lineChartData2 = listOf<LineChartEntity>()
+//    var verticalAxisValues2 = listOf<Float>()
+    for(index in resChart){
+        lineChartData2 = lineChartData2 + LineChartEntity(index.value.toFloat(), index.nomor)
+//        verticalAxisValues2 = verticalAxisValues2 + index.value.toFloat()
+//        Log.d("Loop Chart", index.toString())
+    }
+//    Log.d("lineChartData4 : : ", lineChartData4.toString())
+//    Log.d("Lporan Chart on graph : ", resChart.toString())
+//    val lineChartData2 = listOf(
+////        LineChartEntity(1.0f, "9"),
+////        LineChartEntity(1.5f, "2"),
+////        LineChartEntity(2f, "3"),
+////        LineChartEntity(2.5f, "4"),
+////        LineChartEntity(3.0f, "5"),
+////        LineChartEntity(4.5f, "6"),
+////        LineChartEntity(7f, "7"),
+////        LineChartEntity(9f, "8"),
+////    )
+//    Log.d("lineChartData4 : : ", lineChartData4.toString())
+    Log.d("lineChartData2 : : ", lineChartData2.toString())
+//    Log.d("verticalAxisValues2 :: ", verticalAxisValues2.toString())
+    val verticalAxisValues2 = listOf(100.0f, 200.0f, 300.0f, 400.0f, 500.0f, 600.0f, 700.0f, 800.0f, 900.0f, 1000.0f, 1100.0f, 1200.0f, 1300.0f, 1400.0f, 1500.0f, 1600.0f, 1700.0f, 1800.0f, 1900.0f, 2000.0f, 2100.0f, 2200.0f, 2300.0f, 2400.0f, 2500.0f, 2600.0f, 2700.0f, 2800.0f, 2900.0f, 3000.0f)
 //    val yStep = 50
 //    val random = Random
 //    /* to test with random points */
@@ -412,7 +429,7 @@ fun graphView(){
 //        paddingSpace = 16.dp,
 //        verticalStep = yStep
 //    )
-    LineChart(lineChartData = lineChartData2, verticalAxisValues = verticalAxisValues2)
+    LineChart(lineChartData = lineChartData2, verticalAxisValues = verticalAxisValues2, resChart=resChart)
 
 }
 
@@ -552,6 +569,7 @@ fun LineChart(
     modifier: Modifier? = Modifier
         .padding(top = 16.dp, bottom = 16.dp),
     lineChartData: List<LineChartEntity>,
+    resChart: List<lapo>,
     verticalAxisValues: List<Float>,
     axisColor: Color = DefaultAxisColor,
     horizontalAxisLabelColor: Color = DefaultAxisLabelColor,

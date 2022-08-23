@@ -16,6 +16,7 @@ import com.example.MoRe.network.model.res.getpabrik.ResGetPabrikById
 import com.example.MoRe.network.model.res.getpabrik.ResGetPabrikByName
 import com.example.MoRe.network.model.res.laporan.ResGetVarLaporan
 import com.example.MoRe.network.model.res.laporan.ResLaporanByName
+import com.example.MoRe.network.model.res.laporan.ResLaporanChart
 import com.example.MoRe.network.model.res.login.ResLogin
 import com.example.MoRe.network.model.res.monitor.ResGetMonitor
 import com.example.MoRe.network.model.res.notifikasi.ResGetNotifikasi
@@ -134,6 +135,14 @@ interface ApiService {
         @Path("idMesin") idMesin: String,
         @Body reqLaporan: ReqLaporan
     ) : Response<ResLaporanByName>
+
+    @POST("/pabrik/{id}/mesin/{idMesin}/laporanchartandroid")
+    suspend fun postLaporanChartAndroid(
+        @Path("id") idPabrik: String,
+        @Path("idMesin") idMesin: String,
+        @Body reqLaporan: ReqLaporan
+    ) : Response<ResLaporanChart>
+
 
     // Dokumen
     @GET("/pabrik/{id}/mesin/{idMesin}/dokumen")
