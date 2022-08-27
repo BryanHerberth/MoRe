@@ -35,7 +35,6 @@ import com.example.MoRe.network.model.res.monitor.Monitor
 
 @Composable
 fun CardMesin(
-//    mesin : DaftarMesinNotif = getDataMesin()[0],
     resMesin : Mesin = Mesin("", "", "", "", "", ""),
     onItemClick : (String) -> Unit ={},
     navController: NavController,
@@ -54,12 +53,7 @@ fun CardMesin(
         }
 
     var online = statusMesin
-    /**
-     * Perlu Passing Api Baru If dibawah bisa jalan
-     */
-//    if(resMonitor.alarm && resMonitor.enableAlarm){
-//        online = false
-//    }
+
     if(!clickable){
         tempModifier = Modifier
             .padding(4.dp)
@@ -90,27 +84,22 @@ fun CardMesin(
                 .padding(4.dp)
             ) {
                 Text(
-//                    text = mesin.namaMesin,
                     text = resMesin.nama_mesin,
                     style = MaterialTheme.typography.h6
                 )
                 Text(
-//                    text = mesin.tipeMesin,
                     text = resMesin.tipe_mesin,
                     style = MaterialTheme.typography.caption,
                     fontWeight = FontWeight.Bold,
 
                     )
                 Text(
-//                    text = mesin.merekMesin,
                     text = resMesin.merek_mesin,
                     style = MaterialTheme.typography.caption
                 )
-//                Spacer(modifier = Modifier.height(5.dp))
                 if(showSts){
                     if (online) {
                         Text(
-//                    text = mesin.merekMesin,
                             text = "Online",
                             color = Color.Green,
                             fontWeight = FontWeight.Bold,
@@ -118,7 +107,7 @@ fun CardMesin(
                         )
                     } else{
                         Text(
-//                    text = mesin.merekMesin,
+
                             text = "OFFLINE",
                             color = Color.Red,
                             style = MaterialTheme.typography.caption

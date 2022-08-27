@@ -30,7 +30,6 @@ import com.example.MoRe.model.getDataMesin
 import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.res.notifikasi.Notifikasi
 
-//@Preview(showBackground = true)
 @Composable
 fun CardNotif(
     mesin : DaftarMesinNotif = getDataMesin()[0],
@@ -46,7 +45,6 @@ fun CardNotif(
         myBorder = BorderStroke(2.dp, color = Color.Red)
     }
     Card(
-//        modifier = modifiertemp,
         modifier = Modifier
             .padding(4.dp)
             .fillMaxWidth()
@@ -57,7 +55,6 @@ fun CardNotif(
             },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
         border = myBorder
-//        border = BorderStroke(2.dp, color = Color.LightGray)
     ) {
 
         Row(verticalAlignment = Alignment.CenterVertically,
@@ -74,28 +71,23 @@ fun CardNotif(
                     .crossfade(true)
                     .build(),
                     contentDescription = "Foto Pabrik",
-                    contentScale = ContentScale.Fit // Perlu di sesuaiikannnn
+                    contentScale = ContentScale.Fit
                 )
-//                Image(painter = painterResource(id = mesin.fotoMesin),
-//                    contentDescription = "Foto Mesin")
             }
             Column(modifier = Modifier
                 .padding(4.dp)
             ) {
                 Text(
-//                    text = mesin.namaMesin,
                     text = resNotif.nama_mesin,
                     style = MaterialTheme.typography.h6
                 )
                 Text(
-//                    text = mesin.namaPabrik,
                     text = resNotif.nama_pabrik,
                     style = MaterialTheme.typography.body2,
                     fontWeight = FontWeight.Bold,
 
                 )
                 Text(
-//                    text = mesin.pesan,
                     text = resNotif.text,
                     style = MaterialTheme.typography.caption
                 )

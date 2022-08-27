@@ -1,42 +1,29 @@
 package com.example.MoRe
 
 import android.net.Uri
-import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -45,14 +32,10 @@ import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.base.Resource
 import com.example.MoRe.network.model.req.ReqPutUser
-import com.example.MoRe.network.model.res.ResGetUser
 import com.example.MoRe.network.model.res.getuser.User
 import com.example.MoRe.network.model.res.putUser.ResPutUser
 import com.example.MoRe.network.repository.Repository
 import com.example.MoRe.ui.theme.BlueApp
-import com.example.MoRe.ui.theme.MyApplicationTheme
-import com.example.MoRe.ui.theme.Teal200
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -107,36 +90,7 @@ fun CustomAppbar(name:String,
 @Composable
 fun Scaffoldlayout(navController: NavController) {
 
-//    // START API
-//    var responsegetUser by remember {
-//        mutableStateOf<ResGetUser?>(null)
-//    }
-//    var activeUser by remember {
-//        mutableStateOf<User?>(User("", "", "", "", "", true, ""))
-//    }
-//
-//    suspend fun getUser(){
-//        val repository = Repository()
-//        coroutineScope {
-//            launch(Dispatchers.IO) {
-//                try{
-//                    val response =  repository.getUser()
-//                    launch(Dispatchers.Main) {
-//                        responsegetUser = Resource.Success(response).data?.body()
-//                        activeUser = responsegetUser?.data?.user
-//                        Log.d("Response Get Data User", responsegetUser.toString())
-//                    }
-//                } catch (e: Exception){
-//                    Log.e("error get User on UserProfile.kt : ", e.message.toString())
-//                }
-//            }
-//        }
-//    }
-//
-//    LaunchedEffect(Unit){
-//        getUser()
-//    }
-    // STOP API
+
 
     Scaffold(
         topBar = {

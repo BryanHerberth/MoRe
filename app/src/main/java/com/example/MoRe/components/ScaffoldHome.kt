@@ -1,8 +1,11 @@
 package com.example.MoRe.components
 
+//import com.example.MoRe.SearchBar
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -16,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-//import com.example.MoRe.SearchBar
 import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.model.DaftarPabrik
 import com.example.MoRe.model.getPabrik
@@ -31,8 +33,6 @@ import com.example.MoRe.ui.theme.BlueApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import java.util.*
-import kotlin.collections.ArrayList
 
 @Composable
 fun ScaffoldHome(
@@ -136,44 +136,8 @@ fun ScaffoldHome(
                             }
                         }
                     }
-//                            }
-//                            Log.d("TAG", "$listPabrik: ")
-//                        } else {
-//                            val resultList = ArrayList<String>()
-////                            if (listPabrik != null) {
-//                                for (nama_pabrik in listPabrik ) {
-//                                    if (searchTextState.lowercase(Locale.getDefault())
-//                                            .contains(searchTextState.lowercase(Locale.getDefault()))
-//                                    ) {
-//                                        resultList.add(nama_pabrik.toString())
-////                                    listPabrik.add(listPabrik[0])
-//                                    }
-//                                }
-////                            }
-//
-//                            resultList
-//                            Log.d("pabrik ke - :", "{${resultList}}" )
-//
-//                        }
-////                        responseGetPabrik?.data?.let { it1 ->
-////                            items(items = it1.pabrik){
-////                                Log.d("pabrik ke - :", it.toString())
-////                                CardPabrik(resPabrik = it, navController = navController)
-////                            }
-////                        }
-////                    }
-//                    LazyColumn{
-//                        items(items = listPabrik)
-//                        {
-//                            CardPabrik(pabrik = it, navController = navController)
-//                        }
-//                    }
-
-//                Spacer(modifier = Modifier.height(235.dp))
             }
         }
-
-
 }
     )
 }
@@ -185,7 +149,6 @@ fun ScaffoldHome(
 
 @Composable
 fun AppBarCompose(
-//    onSearchClicked: () -> Unit,
                    navController: NavController,
                    idPabrik: String?,
                    idMesin: String?,
@@ -215,13 +178,6 @@ fun AppBarCompose(
             }
         },
         actions = {
-//            IconButton(onClick = {
-//                navController.navigate(MoReScreens.SearchScreen.name)
-//            }){
-//                Icon(imageVector = Icons.Filled.Search,
-//                    contentDescription = "Search",
-//                    tint = Color.White)
-//            }
             IconButton(onClick = {
                 navController.navigate(MoReScreens.NotifScreen.name +"/$idPabrik/${idMesin}")
             }) {

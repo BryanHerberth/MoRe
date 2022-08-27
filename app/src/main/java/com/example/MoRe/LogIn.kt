@@ -66,7 +66,6 @@ fun moreLogInScreen(navController: NavHostController) {
 fun loginForm(
     navController: NavHostController
 ) {
-    //"linerico24@gmail.com" //test1234
     val email = rememberSaveable { mutableStateOf("") }
     val password = rememberSaveable { mutableStateOf("") }
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }

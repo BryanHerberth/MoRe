@@ -123,7 +123,7 @@ interface ApiService {
     ) : Response<ResGetVarLaporan>
 
 
-    @POST("/pabrik/{id}/mesin/{idMesin}/laporan") // Pandinggggggggggggg
+    @POST("/pabrik/{id}/mesin/{idMesin}/laporan")
     suspend fun postLaporan(
         @Path("id") idPabrik: String,
         @Path("idMesin") idMesin: String

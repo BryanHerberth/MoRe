@@ -13,32 +13,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import com.example.MoRe.dao.SessionManager
 import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.ResStart
-import com.example.MoRe.network.model.base.BaseResponse
 import com.example.MoRe.network.model.base.Resource
 import com.example.MoRe.network.repository.Repository
-import com.example.MoRe.network.viewModel.start.StartViewModel
-//import com.example.MoRe.network.viewModel.start.StartViewModelFactory
 import com.example.MoRe.ui.theme.BlueApp
-import com.google.gson.Gson
-import kotlinx.coroutines.*
-import okhttp3.Response
-import retrofit2.HttpException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-//private lateinit var startViewModel: StartViewModel
-
-//@Preview(showBackground = true)
 
 
 

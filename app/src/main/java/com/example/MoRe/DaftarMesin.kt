@@ -59,13 +59,10 @@ import kotlinx.coroutines.launch
 
 
 
-@OptIn(ExperimentalMaterialApi::class)
+
 @Composable
 fun ScaffoldListMesin(
-    listMesin: List<DaftarMesinNotif> = getDataMesin(),
-    pabrik: DaftarPabrik = getPabrik()[0],
-    scope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState,
+
     navController: NavController,
     idPabrik: String?,
 
@@ -73,10 +70,7 @@ fun ScaffoldListMesin(
     Log.d("idPabrik On Daftar Mesin : ", idPabrik.toString())
       val myPabrik = SessionManager.getPabrikData()
 
-//    Log.e("myPabrik := ", myPabrik.toString())
-//    val activePabrik = rememberSaveable { mutableStateOf(SessionManager.getPabrikData())}
-//    Log.d("TAG", "ScaffoldHome: $idPabrik")
-//    Log.d("Session Pabrik : ", activePabrik.toString())
+
 
     // API START
     var responseGetPabrikById by remember{
@@ -120,7 +114,6 @@ fun ScaffoldListMesin(
     }
 
     LaunchedEffect(Unit){
-//        getPabrikById(idPabrik)
         getMesin(idPabrik)
     }
 
@@ -137,7 +130,7 @@ fun ScaffoldListMesin(
                 .background(BlueApp)
 
         ) {
-            MesinAppBar(onSearchClicked = { /*TODO*/ },
+            MesinAppBar(
                 navController = navController,
                 email = null,
                 password = null  )
@@ -162,7 +155,6 @@ fun ScaffoldListMesin(
             ) {
                 Column() {
                     AsyncImage(model = ImageRequest.Builder(LocalContext.current)
-//                        .data(data = pabrik.fotoPabrik)
                         .data(data = myPabrik?.gambar_pabrik)
                         .crossfade(true)
                         .build(),
@@ -235,10 +227,7 @@ fun ScaffoldListMesin(
                                 CardMesin(resMesin=it, navController = navController, idPabrik = idPabrik)
                             }
                         }
-//                        items(items = listMesin)
-//                        {
-//                            CardMesin(mesin = it, navController = navController, idPabrik = idPabrik)
-//                        }
+
                     }
                 }
             }
@@ -248,64 +237,13 @@ fun ScaffoldListMesin(
 }
 
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-@ExperimentalMaterialApi
-fun ModalBottomSheet(
-    listUser: List<DaftarUser> = getUser(),
-//    activityContentScope: @Composable (state: ModalBottomSheetState , scope: CoroutineScope ) -> Unit
-//    StatusUser: String?
-    ) {
-    Log.e("Button Sheat", "Active")
 
-    val modalBottomSheetState = rememberModalBottomSheetState(
-        initialValue =ModalBottomSheetValue.Hidden
-    )
-
-    val scope = rememberCoroutineScope()
-
-    val context = LocalContext.current
-//    val newUserList = getUser().filter { pengguna ->
-//        pengguna.tipeUser == StatusUser
-//    }
-    val ActivePabrik = SessionManager.getPabrikData()
-    // START API ----------------------------------
-    var responseGetMember by remember {
-        mutableStateOf<ResGetMember?>(null)
-    }
-    suspend fun getMember(){
-        val repository = Repository()
-        coroutineScope {
-            launch(Dispatchers.IO){
-                val response = repository.getMember(idPabrik = ActivePabrik?.id_pabrik!!)
-                launch(Dispatchers.Main){
-                    responseGetMember = Resource.Success(response).data?.body()
-                    Log.d("Response member :-> ", responseGetMember?.data?.anggota.toString())
-                }
-            }
-        }
-    }
-
-    LaunchedEffect(Unit){
-        getMember()
-    }
-    // STOP API -----------------------------------
-    ModalBottomSheetLayout(
-
-        sheetState = modalBottomSheetState,
-        sheetContent = {
-
-        }
-    ) {
-//        activityContentScope(modalBottomSheetState, scope)
-    }
-}
 
 
 
 
 @Composable
-fun MesinAppBar( onSearchClicked: () -> Unit,
+fun MesinAppBar(
                  navController: NavController,
                  email: String?,
                  password: String?) {
@@ -337,29 +275,8 @@ fun MesinAppBar( onSearchClicked: () -> Unit,
                 )
             }
         },
-//        actions = {
-//            IconButton(onClick = {
-//                onSearchClicked()
-//            }) {
-//                Icon(
-//                    imageVector = Icons.Filled.Search,
-//                    contentDescription = "Search",
-//                    tint = Color.White
-//                )
-//            }
-//        },
+
         backgroundColor = BlueApp
     )
 }
 
-//@OptIn(ExperimentalMaterialApi::class)
-//@Preview(showBackground = true)
-//@Composable
-//fun DaftarMesinPreview() {
-//    MesinAppBar (onSearchClicked ={} )
-//    ModalBottomSheet{
-//            state: ModalBottomSheetState, scope: CoroutineScope ->
-//        ScaffoldListMesin(searchViewModel = SearchViewModel(), scope = scope,
-//            modalBottomSheetState = state)
-//    }
-//}

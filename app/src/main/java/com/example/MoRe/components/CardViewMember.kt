@@ -65,19 +65,17 @@ fun CardUser (
                         .size(10.dp)
                         .padding(2.dp),
                     contentDescription = "Foto User",
-                    contentScale = ContentScale.Fit // Perlu di sesuaiikannnn
+                    contentScale = ContentScale.Fit
                 )
             }
             Column(modifier = Modifier
                 .padding(4.dp)
             ) {
                 Text(
-//                    text = pengguna.namaUser,
                     text = resPengguna.nama_pengguna,
                     style = MaterialTheme.typography.h6
                 )
                 Text(
-//                    text = pengguna.emailUser,
                     text = resPengguna.email,
                     style = MaterialTheme.typography.caption
                 )

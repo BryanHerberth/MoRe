@@ -166,12 +166,10 @@ fun VerifForm(
                             Toast.makeText(context, "Kode yang anda masukan tidak valid", Toast.LENGTH_SHORT).show()
                         } else{
                             Toast.makeText(context, "Verifikasi Sukses", Toast.LENGTH_SHORT).show()
-//                            navController.popBackStack()
                             navController.navigate(MoReScreens.LoginScreen.name)
                         }
                     }
-//                    navController.popBackStack()
-//                    navController.navigate(MoReScreens.LoginScreen.name)
+
                 },
                 modifier = Modifier
                     .padding(4.dp)

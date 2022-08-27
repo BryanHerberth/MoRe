@@ -36,9 +36,8 @@ import com.google.gson.Gson
 
 @Composable
 fun CardPabrik(
-//    pabrik: DaftarPabrik = getPabrik()[0],
+
     resPabrik: DataPabrik,
-    onItemClick : (String) -> Unit ={},
     navController: NavController
 ){
     val idPabrik = rememberSaveable { mutableStateOf(resPabrik.id_pabrik) }
@@ -71,7 +70,6 @@ fun CardPabrik(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     AsyncImage(model = ImageRequest.Builder(LocalContext.current)
-//                        .data(data = pabrik.fotoPabrik)
                         .data(data = resPabrik.gambar_pabrik)
                         .crossfade(true)
                         .build(),

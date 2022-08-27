@@ -21,8 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.MoRe.components.CardUser
-import com.example.MoRe.model.DaftarUser
-import com.example.MoRe.model.getUser
 import com.example.MoRe.navigation.MoReScreens
 import com.example.MoRe.network.model.base.Resource
 import com.example.MoRe.network.model.res.getmember.ResGetMember
@@ -35,13 +33,11 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScaffoldMember(
-    listMember: List<DaftarUser> = getUser(),
     navController: NavController,
     idPabrik: String?,
 
 ){
     Log.d("idPabrik DaftarMember : ", idPabrik.toString())
-//    val idPabrik = rememberSaveable { mutableStateOf("2") }
     // API START
     var responseGetMember by remember{
         mutableStateOf<ResGetMember?>(null)
@@ -77,8 +73,7 @@ fun ScaffoldMember(
                 email = null ,
                 password = null,
                 idPabrik = idPabrik,
-                modifier = Modifier
-                )
+                modifier = Modifier)
         },
         content = {
             Column(modifier = Modifier.padding(12.dp)) {
@@ -102,11 +97,7 @@ fun ScaffoldMember(
                                 }
                             }
 
-//                            items(items = pengguna)
-//                            {
-//
-//                                CardUser(pengguna = it)
-//                            }
+
                         }
                     }
                 }
@@ -138,32 +129,16 @@ fun CustomAppbar2(name:String,
                     modifier = Modifier.padding(90.dp, 0.dp)
                 )
             }
-        },
-            backgroundColor = BlueApp,
-
-            navigationIcon = {
-                IconButton(onClick = {
-//                    navController.navigate(MoReScreens.PabrikScreen.name +"/${idPabrik}") {
-//                        popUpTo(MoReScreens.PabrikScreen.name+"/${idPabrik}")
-//                        {
-//                            inclusive = true
-//                        }
-//                    }
-                    Log.d("idPabrik on Detail Mesin : ", idPabrik.toString())
-
-                    navController.navigate(MoReScreens.PabrikScreen.name +"/${idPabrik}") {
-//                        popUpTo(MoReScreens.PabrikScreen.name+"/{$idPabrik}")
-//                        {
-//                            inclusive = true
-//                        }
-                    }
-                }) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Back Arrow",
-                        tint = Color.White
-                    )
-                }
-            })
+        }, backgroundColor = BlueApp, navigationIcon = {
+            IconButton(onClick = {
+                navController.navigate(MoReScreens.PabrikScreen.name + "/${idPabrik}") {}
+            }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Back Arrow",
+                    tint = Color.White
+                )
+            }
+        })
     }
 }

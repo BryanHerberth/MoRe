@@ -2,9 +2,7 @@ package com.example.MoRe.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,16 +10,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.MoRe.*
 import com.example.MoRe.components.ScaffoldHome
-import com.example.MoRe.network.repository.Repository
-import com.example.MoRe.model.DaftarPabrik
-import kotlinx.coroutines.CoroutineScope
-//private lateinit var startViewModel: StartViewModel
 @OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
 @Composable
-fun MoReNavHost(
-    scope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState,
-    ) {
+fun MoReNavHost() {
     val navController = rememberNavController()
 
 
@@ -54,14 +45,6 @@ fun MoReNavHost(
                 email = navVerifikasi.arguments?.getString("email")
             )
         }
-//        composable(MoReScreens.VerificationScreen.name){
-//            moreVerifScreen(navController = navController)
-//        }
-
-        composable(MoReScreens.SearchScreen.name){
-            MainScreen(navController = navController)
-        }
-
         val pabrikScreen  = MoReScreens.PabrikScreen.name
         composable("$pabrikScreen/{idPabrik}",
                 arguments = listOf(
@@ -73,8 +56,6 @@ fun MoReNavHost(
                     )){navPabrik ->
             ScaffoldListMesin(
                 navController = navController,
-                scope = scope,
-                modalBottomSheetState = modalBottomSheetState,
                 idPabrik = navPabrik.arguments?.getString("idPabrik"))
         }
         val detailScreen =MoReScreens.DetailScreen.name

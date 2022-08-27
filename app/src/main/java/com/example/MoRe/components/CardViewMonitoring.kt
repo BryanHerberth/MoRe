@@ -26,7 +26,6 @@ import com.example.MoRe.network.model.res.monitor.ResGetMonitor
 @Composable
 fun CardMonitoring(
     resMonitor : Monitor,
-    onItemClick : (String) -> Unit ={},
 ) {
 
     var myBorder = BorderStroke(1.dp, color = Color.LightGray)
@@ -136,7 +135,6 @@ fun CardMonitoring(
                     )
                 } else {
                     Text(
-//                text = monitoring.valueMonitoring,
                         text = resMonitor.value.toString(),
                         style = MaterialTheme.typography.h3,
                         color = alarmColor,

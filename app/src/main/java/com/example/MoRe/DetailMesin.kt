@@ -64,8 +64,7 @@ fun ScaffoldDetailMesin(
     idPabrik : String?,
     idMesin : String?
 ) {
-    Log.d("TAG", "DetailPabrik: $idPabrik")
-    Log.d("TAG", "DetailMesin: $idMesin")
+
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
     val myMesin = SessionManager.getMesinData()
@@ -176,11 +175,7 @@ fun ScaffoldDetailMesin(
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-//            try {
-//                CardMesin(resMesin = myMesin!! ,navController = navController, idPabrik = idPabrik)
-//            } catch (e: Exception){
-//                Log.e("Error CardMesin Detail Mesin : ", e.message.toString())
-//            }
+
             CardMesin(clickable =false , resMesin = activeMesin!! ,navController = navController, idPabrik = idPabrik, showSts = true, statusMesin = responseStsMesin!!)
 
         }
@@ -426,34 +421,6 @@ fun DokumenLayout(
                     }
                 }
             }
-//            OutlinedButton(onClick = { /*TODO*/ },
-//                modifier = Modifier
-//                    .padding(4.dp)
-//                    .width(300.dp),
-//                elevation = ButtonDefaults.elevation(
-//                    defaultElevation = 2.dp,
-//                    pressedElevation = 4.dp,
-//                    disabledElevation = 0.dp
-//                ),
-//            ) {
-//                Text(text = "Lembaran Data",
-//                    color = Color.Black
-//                )
-//            }
-//            OutlinedButton(onClick = { /*TODO*/ },
-//                modifier = Modifier
-//                    .padding(4.dp)
-//                    .width(300.dp),
-//                elevation = ButtonDefaults.elevation(
-//                    defaultElevation = 2.dp,
-//                    pressedElevation = 4.dp,
-//                    disabledElevation = 0.dp
-//                ),
-//            ) {
-//                Text(text = "Panduan",
-//                    color = Color.Black
-//                )
-//            }
         }
     }
 }
@@ -563,10 +530,6 @@ fun LaporanLayouts(
 
                             }
 
-//                        composableScope.launch{
-//                            postLaporanByName(idPabrik!!, idMesin!!, selectedOptionText, start, stop)
-//                            tampilkanClickedState.value = !tampilkanClickedState.value
-//                        }
                     },
                     modifier = Modifier
                         .padding(4.dp)
@@ -586,11 +549,6 @@ fun LaporanLayouts(
                 }
             }
         }
-//        if (tampilkanClickedState.value){
-//            HasilTampilkan(resLaporan = responseLaporan?.data?.laporan!!)
-//        } else{
-//            Box() {}
-//        }
     }
 }
 

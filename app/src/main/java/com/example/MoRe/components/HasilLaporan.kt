@@ -66,17 +66,13 @@ fun HasilTampilkan(
     laporan: List<DaftarLaporan> = getDataLaporan(),
     resLaporan: List<LaporanByName>,
     resChart: List<lapo>
-//    resLaporanChart:
 ){
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
     Log.d("Hasil Laporan Mesin : ", resLaporan.toString())
     Log.d("Hasil Laporan Mesin chart : ", resChart.toString())
-//    Card(modifier = Modifier
-//        .padding(4.dp)
-//        .fillMaxWidth(),
-//    ) {
+
         Surface(modifier = Modifier
             .padding(horizontal = 10.dp, vertical = 4.dp)
             .fillMaxWidth()
@@ -94,9 +90,6 @@ fun HasilTampilkan(
                     resChart = resChart
                 )
             }
-
-
-
             }
         }
 
@@ -125,7 +118,6 @@ fun TableView(
                     fontWeight = FontWeight.Bold
                 )
             }
-//                    Spacer(modifier = Modifier.weight(0.04f))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -137,7 +129,6 @@ fun TableView(
                     fontWeight = FontWeight.Bold
                 )
             }
-//                    Spacer(modifier = Modifier.padding(horizontal = 20.dp))
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -162,15 +153,6 @@ fun TableView(
                     CardViewLaporan(resLaporan = it)
                 }
             }
-//                    val laporanSort = laporan.groupBy { it.Nomor}
-//
-//                    laporanSort.forEach { (Nomor, Tanggal ) ->
-//                        stickyHeader {
-//                        }
-//                        items(items = Tanggal){
-//                            CardViewLaporan(laporan = it )
-//                        }
-//                    }
 
         }
     }
@@ -273,10 +255,6 @@ fun DateEndPickerLayout() {
     var eDate = remember {
         mutableStateOf("")
     }
-//    fun dateToTimeStamp(date: String){
-//        val myDate = SimpleDateFormat("dd-MM-yyyy").parse("2-08-2022")
-//        Log.d("TimeStamp End : ", Timestamp(year = 2022))
-//    }
 
 
 
@@ -285,7 +263,6 @@ fun DateEndPickerLayout() {
             val endMonth = month2 + 1
             eDate.value = "$day2-$endMonth-$year2"
             SessionManager.saveStopDate(eDate.value)
-            Log.d("EndDate Picker : ", eDate.value)
         }, eYear, eMonth, eDay
     )
 
@@ -299,8 +276,6 @@ fun DateEndPickerLayout() {
             IconButton(
                 onClick = {
                     dateEndPickerDialog.show()
-                    Log.d("EndDatePick date", eDate.value)
-//                    dateToTimeStamp(eDate.value)
                 }
             ) {
                 Image(
@@ -387,199 +362,21 @@ fun graphView(
     resChart: List<lapo>
 ){
     var lineChartData2 = listOf<LineChartEntity>()
-//    var verticalAxisValues2 = listOf<Float>()
     for(index in resChart){
-
         lineChartData2 = lineChartData2 + LineChartEntity(index.value.toFloat(), index.nomor)
-//        verticalAxisValues2 = verticalAxisValues2 + index.value.toFloat()
         Log.d("Loop Chart", index.toString())
     }
-//    Log.d("lineChartData4 : : ", lineChartData4.toString())
-//    Log.d("Lporan Chart on graph : ", resChart.toString())
-//    val lineChartData2 = listOf(
-////        LineChartEntity(1.0f, "9"),
-////        LineChartEntity(1.5f, "2"),
-////        LineChartEntity(2f, "3"),
-////        LineChartEntity(2.5f, "4"),
-////        LineChartEntity(3.0f, "5"),
-////        LineChartEntity(4.5f, "6"),
-////        LineChartEntity(7f, "7"),
-////        LineChartEntity(9f, "8"),
-////    )
-//    Log.d("lineChartData4 : : ", lineChartData4.toString())
     Log.d("lineChartData2 : : ", lineChartData2.toString())
-//    Log.d("verticalAxisValues2 :: ", verticalAxisValues2.toString())
 
 
     val verticalAxisValues2 = listOf(100.0f, 200.0f, 300.0f, 400.0f, 500.0f, 600.0f, 700.0f, 800.0f, 900.0f, 1000.0f, 1100.0f, 1200.0f, 1300.0f, 1400.0f, 1500.0f, 1600.0f, 1700.0f, 1800.0f, 1900.0f, 2000.0f, 2100.0f, 2200.0f, 2300.0f, 2400.0f, 2500.0f, 2600.0f, 2700.0f, 2800.0f)
-//    val yStep = 50
-//    val random = Random
-//    /* to test with random points */
-////                val points = (0..9).map {
-////                    var num = random.nextInt(350)
-////                    if (num <= 50)
-////                        num += 100
-////                    num.toFloat()
-////                }
-//    /* to test with fixed points */
-//    val points = listOf(
-//        100f,150f,200f,250f,300f,350f,400f)
-//    Graph(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .height(500.dp),
-//        xValues = (0..10).map { it + 1 },
-//        yValues = (0..9).map { (it + 1) * yStep },
-//        points = points,
-//        paddingSpace = 16.dp,
-//        verticalStep = yStep
-//    )
+
     LineChart(lineChartData = lineChartData2, verticalAxisValues = verticalAxisValues2, resChart=resChart)
 
 }
 
-@Composable
-fun Graph(
-    modifier : Modifier,
-    xValues: List<Int>,
-    yValues: List<Int>,
-    points: List<Float>,
-    paddingSpace: Dp,
-    verticalStep: Int
-) {
-    val controlPoints1 = mutableListOf<PointF>()
-    val controlPoints2 = mutableListOf<PointF>()
-    val coordinates = mutableListOf<PointF>()
-    val density = LocalDensity.current
-    val textPaint = remember(density) {
-        Paint().apply {
-            color = android.graphics.Color.BLACK
-            textAlign = Paint.Align.CENTER
-            textSize = density.run { 12.sp.toPx() }
-        }
-    }
-
-    Box(
-        modifier = modifier
-            .background(Color.White)
-            .padding(horizontal = 15.dp, vertical = 12.dp)
-            .height(250.dp),
-        contentAlignment = Center
-    ) {
-        Canvas(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            val xAxisSpace = (size.width - paddingSpace.toPx()) / xValues.size
-            val yAxisSpace = size.height / yValues.size
-            /** placing x axis points */
-            /** placing x axis points */
-            /** placing x axis points */
-            /** placing x axis points */
-            for (i in xValues.indices) {
-                drawContext.canvas.nativeCanvas.drawText(
-                    "${xValues[i]}",
-                    xAxisSpace * (i + 1),
-                    size.height - 30,
-                    textPaint
-                )
-            }
-            /** placing y axis points */
-            /** placing y axis points */
-            /** placing y axis points */
-            /** placing y axis points */
-            for (i in yValues.indices) {
-                drawContext.canvas.nativeCanvas.drawText(
-                    "${yValues[i]}",
-                    paddingSpace.toPx() / 2f,
-                    size.height - yAxisSpace * (i + 1),
-                    textPaint
-                )
-            }
-            /** placing our x axis points */
-            /** placing our x axis points */
-            /** placing our x axis points */
-            /** placing our x axis points */
-            for (i in points.indices) {
-                val x1 = xAxisSpace * xValues[i]
-                val y1 = size.height - (yAxisSpace * (points[i]/verticalStep.toFloat()))
-                coordinates.add(PointF(x1,y1))
-                /** drawing circles to indicate all the points */
-                /** drawing circles to indicate all the points */
-                /** drawing circles to indicate all the points */
-                /** drawing circles to indicate all the points */
-                drawCircle(
-                    color = Color.Red,
-                    radius = 10f,
-                    center = Offset(x1,y1)
-                )
-            }
-            /** calculating the connection points */
-            /** calculating the connection points */
-            /** calculating the connection points */
-            /** calculating the connection points */
-            for (i in 1 until coordinates.size) {
-                controlPoints1.add(PointF((coordinates[i].x + coordinates[i - 1].x) / 2, coordinates[i - 1].y))
-                controlPoints2.add(PointF((coordinates[i].x + coordinates[i - 1].x) / 2, coordinates[i].y))
-            }
-            /** drawing the path */
-            /** drawing the path */
-            /** drawing the path */
-            /** drawing the path */
-            val stroke = Path().apply {
-                reset()
-                moveTo(coordinates.first().x, coordinates.first().y)
-                for (i in 0 until coordinates.size - 1) {
-                    cubicTo(
-                        controlPoints1[i].x,controlPoints1[i].y,
-                        controlPoints2[i].x,controlPoints2[i].y,
-                        coordinates[i + 1].x,coordinates[i + 1].y
-                    )
-                }
-            }
-            /** filling the area under the path */
-            /** filling the area under the path */
-            /** filling the area under the path */
-            /** filling the area under the path */
-            val fillPath = android.graphics.Path(stroke.asAndroidPath())
-                .asComposePath()
-                .apply {
-                    lineTo(xAxisSpace * xValues.last(), size.height - yAxisSpace)
-                    lineTo(xAxisSpace, size.height - yAxisSpace)
-                    close()
-                }
-            drawPath(
-                fillPath,
-                brush = Brush.verticalGradient(
-                    listOf(
-                        Color.Cyan,
-                        Color.Transparent,
-                    ),
-                    endY = size.height - yAxisSpace
-                ),
-            )
-            drawPath(
-                stroke,
-                color = Color.Black,
-                style = Stroke(
-                    width = 5f,
-                    cap = StrokeCap.Round
-                )
-            )
-        }
-    }
-}
 
 
-//@Composable
-//fun testLineGraph(resChart: List<lapo>){
-//    LineGraph(plot = LinePlot(
-//        listOf(
-//            LinePlot.Line(
-//                line
-//            )
-//        )
-//    ))
-//}
 
 @Composable
 fun LineChart(
@@ -743,26 +540,3 @@ private fun calculateOffset(
     return Offset(x, y)
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//private fun DefaultPreview() {
-//    AndroidComposeChartsTheme {
-//        val lineChartData = ArrayList<LineChartEntity>()
-//        lineChartData.add(LineChartEntity(150.0f, "1"))
-//        lineChartData.add(LineChartEntity(450.0f, "2"))
-//        lineChartData.add(LineChartEntity(300.0f, "3"))
-//        lineChartData.add(LineChartEntity(200.0f, "4"))
-//        lineChartData.add(LineChartEntity(500.0f, "5"))
-//
-//        LineChart(
-//            lineChartData = lineChartData,
-//            verticalAxisValues = listOf(0.0f, 100.0f, 200.0f, 300.0f, 400.0f, 500.0f),
-////            axisColor = Color(0xFFA6A6A6),
-////            verticalAxisLabelColor = Color(0xFFA6A6A6),
-////            horizontalAxisLabelColor = Color(0xFF4F4F4F),
-////            isShowVerticalAxis = false,
-////            verticalAxisLabelFontSize = 20.sp,
-////            horizontalAxisLabelFontSize = 30.sp,
-////            isShowVerticalAxis = true
-//        )
-//    }
